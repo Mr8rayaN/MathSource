@@ -9,173 +9,181 @@ namespace ALGEBRA
 {
     public class PropsMatematicas
     {
-            Procesos proceso = new Procesos();
+        Procesos proceso = new Procesos();
 
-            public string Distribuir(string funcion)
+        public string POTENCIA_Distribuir(string funcion)
+        {
+            if (funcion.Contains("^"))
             {
-                if (funcion.Contains("^"))
+                string stringPrefijo = funcion.Substring(0, funcion.IndexOf("^"));
+                string stringPostfijo = funcion.Substring(funcion.IndexOf("^") + 1);
+                string exponente = stringPostfijo, sobras = "";
+                int inicio = 0, final = 0;
+
+                if (stringPostfijo.Contains("(") && stringPostfijo.Contains(")"))
                 {
-                    string stringPrefijo = funcion.Substring(0, funcion.IndexOf("^"));
-                    string stringPostfijo = funcion.Substring(funcion.IndexOf("^") + 1);
-                    string exponente = stringPostfijo, sobras = "";
-                    int inicio = 0, final = 0;
+                    inicio = stringPostfijo.IndexOf("(");
+                    final = stringPostfijo.LastIndexOf(")") - stringPostfijo.IndexOf("(");
+                    exponente = stringPostfijo.Substring(inicio + 1, final - 1);
+                    sobras = sobras + stringPostfijo.Remove(inicio, final + 1);
+                }
 
-                    if (stringPostfijo.Contains("(") && stringPostfijo.Contains(")"))
+                if (stringPrefijo.Contains(")") && stringPrefijo.Contains("("))
+                {
+                    inicio = stringPrefijo.IndexOf("(");
+                    final = stringPrefijo.LastIndexOf(")") - stringPrefijo.IndexOf("(");
+
+                    string baseFuncion = stringPrefijo.Substring(inicio + 1, final - 1);
+                    sobras = sobras + stringPrefijo.Remove(inicio, final + 1);
+
+                    if (baseFuncion.Contains("^"))
+                        return "Es una potencia anidada";
+                    else if (baseFuncion.Contains("(") && baseFuncion.Contains(")"))
                     {
-                        inicio = stringPostfijo.IndexOf("(");
-                        final = stringPostfijo.LastIndexOf(")") - stringPostfijo.IndexOf("(");
-                        exponente = stringPostfijo.Substring(inicio + 1, final - 1);
-                        sobras = sobras + stringPostfijo.Remove(inicio, final + 1);
+                        return "Es una distribucion anidada";
                     }
-
-                    if (stringPrefijo.Contains(")") && stringPrefijo.Contains("("))
+                    else
                     {
-                        inicio = stringPrefijo.IndexOf("(");
-                        final = stringPrefijo.LastIndexOf(")") - stringPrefijo.IndexOf("(");
+                        int length = baseFuncion.Length;
+                        char[] variables = baseFuncion.ToCharArray();
+                        string distribucion = "";
 
-                        string baseFuncion = stringPrefijo.Substring(inicio + 1, final - 1);
-                        sobras = sobras + stringPrefijo.Remove(inicio, final + 1);
-
-                        if (baseFuncion.Contains("^"))
-                            return "Es una potencia anidada";
-                        else if (baseFuncion.Contains("(") && baseFuncion.Contains(")"))
+                        foreach (var caracter in variables)
                         {
-                            return "Es una distribucion anidada";
-                        }
-                        else
-                        {
-                            int length = baseFuncion.Length;
-                            char[] variables = baseFuncion.ToCharArray();
-                            string distribucion = "";
-
-                            foreach (var caracter in variables)
-                            {
-                                distribucion = distribucion + caracter + "^" + $"({exponente})";
-                            }
-
-                            return $"({sobras}){distribucion}";
-
+                            distribucion = distribucion + caracter + "^" + $"({exponente})";
                         }
 
+                        return $"({sobras}){distribucion}";
 
                     }
+
 
                 }
 
-                return funcion;
             }
 
-            public string Agrupar(string funcion)
+            return funcion;
+        }
+            
+        public string PRODUCTO_Distribuir(string funcion)
+        {
+            return null;
+        }
+            
+        public string COCIENTE_Distribuir(string funcion)
+        {
+            return null;
+        }
+
+        public string Agrupar(string funcion)
+        {
+            if (funcion == null || funcion.Equals("")) return "Funcion vacia (Inagrupable)";
+
+            return Asociar(Fragmentar(funcion));
+
+        }
+        List<string> Fragmentar(string funcion)
+        {
+
+            if (funcion == null) return null;
+
+            List<string> variables = proceso.ExtraerVariables(funcion), fragmentos = new List<string>();
+
+            if (variables == null) return null;
+
+            List<int> indices;
+            string foco = "", argumento = "", baseFuncion = "", exponente = "", expo = "", bas = "";
+            string laFuncion = funcion;
+            int j = 0, indice = 0, inicio = 0;
+
+
+
+            if (variables.Count > 0)
             {
-                if (funcion == null || funcion.Equals("")) return "Funcion vacia (Inagrupable)";
-
-                return Asociar(Fragmentar(funcion));
-
-            }
-
-            public List<string> Fragmentar(string funcion)
-            {
-
-                if (funcion == null) return null;
-
-                List<string> variables = proceso.ExtraerVariables(funcion), fragmentos = new List<string>();
-
-                if (variables == null) return null;
-
-                List<int> indices;
-                string foco = "", argumento = "", baseFuncion = "", exponente = "", expo = "", bas = "";
-                string laFuncion = funcion;
-                int j = 0, indice = 0, inicio = 0;
-
-
-
-                if (variables.Count > 0)
+                foreach (var variable in variables)
                 {
-                    foreach (var variable in variables)
+                    indices = proceso.VariableIndices(laFuncion, variable);
+
+                    for (j = 0; j < indices.Count; ++j)
                     {
-                        indices = proceso.VariableIndices(laFuncion, variable);
 
-                        for (j = 0; j < indices.Count; ++j)
+                        indice = laFuncion.IndexOf(variable);
+                        if (indice < 0)
+                            break;
+                        foco = proceso.EnfocarVariable(laFuncion, indice);
+                        if (proceso.IsFuncion(foco, variable))
                         {
-
-                            indice = laFuncion.IndexOf(variable);
-                            if (indice < 0)
-                                break;
-                            foco = proceso.EnfocarVariable(laFuncion, indice);
-                            if (proceso.IsFuncion(foco, variable))
+                            inicio = foco.IndexOf("(");
+                            argumento = foco.Substring(inicio, proceso.CierreFuncion(foco, inicio));
+                            if (foco.Contains(argumento + "^"))
                             {
-                                inicio = foco.IndexOf("(");
-                                argumento = foco.Substring(inicio, proceso.CierreFuncion(foco, inicio));
-                                if (foco.Contains(argumento + "^"))
+
+                                baseFuncion = argumento;
+                                inicio = baseFuncion.Length + 1;
+                                exponente = foco.Substring(inicio, proceso.CierreFuncion(foco, inicio));
+
+                                bas = Asociar(Fragmentar(proceso.Descorchar(baseFuncion)));
+                                expo = Asociar(Fragmentar(proceso.Descorchar(exponente)));
+
+                                if (baseFuncion.Length < bas.Length + 2)
                                 {
+                                    baseFuncion = $"({bas})";
+                                }
+                                if (exponente.Length < expo.Length + 2)
+                                {
+                                    exponente = $"({expo})";
+                                }
 
-                                    baseFuncion = argumento;
-                                    inicio = baseFuncion.Length + 1;
-                                    exponente = foco.Substring(inicio, proceso.CierreFuncion(foco, inicio));
+                                laFuncion = laFuncion.Replace(foco, "@");
+                                foco = $"{baseFuncion}^{exponente}";
+                                laFuncion = laFuncion.Replace("@", foco);
+                            }
+                            else
+                            {
+                                baseFuncion = argumento;
+                                foreach (var segmentoBase in Asociar(Fragmentar(proceso.Descorchar(baseFuncion))))
+                                {
+                                    bas = bas + segmentoBase;
+                                }
 
-                                    bas = Asociar(Fragmentar(proceso.Descorchar(baseFuncion)));
-                                    expo = Asociar(Fragmentar(proceso.Descorchar(exponente)));
-
-                                    if (baseFuncion.Length < bas.Length + 2)
-                                    {
-                                        baseFuncion = $"({bas})";
-                                    }
-                                    if (exponente.Length < expo.Length + 2)
-                                    {
-                                        exponente = $"({expo})";
-                                    }
+                                if (baseFuncion.Length < bas.Length + 2)
+                                {
+                                    baseFuncion = $"({bas})";
 
                                     laFuncion = laFuncion.Replace(foco, "@");
-                                    foco = $"{baseFuncion}^{exponente}";
+                                    foco = foco.Replace(argumento, baseFuncion);
                                     laFuncion = laFuncion.Replace("@", foco);
                                 }
-                                else
-                                {
-                                    baseFuncion = argumento;
-                                    foreach (var segmentoBase in Asociar(Fragmentar(proceso.Descorchar(baseFuncion))))
-                                    {
-                                        bas = bas + segmentoBase;
-                                    }
-
-                                    if (baseFuncion.Length < bas.Length + 2)
-                                    {
-                                        baseFuncion = $"({bas})";
-
-                                        laFuncion = laFuncion.Replace(foco, "@");
-                                        foco = foco.Replace(argumento, baseFuncion);
-                                        laFuncion = laFuncion.Replace("@", foco);
-                                    }
 
 
-                                }
                             }
-                            fragmentos.Add(foco);
-                            indice = laFuncion.IndexOf(foco);
-                            laFuncion = laFuncion.Remove(indice, foco.Length);
-                            laFuncion = laFuncion.Substring(0, indice) + ";" + laFuncion.Substring(indice);
-
                         }
+                        fragmentos.Add(foco);
+                        indice = laFuncion.IndexOf(foco);
+                        laFuncion = laFuncion.Remove(indice, foco.Length);
+                        laFuncion = laFuncion.Substring(0, indice) + ";" + laFuncion.Substring(indice);
 
                     }
-
-                    string[] coeficientes = laFuncion.Split(';');
-
-                    for (j = 0; j < coeficientes.Length; j++)
-                    {
-                        if (!coeficientes[j].Equals(""))
-                            fragmentos.Add(coeficientes[j]);
-                    }
-
-                    return fragmentos;
 
                 }
 
-                fragmentos.Add(funcion);
+                string[] coeficientes = laFuncion.Split(';');
+
+                for (j = 0; j < coeficientes.Length; j++)
+                {
+                    if (!coeficientes[j].Equals(""))
+                        fragmentos.Add(coeficientes[j]);
+                }
+
                 return fragmentos;
 
             }
 
-            public string Asociar(List<string> lista)
+            fragmentos.Add(funcion);
+            return fragmentos;
+
+        }
+        string Asociar(List<string> lista)
             {
                 if (lista == null) return null;
 
@@ -305,6 +313,8 @@ namespace ALGEBRA
 
                 return asociado;
             }
+
+
     }
 }
 
