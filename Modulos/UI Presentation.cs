@@ -5,13 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ENTITY;
 using BLL;
-using ALGEBRA;
 
 namespace Modulos
 {
     class Program
     {
-
         string funcion = "";
         FuncionesService Servicio = new FuncionesService();
 
@@ -28,7 +26,7 @@ namespace Modulos
         static void TEST_Propiedades()
         {
             string funcion = "";
-            PropsMatematicas propiedad = new PropsMatematicas();
+            OpsMatematicas propiedad = new OpsMatematicas();
             Procesos proceso = new Procesos();
 
             while (true)

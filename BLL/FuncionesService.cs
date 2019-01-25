@@ -15,7 +15,7 @@ namespace BLL
         Derivada derivada = new Derivada();
         DerivadaParcial derivadaParcial = new DerivadaParcial();
         public Procesos proceso = new Procesos();
-        public PropsMatematicas propiedad = new PropsMatematicas();
+        public ALGEBRA.PropsMatematicas propiedad = new ALGEBRA.PropsMatematicas();
 
         FuncionesRepository gestion = new FuncionesRepository();
 
