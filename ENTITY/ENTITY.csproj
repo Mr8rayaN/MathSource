@@ -45,6 +45,8 @@
     <Compile Include="OpsMatematicas.cs" />
     <Compile Include="Procesos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReemplazarDTO.cs" />
+    <Compile Include="Signos.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

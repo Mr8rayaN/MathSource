@@ -9,7 +9,6 @@ namespace ENTITY
     public abstract class AMathOps
     {
         public virtual int Modulo { get;}
-
         
     }
 }
