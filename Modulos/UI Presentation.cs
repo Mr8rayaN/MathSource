@@ -15,12 +15,14 @@ namespace Modulos
         static void Main(string[] args)
         {
             Suma sum;
+            Cociente cociente;
             while (true)
             {
-                sum = new Suma(Console.ReadLine(), Console.ReadLine());
-                Console.WriteLine(sum.Result);
+                //sum = new Suma(Console.ReadLine(), Console.ReadLine());
+                cociente = new Cociente(Console.ReadLine());
+                //Console.WriteLine(sum.Result);
+                Console.WriteLine(cociente.Result);
             }
-            Console.ReadKey();
         }
         
     }

@@ -10,15 +10,15 @@ namespace ENTITY
     public class Suma : AMathOps
     {
         private Signos Signo;
+        ReemplazarDTO DTO;
         public override int Modulo { get { return 0; } }
         public string Simbolo { get { return "+"; } }
         protected string SumandoUno { get; set; }
         protected string SumandoDos { get; set; }
         public string Result { get; protected set; }
-        bool A = false, B = false;
+        bool A = false, B = false, C = false;
         double number, a, b;
 
-        public Suma() { }
         public Suma(string SumandoUno, string SumandoDos)
         {
             this.SumandoUno = SumandoUno;
@@ -46,18 +46,27 @@ namespace ENTITY
 
         private void PolinomialProcess ()
         {
-            ReemplazarDTO DTO;
+            
+            string SumandoSinSigno = SumandoUno.TrimStart('-');
+            A = Signo.SignoUno.Equals(Signo.SignoNegativo);
+            B = SumandoUno.Contains("*") & SumandoDos.Contains("*");
+            C = SumandoUno.Contains("/") & SumandoDos.Contains("/");
 
-            if (Signo.SignoUno.Equals(Signo.SignoNegativo))
+            if (SumandoSinSigno.Equals(SumandoDos) & A)
             {
-
-                string SumandoSinSigno = SumandoUno.TrimStart('-');
-
-                if (SumandoSinSigno.Equals(SumandoDos))
-                {
-                    Result = Modulo.ToString();
-                }
+                Result = Modulo.ToString();
             }
+
+            else if (C)
+            {
+                SiAmbosSonCocientes();
+            }
+
+            else if (B)
+            {
+                SiAmbosSonProductos();
+            }
+
 
             else if (SumandoUno.Equals(SumandoDos))
             {
@@ -66,69 +75,135 @@ namespace ENTITY
 
             else if (SumandoUno.Contains(SumandoDos))
             {
-                int indexSumandoDos = SumandoUno.IndexOf(SumandoDos);
-                string SubSumandoUno = SumandoUno.Substring(0, indexSumandoDos);
-
-                if (SubSumandoUno.Contains("*"))
-                {
-                    int indexProductoSimbol = SubSumandoUno.IndexOf("*");
-                    string Multiplo = SubSumandoUno.Substring(0, indexProductoSimbol);
-
-                    A = double.TryParse(Multiplo, out number);
-
-                    if (A)
-                    {
-                        a = double.Parse(Multiplo);
-
-                        a = a + 1;
-
-                        DTO = new ReemplazarDTO(SumandoUno);
-                        DTO.AReemplazar = Multiplo;
-                        DTO.Reemplazador = a.ToString();
-                        DTO.StartIndexAReemplazar = 0;
-                        SumandoUno = DTO.Reemplazado;
-
-                        Result = SumandoUno;
-                    }
-
-                    else
-                    {
-                        Result = SumandoUno + Simbolo + SumandoDos;
-                    }
-                }
+                SiUnoContieneADos();
             }
 
             else if (SumandoDos.Contains(SumandoUno))
             {
-                int indexSumandoUno = SumandoDos.IndexOf(SumandoUno);
-                string SubSumandoDos = SumandoDos.Substring(0, indexSumandoUno);
+                SiDosContieneAUno();                
+            }
 
-                if (SubSumandoDos.Contains("*"))
+            else
+            {
+                Result = SumandoUno + Simbolo + SumandoDos;
+            }
+        }
+
+        private void SiAmbosSonCocientes()
+        {
+            
+        }
+
+        private void SiAmbosSonProductos()
+        {
+            int indexSumandoUno = SumandoUno.LastIndexOf("*");
+            int indexSumandoDos = SumandoDos.LastIndexOf("*");
+            string AparenteComunUno = SumandoUno.Substring(indexSumandoUno + 1);
+            string AparenteComunDos = SumandoDos.Substring(indexSumandoDos + 1);
+            bool C = AparenteComunUno.Equals(AparenteComunDos);
+
+            if (C)
+            {
+                string SubSumandoUno = SumandoUno.Substring(0, indexSumandoUno);
+                string SubSumandoDos = SumandoDos.Substring(0, indexSumandoDos);
+
+                A = double.TryParse(SubSumandoUno, out number);
+                B = double.TryParse(SubSumandoDos, out number);
+
+                if(A & B)
                 {
-                    int indexProductoSimbol = SubSumandoDos.IndexOf("*");
-                    string Multiplo = SubSumandoDos.Substring(0, indexProductoSimbol);
+                    a = double.Parse(SubSumandoUno);
+                    b = double.Parse(SubSumandoDos);
+                    double c = a + b;
 
-                    A = double.TryParse(Multiplo, out number);
+                    DTO = new ReemplazarDTO(SumandoUno);
+                    DTO.AReemplazar = a.ToString();
+                    DTO.Reemplazador = c.ToString();
+                    DTO.StartIndexAReemplazar = 0;
 
-                    if (A)
-                    {
-                        a = double.Parse(Multiplo);
+                    Result = DTO.Reemplazado;
+                }
 
-                        a = a + 1;
+                else
+                {
+                    Result = SumandoUno + Simbolo + SumandoDos;
+                }
+            }
 
-                        DTO = new ReemplazarDTO(SumandoDos);
-                        DTO.AReemplazar = Multiplo;
-                        DTO.Reemplazador = a.ToString();
-                        DTO.StartIndexAReemplazar = 0;
-                        SumandoUno = DTO.Reemplazado;
+            else
+            {
+                Result = SumandoUno + Simbolo + SumandoDos;
+            }
+        }
+        
+        private void SiUnoContieneADos()
+        {
+            int indexSumandoDos = SumandoUno.IndexOf(SumandoDos);
+            string SubSumandoUno = SumandoUno.Substring(0, indexSumandoDos);
 
-                        Result = SumandoDos;
-                    }
+            if (SubSumandoUno.Contains("*"))
+            {
+                int indexProductoSimbol = SubSumandoUno.IndexOf("*");
+                string Multiplo = SubSumandoUno.Substring(0, indexProductoSimbol);
 
-                    else
-                    {
-                        Result = SumandoUno + Simbolo + SumandoDos;
-                    }
+                A = double.TryParse(Multiplo, out number);
+
+                if (A)
+                {
+                    a = double.Parse(Multiplo);
+
+                    a = a + 1;
+
+                    DTO = new ReemplazarDTO(SumandoUno);
+                    DTO.AReemplazar = Multiplo;
+                    DTO.Reemplazador = a.ToString();
+                    DTO.StartIndexAReemplazar = 0;
+
+                    Result = DTO.Reemplazado;
+                    
+                }
+
+                else
+                {
+                    Result = SumandoUno + Simbolo + SumandoDos;
+                }
+            }
+
+            else
+            {
+                Result = SumandoUno + Simbolo + SumandoDos;
+            }
+        }
+
+        private void SiDosContieneAUno()
+        {
+            int indexSumandoUno = SumandoDos.IndexOf(SumandoUno);
+            string SubSumandoDos = SumandoDos.Substring(0, indexSumandoUno);
+
+            if (SubSumandoDos.Contains("*"))
+            {
+                int indexProductoSimbol = SubSumandoDos.IndexOf("*");
+                string Multiplo = SubSumandoDos.Substring(0, indexProductoSimbol);
+
+                A = double.TryParse(Multiplo, out number);
+
+                if (A)
+                {
+                    a = double.Parse(Multiplo);
+
+                    a = a + 1;
+
+                    DTO = new ReemplazarDTO(SumandoDos);
+                    DTO.AReemplazar = Multiplo;
+                    DTO.Reemplazador = a.ToString();
+                    DTO.StartIndexAReemplazar = 0;
+
+                    Result = DTO.Reemplazado;
+                }
+
+                else
+                {
+                    Result = SumandoUno + Simbolo + SumandoDos;
                 }
             }
 
@@ -203,10 +278,166 @@ namespace ENTITY
     public class Cociente : AMathOps
     {
         public override int Modulo { get { return 1;} }
+        public int ModuloCancelativo { get { return 0; } }
         public string Simbolo { get { return "/"; } }
         public string Dividendo { get; set; }
         public string Divisor { get; set; }
+        public string Signo { get; private set; }
         public string Result { get; set; }
+        double number;
+
+        public Cociente (string Dividendo, string Divisor)
+        {
+            this.Dividendo = Dividendo;
+            this.Divisor = Divisor;
+
+            Resolucion();
+
+        }
+        public Cociente (string Cociente)
+        {
+            ExtraerPartes(Cociente);
+            Resolucion();
+        }
+
+        private void ExtraerPartes(string Cociente)
+        {
+            int indexOperador = Cociente.IndexOf(Simbolo);
+            Dividendo = Cociente.Substring(0, indexOperador);
+            Divisor = Cociente.Substring(indexOperador + 1);
+        }
+
+        private void Resolucion()
+        {
+            //Propiedades de cociente
+            bool A = false, B = false, C = false, D = false, E = false;
+            bool F = false;
+            A = Dividendo.Equals(ModuloCancelativo.ToString());
+            B = Divisor.Equals(ModuloCancelativo.ToString());
+            C = Dividendo.Equals(Modulo.ToString());
+            D = Divisor.Equals(Modulo.ToString());
+            E = Dividendo.Equals(Divisor);
+            F = double.TryParse(Dividendo, out number) & double.TryParse(Divisor, out number);
+
+            if(B)
+            {
+                Result = "Math ERROR";
+            }
+
+            else if(A & !B)
+            {
+                Result = ModuloCancelativo.ToString();
+            }
+
+            else if (C & D)
+            {
+                Result = Modulo.ToString();
+            }
+
+            else if (D)
+            {
+                Result = Dividendo;
+            }
+
+            else if (E)
+            {
+                Result = Modulo.ToString();
+            }
+
+            else if (F)
+            {
+                double dividendo = double.Parse(Dividendo);
+                double divisor = double.Parse(Divisor);
+                SimplificarEnteros(dividendo, divisor);
+            }
+
+        }
+
+        private void SimplificarEnteros(double dividendo, double divisor)
+        {
+            //Siempre y cuando sean dos numeros enteros positivos
+
+            bool A = false, B = false;
+            int i = 0, j = 0, sobra = 0;
+            double menor = Math.Min(dividendo, divisor);
+            if(dividendo % divisor == 0)
+            {
+                Result = (dividendo / divisor).ToString();
+            }
+            else if (dividendo == Modulo)
+            {
+                Result = $"{dividendo}/{divisor}";
+            }
+            else
+            {
+                List<int> FactoresPrimosDividendo = new List<int>();
+                List<int> FactoresPrimosDivisor = new List<int>();
+                if(menor == dividendo)
+                {
+                    
+                    for (i = 2; i <= (divisor/2); i++)
+                    {
+                        if (divisor % i == 0)
+                        {
+                            divisor = divisor / i;
+                            FactoresPrimosDivisor.Add(i);
+                            i = 2;
+                        }
+                    }
+                    FactoresPrimosDivisor.Add((int)divisor);
+
+
+
+                    for (i = 2; i <= (dividendo / 2); i++)
+                    {
+                        if (dividendo % i == 0)
+                        {
+                            dividendo = dividendo / i;
+
+                            //Simplificacion en curso
+                            if (FactoresPrimosDivisor.Contains(i))
+                            {
+                                int indexToRemove = FactoresPrimosDivisor.IndexOf(i);
+                                FactoresPrimosDivisor.RemoveAt(indexToRemove);
+                            }
+
+                            else
+                            {
+                                FactoresPrimosDividendo.Add(i);
+                            }
+                            
+                            i = 2;
+                        }
+                    }
+                    FactoresPrimosDividendo.Add((int)dividendo);
+
+
+                    dividendo = 0;
+                    divisor = 0;
+
+                    foreach(var item in FactoresPrimosDividendo)
+                    {
+                        dividendo *= item;
+                    }
+                
+                    foreach(var item in FactoresPrimosDivisor)
+                    {
+                        divisor *= item;
+                    }
+
+                    Dividendo = dividendo.ToString();
+                    Divisor = divisor.ToString();
+
+                    Result = Dividendo + Simbolo + Divisor;
+
+                }
+
+                else
+                {
+                    //Simplificacion cuando menor es el divisor
+                }
+            }
+        }
     }
 
     public class Producto : AMathOps
