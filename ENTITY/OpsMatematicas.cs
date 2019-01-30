@@ -350,6 +350,10 @@ namespace ENTITY
                 double divisor = double.Parse(Divisor);
                 SimplificarEnteros(dividendo, divisor);
             }
+            else
+            {
+                Result = Dividendo + Simbolo + Divisor;
+            }
 
         }
 
@@ -357,9 +361,7 @@ namespace ENTITY
         {
             //Siempre y cuando sean dos numeros enteros positivos
 
-            bool A = false, B = false;
-            int i = 0, j = 0, sobra = 0;
-            double menor = Math.Min(dividendo, divisor);
+            int i = 0;
             if(dividendo % divisor == 0)
             {
                 Result = (dividendo / divisor).ToString();
@@ -372,7 +374,9 @@ namespace ENTITY
             {
                 List<int> FactoresPrimosDividendo = new List<int>();
                 List<int> FactoresPrimosDivisor = new List<int>();
-                if(menor == dividendo)
+                int indexToRemove = 0;
+
+                if(dividendo<divisor)
                 {
                     
                     for (i = 2; i <= (divisor/2); i++)
@@ -386,7 +390,7 @@ namespace ENTITY
                     }
                     FactoresPrimosDivisor.Add((int)divisor);
 
-
+                    
 
                     for (i = 2; i <= (dividendo / 2); i++)
                     {
@@ -397,7 +401,7 @@ namespace ENTITY
                             //Simplificacion en curso
                             if (FactoresPrimosDivisor.Contains(i))
                             {
-                                int indexToRemove = FactoresPrimosDivisor.IndexOf(i);
+                                indexToRemove = FactoresPrimosDivisor.IndexOf(i);
                                 FactoresPrimosDivisor.RemoveAt(indexToRemove);
                             }
 
@@ -409,11 +413,22 @@ namespace ENTITY
                             i = 2;
                         }
                     }
-                    FactoresPrimosDividendo.Add((int)dividendo);
+
+                    if (FactoresPrimosDivisor.Contains((int)dividendo))
+                    {
+                        indexToRemove = FactoresPrimosDivisor.IndexOf((int)dividendo);
+                        FactoresPrimosDivisor.RemoveAt(indexToRemove);
+                    }
+
+                    else
+                    {
+                        FactoresPrimosDividendo.Add((int)dividendo);
+                    }
+                    
 
 
-                    dividendo = 0;
-                    divisor = 0;
+                    dividendo = 1;
+                    divisor = 1;
 
                     foreach(var item in FactoresPrimosDividendo)
                     {
@@ -435,6 +450,67 @@ namespace ENTITY
                 else
                 {
                     //Simplificacion cuando menor es el divisor
+                    for (i = 2; i <= (dividendo / 2); i++)
+                    {
+                        if (dividendo % i == 0)
+                        {
+                            dividendo = dividendo / i;
+                            FactoresPrimosDividendo.Add(i);
+                            i = 2;
+                        }
+                    }
+                    FactoresPrimosDividendo.Add((int)dividendo);
+
+                    for (i = 2; i <= (divisor / 2); i++)
+                    {
+                        if (divisor % i == 0)
+                        {
+                            divisor = divisor / i;
+
+                            //Simplificacion en curso
+                            if (FactoresPrimosDividendo.Contains(i))
+                            {
+                                indexToRemove = FactoresPrimosDividendo.IndexOf(i);
+                                FactoresPrimosDividendo.RemoveAt(indexToRemove);
+                            }
+
+                            else
+                            {
+                                FactoresPrimosDivisor.Add(i);
+                            }
+
+                            i = 2;
+                        }
+                    }
+
+                    if (FactoresPrimosDividendo.Contains((int)divisor))
+                    {
+                        indexToRemove = FactoresPrimosDividendo.IndexOf((int)divisor);
+                        FactoresPrimosDividendo.RemoveAt(indexToRemove);
+                    }
+
+                    else
+                    {
+                        FactoresPrimosDivisor.Add((int)divisor);
+                    }
+
+                    dividendo = 1;
+                    divisor = 1;
+
+                    foreach (var item in FactoresPrimosDividendo)
+                    {
+                        dividendo *= item;
+                    }
+
+                    foreach (var item in FactoresPrimosDivisor)
+                    {
+                        divisor *= item;
+                    }
+
+                    Dividendo = dividendo.ToString();
+                    Divisor = divisor.ToString();
+
+                    Result = Dividendo + Simbolo + Divisor;
                 }
             }
         }
