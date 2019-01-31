@@ -28,6 +28,7 @@ namespace UI
 
         private void ListaOperacionesMouseHover(object sender, EventArgs e)
         {
+            comboBox1.BackColor = Color.White;
             comboBox1.DroppedDown = true;
         }
 

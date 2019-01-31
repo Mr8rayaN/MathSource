@@ -46,20 +46,21 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.Controls.Add(this.pictureBox3);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(365, 220);
+            this.panel1.Size = new System.Drawing.Size(365, 450);
             this.panel1.TabIndex = 6;
             // 
             // pictureBox3
             // 
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::UI.Properties.Resources.Verificacion_Positiva;
-            this.pictureBox3.Location = new System.Drawing.Point(229, 110);
+            this.pictureBox3.Location = new System.Drawing.Point(219, 224);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(60, 60);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -71,7 +72,7 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = global::UI.Properties.Resources.Verificacion_Negativa;
-            this.pictureBox1.Location = new System.Drawing.Point(80, 110);
+            this.pictureBox1.Location = new System.Drawing.Point(70, 224);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(60, 60);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -84,7 +85,7 @@
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label1.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label1.Location = new System.Drawing.Point(29, 21);
+            this.label1.Location = new System.Drawing.Point(20, 152);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(333, 42);
             this.label1.TabIndex = 5;
@@ -98,14 +99,14 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(367, 218);
+            this.panel2.Size = new System.Drawing.Size(365, 450);
             this.panel2.TabIndex = 7;
             // 
             // pictureBox4
             // 
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox4.Image = global::UI.Properties.Resources.Verificacion_Positiva;
-            this.pictureBox4.Location = new System.Drawing.Point(229, 122);
+            this.pictureBox4.Location = new System.Drawing.Point(228, 224);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(60, 60);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -117,7 +118,7 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::UI.Properties.Resources.Verificacion_Negativa;
-            this.pictureBox2.Location = new System.Drawing.Point(80, 122);
+            this.pictureBox2.Location = new System.Drawing.Point(79, 224);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(60, 60);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -130,19 +131,20 @@
             this.label2.AutoSize = true;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label2.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label2.Location = new System.Drawing.Point(50, 21);
+            this.label2.Location = new System.Drawing.Point(49, 152);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(279, 42);
             this.label2.TabIndex = 6;
             this.label2.Text = "¿Deseas gráficarle?";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // Evaluacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(367, 221);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(365, 450);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Evaluacion";
             this.Text = "Evaluacion";

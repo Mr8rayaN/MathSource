@@ -24,5 +24,10 @@ namespace UI
             this.Dock = DockStyle.Fill;
             this.Size = Anterior.Size;
         }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -43,6 +43,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -60,7 +62,7 @@
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label1.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label1.Location = new System.Drawing.Point(13, 97);
+            this.label1.Location = new System.Drawing.Point(20, 99);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(310, 42);
             this.label1.TabIndex = 0;
@@ -69,7 +71,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.Controls.Add(this.pictureBox5);
             this.panel1.Controls.Add(this.pictureBox6);
             this.panel1.Controls.Add(this.label1);
@@ -77,7 +79,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(333, 440);
+            this.panel1.Size = new System.Drawing.Size(341, 440);
             this.panel1.TabIndex = 3;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -97,7 +99,7 @@
             // 
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox6.Image = global::UI.Properties.Resources.Flecha_Atras;
-            this.pictureBox6.Location = new System.Drawing.Point(7, 308);
+            this.pictureBox6.Location = new System.Drawing.Point(14, 308);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(30, 30);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -109,7 +111,7 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::UI.Properties.Resources.Verificacion_Positiva;
-            this.pictureBox2.Location = new System.Drawing.Point(196, 174);
+            this.pictureBox2.Location = new System.Drawing.Point(208, 174);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(50, 50);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -137,14 +139,14 @@
             this.panel2.Location = new System.Drawing.Point(12, 34);
             this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(333, 376);
+            this.panel2.Size = new System.Drawing.Size(341, 376);
             this.panel2.TabIndex = 4;
             // 
             // pictureBox4
             // 
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox4.Image = global::UI.Properties.Resources.Flecha_Siguiente;
-            this.pictureBox4.Location = new System.Drawing.Point(293, 287);
+            this.pictureBox4.Location = new System.Drawing.Point(293, 286);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(30, 30);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -156,7 +158,7 @@
             // 
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::UI.Properties.Resources.Flecha_Atras;
-            this.pictureBox3.Location = new System.Drawing.Point(7, 287);
+            this.pictureBox3.Location = new System.Drawing.Point(14, 286);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(30, 30);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -171,16 +173,20 @@
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.comboBox1);
             this.panel3.Controls.Add(this.label2);
-            this.panel3.Location = new System.Drawing.Point(13, 34);
+            this.panel3.Location = new System.Drawing.Point(14, 57);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(309, 178);
+            this.panel3.Size = new System.Drawing.Size(316, 178);
             this.panel3.TabIndex = 7;
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
             this.dataGridView1.Location = new System.Drawing.Point(171, 15);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(118, 150);
             this.dataGridView1.TabIndex = 5;
             // 
@@ -196,7 +202,7 @@
             this.label3.AutoSize = true;
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label3.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label3.Location = new System.Drawing.Point(14, 85);
+            this.label3.Location = new System.Drawing.Point(30, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 42);
             this.label3.TabIndex = 3;
@@ -216,16 +222,29 @@
             this.label2.AutoSize = true;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label2.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label2.Location = new System.Drawing.Point(14, 15);
+            this.label2.Location = new System.Drawing.Point(29, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(136, 42);
             this.label2.TabIndex = 1;
             this.label2.Text = "¿Cuales?";
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Variable";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Column2";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
             // Variables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(365, 450);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
@@ -265,5 +284,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

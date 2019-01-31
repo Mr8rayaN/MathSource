@@ -44,26 +44,31 @@
             this.label1.Cursor = System.Windows.Forms.Cursors.PanSouth;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label1.Font = new System.Drawing.Font("Segoe Script", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(51, 108);
+            this.label1.Location = new System.Drawing.Point(39, 116);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(277, 42);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Ingrese la funcion";
+            this.label1.Text = "Ingrese la función";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(57, 167);
+            this.textBox1.BackColor = System.Drawing.Color.White;
+            this.textBox1.Location = new System.Drawing.Point(40, 177);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(249, 20);
+            this.textBox1.Size = new System.Drawing.Size(276, 20);
             this.textBox1.TabIndex = 1;
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(154, 256);
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox3.Location = new System.Drawing.Point(146, 249);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(67, 65);
+            this.pictureBox3.Size = new System.Drawing.Size(65, 65);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // pictureBox2
             // 
@@ -93,6 +98,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(365, 450);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
