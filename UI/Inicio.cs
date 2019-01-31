@@ -22,6 +22,14 @@ namespace UI
             Application.Run(new Inicio());
         }
 
-        
+        private void ListaOperacionesMouseHover(object sender, EventArgs e)
+        {
+            comboBox1.DroppedDown = true;
+        }
+
+        private void FlechaSiguienteClick(object sender, EventArgs e)
+        {
+            //Enlazo con el siguiente formulario
+        }
     }
 }
