@@ -53,6 +53,12 @@
     <Compile Include="Evaluacion.Designer.cs">
       <DependentUpon>Evaluacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormularioBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormularioBase.Designer.cs">
+      <DependentUpon>FormularioBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graficas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Evaluacion.resx">
       <DependentUpon>Evaluacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormularioBase.resx">
+      <DependentUpon>FormularioBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graficas.resx">
       <DependentUpon>Graficas.cs</DependentUpon>

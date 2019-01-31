@@ -17,6 +17,14 @@ namespace UI
             InitializeComponent();
         }
 
+        public Variables(Form Anterior)
+        {
+            InitializeComponent();
+            this.MdiParent = Anterior;
+            this.Dock = DockStyle.Fill;
+            this.Size = Anterior.Size;
+        }
+
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -34,7 +42,27 @@ namespace UI
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
+            //Enlazo con la siguiente ventana
+            panel1.Show();
+            Resultado RESULTADO = new Resultado(this.MdiParent);
+            RESULTADO.Show();
+        }
 
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            panel1.Hide();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            //Enlazo con la siguiente ventana
+            Resultado RESULTADO = new Resultado(this.MdiParent);
+            RESULTADO.Show();
         }
     }
 }

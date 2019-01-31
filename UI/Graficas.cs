@@ -16,5 +16,13 @@ namespace UI
         {
             InitializeComponent();
         }
+
+        public Graficas (Form Anterior)
+        {
+            InitializeComponent();
+            this.MdiParent = Anterior;
+            this.Dock = DockStyle.Fill;
+            this.Size = Anterior.Size;
+        }
     }
 }

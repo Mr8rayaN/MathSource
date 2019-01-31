@@ -17,10 +17,14 @@ namespace UI
             InitializeComponent();
         }
 
-        public static void Main(string[] args)
+        public Inicio(Form Anterior)
         {
-            Application.Run(new Inicio());
+            InitializeComponent();
+            this.MdiParent = Anterior;
+            this.Dock = DockStyle.Fill;
+            this.Size = Anterior.Size;
         }
+
 
         private void ListaOperacionesMouseHover(object sender, EventArgs e)
         {
@@ -30,6 +34,18 @@ namespace UI
         private void FlechaSiguienteClick(object sender, EventArgs e)
         {
             //Enlazo con el siguiente formulario
+            IngresoFuncion INGRESAR = new IngresoFuncion(this.MdiParent);
+            INGRESAR.Show();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
