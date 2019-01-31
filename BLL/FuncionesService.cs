@@ -7,7 +7,6 @@ using DERIVADAS;
 using DAL;
 using ALGEBRA;
 using ENTITY;
-using DAL;
 
 namespace BLL
 {

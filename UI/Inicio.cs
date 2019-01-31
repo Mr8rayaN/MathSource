@@ -16,5 +16,12 @@ namespace UI
         {
             InitializeComponent();
         }
+
+        public static void Main(string[] args)
+        {
+            Application.Run(new Inicio());
+        }
+
+        
     }
 }

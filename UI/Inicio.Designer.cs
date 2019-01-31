@@ -1,8 +1,6 @@
-﻿using System.Windows.Forms;
-
-namespace UI
+﻿namespace UI
 {
-    public partial class Inicio
+    partial class Inicio
     {
         /// <summary>
         /// Required designer variable.
@@ -30,17 +28,19 @@ namespace UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Inicio
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "Inicio";
             this.Text = "Inicio";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
-
-        public static void Main(string[] s)
-        {
-            Application.Run(new Inicio());
-        }
     }
 }
