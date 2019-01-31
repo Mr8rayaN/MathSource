@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DERIVADAS;
+using DAL;
 using ALGEBRA;
 using ENTITY;
 using DAL;
@@ -15,7 +16,7 @@ namespace BLL
         Derivada derivada = new Derivada();
         DerivadaParcial derivadaParcial = new DerivadaParcial();
         public Procesos proceso = new Procesos();
-        public ALGEBRA.PropsMatematicas propiedad = new ALGEBRA.PropsMatematicas();
+        PropsMatematicas propiedad = new PropsMatematicas();
 
         FuncionesRepository gestion = new FuncionesRepository();
 

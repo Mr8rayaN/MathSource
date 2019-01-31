@@ -49,8 +49,8 @@
       <Project>{0ea8ebbf-0f6c-4353-b302-b629882951eb}</Project>
       <Name>ALGEBRA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ClassLibrary1\DAL.csproj">
-      <Project>{f94b2c0d-e9de-4fa1-9dbb-94e310779c10}</Project>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{744ff548-e26a-4d58-ae48-f3beed6ac868}</Project>
       <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DERIVADAS\DERIVADAS.csproj">

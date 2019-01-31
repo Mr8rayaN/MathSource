@@ -7,8 +7,8 @@
     <ProjectGuid>{0EA8EBBF-0F6C-4353-B302-B629882951EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algebra</RootNamespace>
-    <AssemblyName>Algebra</AssemblyName>
+    <RootNamespace>ALGEBRA</RootNamespace>
+    <AssemblyName>ALGEBRA</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
