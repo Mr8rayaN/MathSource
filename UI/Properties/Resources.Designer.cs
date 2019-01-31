@@ -63,9 +63,39 @@ namespace UI.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Flecha_Atras {
+            get {
+                object obj = ResourceManager.GetObject("Flecha Atras", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Flecha_Siguiente {
             get {
                 object obj = ResourceManager.GetObject("Flecha Siguiente", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Verificacion_Negativa {
+            get {
+                object obj = ResourceManager.GetObject("Verificacion Negativa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Verificacion_Positiva {
+            get {
+                object obj = ResourceManager.GetObject("Verificacion Positiva", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
