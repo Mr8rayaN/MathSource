@@ -50,18 +50,18 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(550, 339);
+            this.panel1.Size = new System.Drawing.Size(365, 220);
             this.panel1.TabIndex = 6;
             // 
             // pictureBox3
             // 
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::UI.Properties.Resources.Verificacion_Positiva;
-            this.pictureBox3.Location = new System.Drawing.Point(344, 169);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox3.Location = new System.Drawing.Point(229, 110);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(90, 92);
+            this.pictureBox3.Size = new System.Drawing.Size(60, 60);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 7;
             this.pictureBox3.TabStop = false;
@@ -71,10 +71,9 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = global::UI.Properties.Resources.Verificacion_Negativa;
-            this.pictureBox1.Location = new System.Drawing.Point(120, 169);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox1.Location = new System.Drawing.Point(80, 110);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(90, 92);
+            this.pictureBox1.Size = new System.Drawing.Size(60, 60);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
@@ -85,10 +84,9 @@
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label1.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label1.Location = new System.Drawing.Point(44, 32);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(29, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(493, 64);
+            this.label1.Size = new System.Drawing.Size(333, 42);
             this.label1.TabIndex = 5;
             this.label1.Text = "¿Fué útil la solución?";
             // 
@@ -98,18 +96,18 @@
             this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(550, 336);
+            this.panel2.Size = new System.Drawing.Size(367, 218);
             this.panel2.TabIndex = 7;
             // 
             // pictureBox4
             // 
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox4.Image = global::UI.Properties.Resources.Verificacion_Positiva;
-            this.pictureBox4.Location = new System.Drawing.Point(344, 187);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox4.Location = new System.Drawing.Point(229, 122);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(90, 92);
+            this.pictureBox4.Size = new System.Drawing.Size(60, 60);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 8;
             this.pictureBox4.TabStop = false;
@@ -119,10 +117,9 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::UI.Properties.Resources.Verificacion_Negativa;
-            this.pictureBox2.Location = new System.Drawing.Point(120, 187);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox2.Location = new System.Drawing.Point(80, 122);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(90, 92);
+            this.pictureBox2.Size = new System.Drawing.Size(60, 60);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 7;
             this.pictureBox2.TabStop = false;
@@ -133,22 +130,20 @@
             this.label2.AutoSize = true;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label2.Font = new System.Drawing.Font("Segoe Script", 20F);
-            this.label2.Location = new System.Drawing.Point(75, 32);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(50, 21);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(415, 64);
+            this.label2.Size = new System.Drawing.Size(279, 42);
             this.label2.TabIndex = 6;
             this.label2.Text = "¿Deseas gráficarle?";
             // 
             // Evaluacion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 340);
+            this.ClientSize = new System.Drawing.Size(367, 221);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Evaluacion";
             this.Text = "Evaluacion";
             this.panel1.ResumeLayout(false);

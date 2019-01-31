@@ -47,8 +47,7 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(560, 32);
+            this.toolStrip1.Size = new System.Drawing.Size(349, 22);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -58,7 +57,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(90, 29);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(61, 19);
             this.toolStripDropDownButton1.Text = "Archivo";
             this.toolStripDropDownButton1.ToolTipText = "Gestion de archivo";
             // 
@@ -68,7 +67,7 @@
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(75, 29);
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(50, 19);
             this.toolStripDropDownButton2.Text = "Editar";
             this.toolStripDropDownButton2.ToolTipText = "Editar parametros";
             // 
@@ -78,16 +77,17 @@
             this.toolStripDropDownButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton3.Image")));
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
-            this.toolStripDropDownButton3.Size = new System.Drawing.Size(55, 29);
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(36, 19);
             this.toolStripDropDownButton3.Text = "Ver";
             this.toolStripDropDownButton3.ToolTipText = "Opciones vista";
             // 
             // FormularioBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 747);
+            this.ClientSize = new System.Drawing.Size(349, 411);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormularioBase";
             this.Text = "FormularioBase";
             this.toolStrip1.ResumeLayout(false);
