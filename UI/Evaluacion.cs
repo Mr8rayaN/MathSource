@@ -12,6 +12,9 @@ namespace UI
 {
     public partial class Evaluacion : Form
     {
+        bool VentanaAbierta = true;
+        Graficas GRAFICA;
+
         public Evaluacion()
         {
             InitializeComponent();
@@ -23,14 +26,32 @@ namespace UI
             this.MdiParent = Anterior;
             this.Dock = DockStyle.Fill;
             this.Size = Anterior.Size;
+           GRAFICA = new Graficas();
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             //Abro ventana Graficar
+            
             this.Dispose();
-            Graficas GRAFICA = new Graficas();
-            GRAFICA.Show();
+            
+
+            foreach (var frm in Application.OpenForms)
+            {
+                if(frm.GetType() == typeof(Graficas))
+                {
+                    VentanaAbierta = false;
+                    break;
+                }
+            }
+
+            if (VentanaAbierta)
+            {
+                GRAFICA.Show();
+            }
+            else
+                GRAFICA.Refresh();
+            
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)

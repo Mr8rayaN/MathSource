@@ -105,7 +105,7 @@
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox6.TabIndex = 10;
             this.pictureBox6.TabStop = false;
-            this.pictureBox6.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pictureBox6.Click += new System.EventHandler(this.AnteriorVentana);
             // 
             // pictureBox2
             // 

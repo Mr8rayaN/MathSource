@@ -50,7 +50,7 @@ namespace UI
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            panel1.Show();
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -63,6 +63,11 @@ namespace UI
             //Enlazo con la siguiente ventana
             Resultado RESULTADO = new Resultado(this.MdiParent);
             RESULTADO.Show();
+        }
+
+        private void AnteriorVentana(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
