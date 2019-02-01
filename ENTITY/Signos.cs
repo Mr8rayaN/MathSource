@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    public class Signos
+    public abstract class Signos
     {
         public string SignoPositivo { get { return "+";} }
         public string SignoNegativo { get { return "-";} }
@@ -15,19 +15,20 @@ namespace ENTITY
         public string SignoUno { get; private set; }
         public string SignoDos { get; private set; }
 
-        public Signos () { }
-        public Signos (string OperadorUno)
+        
+
+        public void AgregarOperador(string Monomio)
         {
-            this.OperadorUno = OperadorUno;
+            OperadorUno = Monomio;
             SignoUno = ExtraerSigno(OperadorUno);
         }
-        public Signos (string OperadorUno, string OperadorDos)
-        {
-            this.OperadorUno = OperadorUno;
-            this.OperadorDos = OperadorDos;
 
-            SignoUno = ExtraerSigno(OperadorUno);
-            SignoDos = ExtraerSigno(OperadorDos);
+        public void AgregarOperadores(string MonomioUno, string MonomioDos)
+        {
+            OperadorUno = MonomioUno;
+            OperadorDos = MonomioDos;
+            SignoUno = ExtraerSigno(MonomioUno);
+            SignoDos = ExtraerSigno(MonomioDos);
 
         }
 

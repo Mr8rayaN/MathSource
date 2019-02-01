@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{34FBBA3A-DBB6-470E-9682-2E02F83B5E32}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TESTER</RootNamespace>
     <AssemblyName>TESTER</AssemblyName>
@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,6 +46,36 @@
   <ItemGroup>
     <Compile Include="Lab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algebra\ALGEBRA.csproj">
+      <Project>{0ea8ebbf-0f6c-4353-b302-b629882951eb}</Project>
+      <Name>ALGEBRA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{588b39c1-e42e-4478-9fdb-3133613ba951}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{744ff548-e26a-4d58-ae48-f3beed6ac868}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DERIVADAS\DERIVADAS.csproj">
+      <Project>{4aa5dce6-7b1e-47dd-a399-9c0baa07a7b0}</Project>
+      <Name>DERIVADAS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTITY\ENTITY.csproj">
+      <Project>{e1b0a794-e12d-47f6-8ae2-92440a51b1cb}</Project>
+      <Name>ENTITY</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GRAMATICA\GRAMATICA.csproj">
+      <Project>{27af06e2-71f5-4e11-8bda-f2ce076b83ab}</Project>
+      <Name>GRAMATICA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\UI.csproj">
+      <Project>{6684fd05-95d0-41f9-b2fa-e90508cafbb6}</Project>
+      <Name>UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

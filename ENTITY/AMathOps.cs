@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    public abstract class AMathOps
+    public abstract class AMathOps : Signos
     {
         public virtual int Modulo { get;}
         
