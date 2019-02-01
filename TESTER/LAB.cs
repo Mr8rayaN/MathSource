@@ -21,7 +21,7 @@ namespace TESTER
 
                     //Aplicacion del TEST
 
-                    TEST_ENTITY_Sustraccion_Monomial(PRUEBA[i], PRUEBA[j]);
+                    TEST_ENTITY_Cociente_Monomial(PRUEBA[i], PRUEBA[j]);
 
                     Console.WriteLine("----------------------------------");
                 }
@@ -40,6 +40,7 @@ namespace TESTER
         private static void TEST_ENTITY_Suma_Monomial(string Uno, string Dos)
         {
             Suma SUMA = new Suma(Uno,Dos);
+            Console.WriteLine(SUMA.Nombre);
             Console.WriteLine(SUMA.Result);
         }//OK
 

@@ -73,7 +73,6 @@ namespace ENTITY
                 
     } //OK
     
-
     public class Sustraccion : AMathOps
     {
         public string Nombre => "RESTA";
@@ -159,6 +158,7 @@ namespace ENTITY
             Resolucion();
 
         }
+
         public Cociente (string Cociente)
         {
             ExtraerPartes(Cociente);
@@ -393,6 +393,18 @@ namespace ENTITY
         public string FactorUno { get; set; }
         public string FactorDos { get; set; }
         public string Result { get; set; }
+
+        public Producto (string FactorUno, string FactorDos)
+        {
+            this.FactorUno = FactorUno;
+            this.FactorDos = FactorDos;
+
+            AgregarOperadores(FactorUno, FactorDos);
+
+            
+        }
+
+
     }
 
     public abstract class Potencia : AMathOps
