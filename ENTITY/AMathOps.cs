@@ -9,6 +9,8 @@ namespace ENTITY
     public abstract class AMathOps : Signos
     {
         public virtual int Modulo { get;}
-        
+        public virtual string Nombre { get; }
+        public virtual string Simbolo { get; }
+        public string Result { get; protected set; }
     }
 }

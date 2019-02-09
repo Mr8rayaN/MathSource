@@ -9,12 +9,12 @@ namespace ENTITY
     
     public class Suma : AMathOps
     {
-        public string Nombre => "SUMA";
+        public override string Nombre => "SUMA";
         public override int Modulo { get { return 0; } }
-        public string Simbolo { get { return "+"; } }
+        public override string Simbolo { get { return "+"; } }
         protected string SumandoUno { get; set; }
         protected string SumandoDos { get; set; }
-        public string Result { get; protected set; }
+
         bool A = false, B = false, C = false;
         double number, a, b;
 
@@ -75,12 +75,12 @@ namespace ENTITY
     
     public class Sustraccion : AMathOps
     {
-        public string Nombre => "RESTA";
+        public override string Nombre => "RESTA";
         public override int Modulo { get { return 0; } }
-        public string Simbolo { get { return "-"; } }
+        public override string Simbolo { get { return "-"; } }
         protected string Minuendo { get; set; }
         protected string Sustraendo { get; set; }
-        public string Result { get; private set; }
+        
         bool A = false, B = false, C = false, D = false, E = false;
         double number;
 
@@ -138,14 +138,14 @@ namespace ENTITY
 
     public class Cociente : AMathOps
     {
-        public string Nombre => "COCIENTE";
+        public override string Nombre => "COCIENTE";
         public override int Modulo { get { return 1;} }
         public int ModuloCancelativo { get { return 0; } }
-        public string Simbolo { get { return "/"; } }
+        public override string Simbolo { get { return "/"; } }
         public string Dividendo { get; set; }
         public string Divisor { get; set; }
         public string Signo { get; private set; }
-        public string Result { get; set; }
+        
         List<int> FactoresPrimosDividendo = new List<int>();
         List<int> FactoresPrimosDivisor = new List<int>();
         double number;
@@ -387,18 +387,16 @@ namespace ENTITY
 
     public class Producto : AMathOps
     {
-        public string Nombre => "PRODUCTO";
+        public override string Nombre => "PRODUCTO";
         public override int Modulo { get { return 1; } }
-        public string Simbolo { get { return "*"; } }
+        public override string Simbolo { get { return "*"; } }
         public string FactorUno { get; set; }
         public string FactorDos { get; set; }
-        public string Result { get; set; }
 
-        public Producto (string FactorUno, string FactorDos)
+        public Producto(string FactorUno, string FactorDos)
         {
             this.FactorUno = FactorUno;
             this.FactorDos = FactorDos;
-
             AgregarOperadores(FactorUno, FactorDos);
 
             
@@ -409,12 +407,11 @@ namespace ENTITY
 
     public abstract class Potencia : AMathOps
     {
-        public string Nombre => "POTENCIA";
+        public override string Nombre => "POTENCIA";
         public override int Modulo { get { return 1; } }
-        public string Simbolo { get { return "^"; } }
+        public override string Simbolo { get { return "^"; } }
         public string Base { get; set; }
         public string Exponente { get; set; }
-        public string Result { get; set; }
 
     }
 }
