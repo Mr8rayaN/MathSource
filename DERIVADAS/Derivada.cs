@@ -10,7 +10,7 @@ namespace DERIVADAS
     public class Derivada
     {
 
-        public Procesos proceso = new Procesos();        
+        public ProcesosOld proceso = new ProcesosOld();        
 
         public string Derivar(string funcion, string variable)
         {

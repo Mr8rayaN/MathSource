@@ -9,7 +9,7 @@ namespace ALGEBRA
 {
     public class PropsMatematicas
     {
-        Procesos proceso = new Procesos();
+        ProcesosOld proceso = new ProcesosOld();
 
         public string POTENCIA_Distribuir(string funcion)
         {

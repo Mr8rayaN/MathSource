@@ -10,7 +10,7 @@ namespace GRAMATICA
 {
     public class Validador
     {
-        Procesos proceso = new Procesos();
+        ProcesosOld proceso = new ProcesosOld();
 
 
     }

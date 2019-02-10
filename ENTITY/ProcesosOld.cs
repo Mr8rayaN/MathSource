@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    public class Procesos
+    public class ProcesosOld
     {
+
+
 
         public bool IsFuncion(string funcion, string variable)
         {

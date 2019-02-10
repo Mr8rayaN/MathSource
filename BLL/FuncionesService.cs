@@ -14,7 +14,7 @@ namespace BLL
     {
         Derivada derivada = new Derivada();
         DerivadaParcial derivadaParcial = new DerivadaParcial();
-        public Procesos proceso = new Procesos();
+        public ProcesosOld proceso = new ProcesosOld();
         PropsMatematicas propiedad = new PropsMatematicas();
 
         FuncionesRepository gestion = new FuncionesRepository();
