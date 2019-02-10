@@ -15,7 +15,7 @@ namespace ENTITY
         protected string SumandoUno { get; private set; }
         protected string SumandoDos { get; private set; }
 
-        bool A = false, B = false, C = false;
+        bool A = false, B = false;
         double number, a, b;
 
         public Suma(string SumandoUno, string SumandoDos)
@@ -75,7 +75,7 @@ namespace ENTITY
         protected string Minuendo { get; private set; }
         protected string Sustraendo { get; private set; }
         
-        bool A = false, B = false, C = false, D = false, E = false;
+        bool A = false, B = false;
         double number;
 
         public Sustraccion(string Minuendo, string Sustraendo)
