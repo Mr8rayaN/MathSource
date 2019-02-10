@@ -21,12 +21,12 @@ namespace TESTER
 
                     //Aplicacion del TEST
 
-                    TEST_ENTITY_Cociente_Monomial(PRUEBA[i], PRUEBA[j]);
+                    TEST_ENTITY_Potencia_Monomial(PRUEBA[i], PRUEBA[j]);
 
                     Console.WriteLine("----------------------------------");
                 }
             }
-            
+
             Console.Read();
         }
 
@@ -57,9 +57,11 @@ namespace TESTER
 
         }
 
-        private static void TEST_ENTITY_Potencia_Monomial()
+        private static void TEST_ENTITY_Potencia_Monomial(string Uno, string Dos)
         {
-
+            Potencia POTENCIA = new Potencia(Uno, Dos);
+            Console.WriteLine(POTENCIA.Nombre);
+            Console.WriteLine(POTENCIA.Result);
         }
 
 

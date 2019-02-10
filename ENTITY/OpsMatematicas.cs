@@ -12,8 +12,8 @@ namespace ENTITY
         public override string Nombre => "SUMA";
         public override int Modulo { get { return 0; } }
         public override string Simbolo { get { return "+"; } }
-        protected string SumandoUno { get; set; }
-        protected string SumandoDos { get; set; }
+        protected string SumandoUno { get; private set; }
+        protected string SumandoDos { get; private set; }
 
         bool A = false, B = false, C = false;
         double number, a, b;
@@ -54,21 +54,15 @@ namespace ENTITY
                 Result = Modulo.ToString();
             }
 
-            else if (SumandoUno.Equals(SumandoDos))
-            {
-                Result = $"2*{SumandoUno}";
-            }
-
             else
             {
                 Result = SumandoUno + Simbolo + SumandoDos;
             } 
         }//OK
         
-        public string PropiedadConmutativa ()
+        public void Conmutar ()
         {
             Result = SumandoDos + Simbolo + SumandoUno;
-            return Result;
         }//OK
                 
     } //OK
@@ -78,8 +72,8 @@ namespace ENTITY
         public override string Nombre => "RESTA";
         public override int Modulo { get { return 0; } }
         public override string Simbolo { get { return "-"; } }
-        protected string Minuendo { get; set; }
-        protected string Sustraendo { get; set; }
+        protected string Minuendo { get; private set; }
+        protected string Sustraendo { get; private set; }
         
         bool A = false, B = false, C = false, D = false, E = false;
         double number;
@@ -98,12 +92,7 @@ namespace ENTITY
                 Result = Minuendo;
             }
 
-            else if (Minuendo.Equals(Sustraendo) & A)
-            {
-                Result = $"-2*{Minuendo}";
-            }
-
-            else if (Minuendo.Equals(Sustraendo))
+            else if (Minuendo.Equals(Sustraendo) && !A)
             {
                 Result = Modulo.ToString();
             }
@@ -134,7 +123,7 @@ namespace ENTITY
             }
         }
 
-    }
+    } //OK
 
     public class Cociente : AMathOps
     {
@@ -142,9 +131,8 @@ namespace ENTITY
         public override int Modulo { get { return 1;} }
         public int ModuloCancelativo { get { return 0; } }
         public override string Simbolo { get { return "/"; } }
-        public string Dividendo { get; set; }
-        public string Divisor { get; set; }
-        public string Signo { get; private set; }
+        public string Dividendo { get; private set; }
+        public string Divisor { get; private set; }
         
         List<int> FactoresPrimosDividendo = new List<int>();
         List<int> FactoresPrimosDivisor = new List<int>();
@@ -383,35 +371,114 @@ namespace ENTITY
 
             return Dividendo + Simbolo + Divisor;
         } //OK
-    }
+    } //OK
 
     public class Producto : AMathOps
     {
         public override string Nombre => "PRODUCTO";
         public override int Modulo { get { return 1; } }
         public override string Simbolo { get { return "*"; } }
-        public string FactorUno { get; set; }
-        public string FactorDos { get; set; }
+        public string FactorUno { get; private set; }
+        public string FactorDos { get; private set; }
+
+        bool A;
+        double number, a, b;
 
         public Producto(string FactorUno, string FactorDos)
         {
+            A = false;
+
             this.FactorUno = FactorUno;
             this.FactorDos = FactorDos;
+
             AgregarOperadores(FactorUno, FactorDos);
 
+            A = double.TryParse(FactorUno, out number) & double.TryParse(FactorDos, out number);
+
+            if (A)
+            {
+                a = double.Parse(FactorUno);
+                b = double.Parse(FactorDos);
+
+                Result = (a * b).ToString();
+            }
+            else
+            {
+                Result = FactorUno + Simbolo + FactorDos;
+            }
             
         }
 
+        public void Conmutar()
+        {
+            Result = FactorDos + Simbolo + FactorUno;
+        }
 
-    }
 
-    public abstract class Potencia : AMathOps
+    } //OK
+
+    public class Potencia : AMathOps
     {
         public override string Nombre => "POTENCIA";
         public override int Modulo { get { return 1; } }
+        public int ModuloCancelativo { get { return 0; } }
         public override string Simbolo { get { return "^"; } }
         public string Base { get; set; }
         public string Exponente { get; set; }
+
+        bool A, B, C, D, E;
+        double number, a, b;
+
+        public Potencia(string Base, string Exponente)
+        {
+            A = B = C = false;
+            this.Base = Base;
+            this.Exponente = Exponente;
+
+            Procesointerno();
+            
+        }
+
+        private void Procesointerno()
+        {
+            A = double.TryParse(Base, out number) & double.TryParse(Exponente, out number);
+            B = Base.Equals(ModuloCancelativo);
+            C = Exponente.Equals(ModuloCancelativo);
+            D = Base.Equals(Modulo);
+            E = Exponente.Equals(Modulo);
+
+            if (B & C)
+            {
+                Result = "Math ERROR";
+            }
+            else if (C)
+            {
+                Result = Modulo.ToString();
+            }
+            else if (B)
+            {
+                Result = ModuloCancelativo.ToString();
+            }
+            else if (D)
+            {
+                Result = Modulo.ToString();
+            }
+            else if (E)
+            {
+                Result = Base;
+            }
+            else if (A)
+            {
+                a = double.Parse(Base);
+                b = double.Parse(Exponente);
+
+                Result = Math.Pow(a, b).ToString();
+            }
+            else
+            {
+                Result = "{"+ Base + "}" + Simbolo + "{" + Exponente + "}";
+            }
+        }
 
     }
 }

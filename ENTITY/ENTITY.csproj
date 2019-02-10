@@ -42,13 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AMathOps.cs" />
-    <Compile Include="FSolucion.cs" />
     <Compile Include="Funcion.cs" />
+    <Compile Include="Monomio.cs" />
     <Compile Include="OpsMatematicas.cs" />
     <Compile Include="Pasos.cs" />
+    <Compile Include="Polinomios.cs" />
     <Compile Include="Procesos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signos.cs" />
+    <Compile Include="Variables.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

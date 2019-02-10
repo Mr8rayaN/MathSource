@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    public class FSolucion : Funcion
+    class Polinomios
     {
     }
 }

@@ -8,15 +8,15 @@ namespace ENTITY
 {
     public class Pasos
     {
-        public string Entrada { get; set; }
-        public string Salida { get; set; }
-        public string ProcessName { get; set; }
+        public Funcion Entrada { get; private set; }
+        public Funcion Salida { get; private set; }
+        public string Nombre { get; private set; }
 
-        public Pasos (string Entrada, string Salida, string ProcessName)
+        public Pasos (Funcion Entrada, Funcion Salida, string Nombre)
         {
             this.Entrada = Entrada;
             this.Salida = Salida;
-            this.ProcessName = ProcessName;
+            this.Nombre = Nombre;
         }
     }
 }
