@@ -47,36 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Evaluacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Evaluacion.Designer.cs">
-      <DependentUpon>Evaluacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormularioBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormularioBase.Designer.cs">
-      <DependentUpon>FormularioBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Graficas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graficas.Designer.cs">
-      <DependentUpon>Graficas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IngresoFuncion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="IngresoFuncion.Designer.cs">
-      <DependentUpon>IngresoFuncion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Inicio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Inicio.Designer.cs">
-      <DependentUpon>Inicio.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -84,44 +54,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resultado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Resultado.Designer.cs">
-      <DependentUpon>Resultado.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Variables.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Variables.Designer.cs">
-      <DependentUpon>Variables.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Evaluacion.resx">
-      <DependentUpon>Evaluacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormularioBase.resx">
-      <DependentUpon>FormularioBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Graficas.resx">
-      <DependentUpon>Graficas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IngresoFuncion.resx">
-      <DependentUpon>IngresoFuncion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Inicio.resx">
-      <DependentUpon>Inicio.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resultado.resx">
-      <DependentUpon>Resultado.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Variables.resx">
-      <DependentUpon>Variables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
