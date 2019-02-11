@@ -54,11 +54,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="VentanaPpal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VentanaPpal.Designer.cs">
+      <DependentUpon>VentanaPpal.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VentanaPpal.resx">
+      <DependentUpon>VentanaPpal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
