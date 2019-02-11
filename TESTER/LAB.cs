@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ENTITY;
+using ALGEBRA;
 
 namespace TESTER
 {
@@ -11,17 +12,19 @@ namespace TESTER
     {
         public static void Main (string[] args)
         {
-            string[] PRUEBA = { "2", "x", "2*x", "45", "y" };
+            string[] PRUEBA_OPS_MATHS = { "-2", "x", "2*x", "44", "y" };
+            string[] PRUEBA_MONOMIO_COE = { "1/3", "0", "3", "21.5", "4/5", "2^2" };
+            string[] PRUEBA_MONOMIO_LIT = { "{x^2}*y", "x*y*{z^2}", "x*y", "x", "y", "y*z"};
 
             for(int i=0; i<5; ++i)
             {
                 for(int j=0; j<5; ++j)
                 {
-                    Console.WriteLine($"ENTRADAS {PRUEBA[i]} | {PRUEBA[j]}");
+                    Console.WriteLine($"ENTRADAS {PRUEBA_MONOMIO_COE[i]} | {PRUEBA_MONOMIO_LIT[j]}");
 
                     //Aplicacion del TEST
 
-                    TEST_ENTITY_Potencia_Monomial(PRUEBA[i], PRUEBA[j]);
+                    TEST_ALGEBRA_Monomio(PRUEBA_MONOMIO_COE[i], PRUEBA_MONOMIO_LIT[j]);
 
                     Console.WriteLine("----------------------------------");
                 }
@@ -30,41 +33,53 @@ namespace TESTER
             Console.Read();
         }
 
-        private static void TEST_ENTITY_Cociente_Monomial(string Uno, string Dos)
+        private static void TEST_ENTITY_Cociente(string Uno, string Dos)
         {
-            Cociente COCIENTE = new Cociente(Uno, Dos);
+            Cocientes COCIENTE = new Cocientes(Uno, Dos);
             Console.WriteLine(COCIENTE.Nombre);
             Console.WriteLine(COCIENTE.Result);
         }//OK
 
-        private static void TEST_ENTITY_Suma_Monomial(string Uno, string Dos)
+        private static void TEST_ENTITY_Suma(string Uno, string Dos)
         {
-            Suma SUMA = new Suma(Uno,Dos);
+            Sumas SUMA = new Sumas(Uno,Dos);
             Console.WriteLine(SUMA.Nombre);
             Console.WriteLine(SUMA.Result);
         }//OK
 
-        private static void TEST_ENTITY_Sustraccion_Monomial(string Uno, string Dos)
+        private static void TEST_ENTITY_Resta(string Uno, string Dos)
         {
-            Sustraccion RESTA = new Sustraccion(Uno,Dos);
+            Sustracciones RESTA = new Sustracciones(Uno,Dos);
             Console.WriteLine(RESTA.Nombre);
             Console.WriteLine(RESTA.Result);
 
         }
 
-        private static void TEST_ENTITY_Producto_Monomial()
+        private static void TEST_ENTITY_Producto(string Uno, string Dos)
         {
-
+            Productos Producto = new Productos(Uno, Dos);
+            Console.WriteLine(Producto.Nombre);
+            Console.WriteLine(Producto.Result);
         }
 
-        private static void TEST_ENTITY_Potencia_Monomial(string Uno, string Dos)
+        private static void TEST_ENTITY_Potencia(string Uno, string Dos)
         {
-            Potencia POTENCIA = new Potencia(Uno, Dos);
+            Potencias POTENCIA = new Potencias(Uno, Dos);
             Console.WriteLine(POTENCIA.Nombre);
             Console.WriteLine(POTENCIA.Result);
         }
 
+        private static void TEST_ALGEBRA_Monomio(string Coeficiente, string ParteLiteral)
+        {
+            string Expresion = Coeficiente + "*"+ ParteLiteral;
+            Monomios Monomio = new Monomios(Expresion);
+            Console.WriteLine(Monomio.Nombre);
+            Console.WriteLine("CONTENIDO     " + Monomio.Expresion);
+            Console.WriteLine("COEFICIENTE   "+Monomio.Coeficiente);
+            Console.WriteLine("PARTE LITERAL "+Monomio.ParteLiteral);
+            Console.WriteLine("GRADO         "+Monomio.Grado);
 
+        }
 
     }
 }

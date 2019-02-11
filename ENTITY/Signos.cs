@@ -8,13 +8,13 @@ namespace ENTITY
 {
     public abstract class Signos
     {
-        public string SignoPositivo { get { return "+";} }
-        public string SignoNegativo { get { return "-";} }
+        protected string SignoPositivo { get { return "+";} }
+        protected string SignoNegativo { get { return "-";} }
         private string OperadorUno;
         private string OperadorDos;
-        public string SignoUno { get; private set; }
-        public string SignoDos { get; private set; }
-        public string ResultSignos { get; private set; }
+        protected string SignoUno { get; private set; }
+        protected string SignoDos { get; private set; }
+        protected string ResultSignos { get; private set; }
 
         
 

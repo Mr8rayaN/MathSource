@@ -8,8 +8,10 @@ namespace ENTITY
 {
     public class ProcesosOld
     {
+        public ProcesosOld()
+        {
 
-
+        }
 
         public bool IsFuncion(string funcion, string variable)
         {

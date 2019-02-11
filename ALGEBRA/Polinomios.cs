@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ENTITY;
 
-namespace ENTITY
+namespace ALGEBRA
 {
     public class Polinomios
     {
         public string Nombre { get; set; }
         public string Expresion { get; private set;}
-        public List<Monomios> Monomios { get; private set; }
+        public List<Monomios> Polinomio { get; private set; }
         private Monomios Monomio;
-        private AMathOps Suma = new Suma(null, null);
-        private AMathOps Resta = new Sustraccion(null, null);
+        private AMathOps Suma = new Sumas(null, null);
+        private AMathOps Resta = new Sustracciones(null, null);
 
-        public Polinomios(List<Monomios> Monomios)
+        public Polinomios(List<Monomios> Polinomio)
         {
-            this.Monomios = Monomios;
+            this.Polinomio = Polinomio;
             ObtenerExpresion();
             Nombre = $"Polinomio {Expresion}";
         }
@@ -30,22 +31,22 @@ namespace ENTITY
         private void ObtenerExpresion()
         {
             Expresion = "";
-            foreach (var item in Monomios)
+            foreach (var item in Polinomio)
             {
                 Expresion += item;
             }
         }
 
-        private void ObtenerMonomios(string Polinomio)
+        private void ObtenerMonomios(string Expresion)
         {
             int j = 0;
             string index;
-            Monomio = new Monomios();
-            Monomios = new List<Monomios>();
+            //Monomio = new Monomios(nul);
+            Polinomio = new List<Monomios>();
 
-            for(int i=0; i<Polinomio.Length; i++)
+            for(int i=0; i<Expresion.Length; i++)
             {
-                index = Polinomio.ElementAt(i).ToString();
+                index = Expresion.ElementAt(i).ToString();
                 if (index.Equals(Suma.Simbolo))
                 {
                     

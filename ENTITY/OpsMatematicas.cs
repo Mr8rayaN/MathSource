@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ENTITY
 {
     
-    public class Suma : AMathOps
+    public class Sumas : AMathOps
     {
         public override string Nombre => "SUMA";
         public override int Modulo { get { return 0; } }
@@ -18,13 +18,36 @@ namespace ENTITY
         bool A = false, B = false;
         double number, a, b;
 
-        public Suma(string SumandoUno, string SumandoDos)
+        public Sumas()
+        {
+            
+        }
+
+        public Sumas(string SumandoUno, string SumandoDos)
         {
             this.SumandoUno = SumandoUno;
             this.SumandoDos = SumandoDos;
 
-            AgregarOperadores(SumandoUno, SumandoDos);
+            ProcesoInterno();
+                
+        }
 
+        public Sumas(string Suma)
+        {
+            ObtenerElementos(Suma);
+
+            ProcesoInterno();
+        }
+
+        private void ObtenerElementos(string Expresion)
+        {
+            string[] Elementos = Expresion.Split(Simbolo.ElementAtOrDefault(0));
+            SumandoUno = Elementos[0];
+            SumandoDos = Elementos[1]; 
+        } //OK
+
+        private void ProcesoInterno()
+        {
             A = double.TryParse(SumandoUno, out number);
             B = double.TryParse(SumandoDos, out number);
 
@@ -38,16 +61,15 @@ namespace ENTITY
 
             else
             {
-                PolinomialProcess();                
+                PolinomialProcess();
             }
-                
         }
 
         private void PolinomialProcess ()
         {
             
             string SumandoSinSigno = SumandoUno.TrimStart('-');
-            A = SignoUno.Equals(SignoNegativo);
+            A = SumandoUno.StartsWith("-");
 
             if (SumandoSinSigno.Equals(SumandoDos) & A)
             {
@@ -67,7 +89,7 @@ namespace ENTITY
                 
     } //OK
     
-    public class Sustraccion : AMathOps
+    public class Sustracciones : AMathOps
     {
         public override string Nombre => "RESTA";
         public override int Modulo { get { return 0; } }
@@ -78,31 +100,51 @@ namespace ENTITY
         bool A = false, B = false;
         double number;
 
-        public Sustraccion(string Minuendo, string Sustraendo)
+        public Sustracciones()
+        {
+
+        }
+
+        public Sustracciones(string Minuendo, string Sustraendo)
         {
             this.Minuendo = Minuendo;
             this.Sustraendo = Sustraendo;
 
-            AgregarOperadores(Minuendo, Sustraendo);
+            ProcesoInterno();
 
-            A = SignoUno.Equals(SignoNegativo) ;
+        }
 
+        public Sustracciones(string Resta)
+        {
+            ObtenerElementos(Resta);
+
+            ProcesoInterno();
+        }
+
+        private void ObtenerElementos(string Expresion)
+        {
+            string[] Elementos = Expresion.Split(Simbolo.ElementAtOrDefault(0));
+            Sustraendo = Elementos[0];
+            Minuendo = Elementos[1];
+        } //OK
+
+        private void ProcesoInterno()
+        {
             if (Sustraendo.Equals(Modulo.ToString()))
             {
                 Result = Minuendo;
             }
 
-            else if (Minuendo.Equals(Sustraendo) && !A)
+            else if (Minuendo.Equals(Sustraendo))
             {
                 Result = Modulo.ToString();
             }
 
             else
             {
-                ParseProcess();                
+                ParseProcess();
             }
-
-        }
+        } //OK
 
         private void ParseProcess ()
         {
@@ -121,11 +163,11 @@ namespace ENTITY
             {
                 Result = Minuendo + Simbolo + Sustraendo;
             }
-        }
+        } //OK
 
     } //OK
 
-    public class Cociente : AMathOps
+    public class Cocientes : AMathOps
     {
         public override string Nombre => "COCIENTE";
         public override int Modulo { get { return 1;} }
@@ -133,32 +175,40 @@ namespace ENTITY
         public override string Simbolo { get { return "/"; } }
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
-        
+        public char Abrir => '{';
+        public char Cerrar => '}';
+        int signo = 1;
+
         List<int> FactoresPrimosDividendo = new List<int>();
         List<int> FactoresPrimosDivisor = new List<int>();
         double number;
 
-        public Cociente (string Dividendo, string Divisor)
+        public Cocientes ()
+        {
+
+        }
+
+        public Cocientes (string Dividendo, string Divisor)
         {
             this.Dividendo = Dividendo;
             this.Divisor = Divisor;
 
             Resolucion();
 
-        }
+        } //OK
 
-        public Cociente (string Cociente)
+        public Cocientes (string Cociente)
         {
             ExtraerPartes(Cociente);
             Resolucion();
-        }
+        } //OK
 
         private void ExtraerPartes(string Cociente)
         {
             int indexOperador = Cociente.IndexOf(Simbolo);
             Dividendo = Cociente.Substring(0, indexOperador);
             Divisor = Cociente.Substring(indexOperador + 1);
-        }
+        } //OK
 
         private void Resolucion()
         {
@@ -174,27 +224,27 @@ namespace ENTITY
 
             if(B)
             {
-                Result = "Math ERROR";
+                Result = ("Math ERROR");
             }
 
             else if(A & !B)
             {
-                Result = ModuloCancelativo.ToString();
+                Result = (ModuloCancelativo.ToString());
             }
 
             else if (C & D)
             {
-                Result = Modulo.ToString();
+                Result = (Modulo.ToString());
             }
 
             else if (D)
             {
-                Result = Dividendo;
+                Result = (Dividendo);
             }
 
             else if (E)
             {
-                Result = Modulo.ToString();
+                Result = (Modulo.ToString());
             }
 
             else if (F)
@@ -205,26 +255,42 @@ namespace ENTITY
             }
             else
             {
-                Result = Dividendo + Simbolo + Divisor;
+                Result = $"{Abrir}{Dividendo}{Simbolo}{Divisor}{Cerrar}";
             }
 
-        }
+        } //OK
 
         private void SimplificarEnteros(double dividendo, double divisor)
         {
-            //Siempre y cuando sean dos numeros enteros positivos
+            //Multiplicacion de signos
+            
+            if (dividendo < 0)
+            {
+                signo = -1;
+                dividendo = Math.Abs(dividendo);
+            }
+
+            else if (divisor < 0)
+            {
+                signo *= -1;
+                divisor = Math.Abs(divisor);
+            }
+
+            //Comienza el proceso
 
             if(dividendo % divisor == 0)
             {
+                dividendo *= signo;
                 Result = (dividendo / divisor).ToString();
             }
             else if (dividendo == Modulo)
             {
-                Result = $"{dividendo}/{divisor}";
+                dividendo *= signo;
+                Result = $"{Abrir}{dividendo}{Simbolo}{divisor}{Cerrar}";
             }
             else
             {
-                if(dividendo<divisor)
+                if(dividendo < divisor)
                 {
                     Result = SiDivisorMayorDividendo(dividendo, divisor);
                 }
@@ -234,7 +300,7 @@ namespace ENTITY
                     Result = SiDividendoMayorDivisor(dividendo, divisor);
                 }
             }
-        }
+        } //OK
 
         private string SiDividendoMayorDivisor(double dividendo, double divisor)
         {
@@ -293,6 +359,8 @@ namespace ENTITY
                 dividendo *= item;
             }
 
+            dividendo *= signo;
+
             foreach (var item in FactoresPrimosDivisor)
             {
                 divisor *= item;
@@ -301,7 +369,7 @@ namespace ENTITY
             Dividendo = dividendo.ToString();
             Divisor = divisor.ToString();
 
-            return Dividendo + Simbolo + Divisor;
+            return $"{Abrir}{Dividendo}{Simbolo}{Divisor}{Cerrar}";
         } //OK
 
         private string SiDivisorMayorDividendo(double dividendo, double divisor)
@@ -361,6 +429,8 @@ namespace ENTITY
                 dividendo *= item;
             }
 
+            dividendo *= signo;
+
             foreach (var item in FactoresPrimosDivisor)
             {
                 divisor *= item;
@@ -369,33 +439,53 @@ namespace ENTITY
             Dividendo = dividendo.ToString();
             Divisor = divisor.ToString();
 
-            return Dividendo + Simbolo + Divisor;
+            return $"{Abrir}{Dividendo}{Simbolo}{Divisor}{Cerrar}";
         } //OK
+
     } //OK
 
-    public class Producto : AMathOps
+    public class Productos : AMathOps
     {
         public override string Nombre => "PRODUCTO";
         public override int Modulo { get { return 1; } }
+        public int ModuloCancelativo => 0;
         public override string Simbolo { get { return "*"; } }
         public string FactorUno { get; private set; }
         public string FactorDos { get; private set; }
 
-        bool A;
+        bool A, B;
         double number, a, b;
 
-        public Producto(string FactorUno, string FactorDos)
+        public Productos()
         {
-            A = false;
 
+        }
+
+        public Productos(string FactorUno, string FactorDos)
+        {
             this.FactorUno = FactorUno;
             this.FactorDos = FactorDos;
 
-            AgregarOperadores(FactorUno, FactorDos);
+            ProcesoInterno();
+        }
 
+        public Productos(string Producto)
+        {
+            ObtenerElementos(Producto);
+
+            ProcesoInterno();
+        }
+
+        private void ProcesoInterno()
+        {
             A = double.TryParse(FactorUno, out number) & double.TryParse(FactorDos, out number);
+            B = FactorUno.Equals(ModuloCancelativo.ToString()) || FactorDos.Equals(ModuloCancelativo.ToString());
 
-            if (A)
+            if (B)
+            {
+                Result = ModuloCancelativo.ToString();
+            }
+            else if (A)
             {
                 a = double.Parse(FactorUno);
                 b = double.Parse(FactorDos);
@@ -406,32 +496,45 @@ namespace ENTITY
             {
                 Result = FactorUno + Simbolo + FactorDos;
             }
-            
-        }
+        } //OK
+
+        private void ObtenerElementos(string Expresion)
+        {
+            string[] Operadores = Expresion.Split(Simbolo.ElementAtOrDefault(0));
+            FactorUno = Operadores[0];
+            FactorDos = Operadores[1];
+        }//OK
 
         public void Conmutar()
         {
             Result = FactorDos + Simbolo + FactorUno;
-        }
+        } //OK
 
 
     } //OK
 
-    public class Potencia : AMathOps
+    public class Potencias : AMathOps
     {
         public override string Nombre => "POTENCIA";
         public override int Modulo { get { return 1; } }
         public int ModuloCancelativo { get { return 0; } }
         public override string Simbolo { get { return "^"; } }
-        public string Base { get; set; }
-        public string Exponente { get; set; }
+        public string Base { get; private set; }
+        public string Exponente { get; private set; }
+        public char Abrir => '{';
+        public char Cerrar => '}';
 
         bool A, B, C, D, E;
         double number, a, b;
 
-        public Potencia(string Base, string Exponente)
+        public Potencias()
         {
-            A = B = C = false;
+
+        }
+
+        public Potencias(string Base, string Exponente)
+        {
+            
             this.Base = Base;
             this.Exponente = Exponente;
 
@@ -439,8 +542,23 @@ namespace ENTITY
             
         }
 
+        public Potencias(string Potencia)
+        {
+            ObtenerElementos(Potencia);
+
+            Procesointerno();
+        }
+
+        private void ObtenerElementos(string Expresion)
+        {
+            string[] Elemento = Expresion.Split(Simbolo.ElementAtOrDefault(0));
+            Base = Elemento[0];
+            Exponente = Elemento[1]; 
+        } //OK
+
         private void Procesointerno()
         {
+            A = B = C = D = E = false;
             A = double.TryParse(Base, out number) & double.TryParse(Exponente, out number);
             B = Base.Equals(ModuloCancelativo);
             C = Exponente.Equals(ModuloCancelativo);
@@ -453,15 +571,15 @@ namespace ENTITY
             }
             else if (C)
             {
-                Result = Modulo.ToString();
+                Result = $"{Modulo}";
             }
             else if (B)
             {
-                Result = ModuloCancelativo.ToString();
+                Result = $"{ModuloCancelativo}";
             }
             else if (D)
             {
-                Result = Modulo.ToString();
+                Result = $"{Modulo}";
             }
             else if (E)
             {
@@ -476,9 +594,9 @@ namespace ENTITY
             }
             else
             {
-                Result = "{"+ Base + "}" + Simbolo + "{" + Exponente + "}";
+                Result = $"{Abrir}{Base}{Simbolo}{Exponente}{Cerrar}";
             }
-        }
+        } //OK
 
     } //OK
 }
