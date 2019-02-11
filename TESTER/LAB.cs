@@ -12,8 +12,8 @@ namespace TESTER
     {
         public static void Main (string[] args)
         {
-            string[] PRUEBA_OPS_MATHS = { "-2", "x", "2*x", "44", "y" };
-            string[] PRUEBA_MONOMIO_COE = { "1/3", "0", "3", "21.5", "4/5", "2^2" };
+            string[] PRUEBA_OPS_MATHS = { "0", "x", "2*x", "44", "y" };
+            string[] PRUEBA_MONOMIO_COE = { "0", "-2", "3", "21.5", "4/5", "2^2" };
             string[] PRUEBA_MONOMIO_LIT = { "{x^2}*y", "x*y*{z^2}", "x*y", "x", "y", "y*z"};
 
             for(int i=0; i<5; ++i)

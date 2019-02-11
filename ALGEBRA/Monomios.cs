@@ -81,7 +81,14 @@ namespace ALGEBRA
 
                 foreach (var item in Elementos)
                 {
-                    if (double.TryParse(item, out number))
+                    if (item.Equals(Producto.ModuloCancelativo.ToString()))
+                    {
+                        Coeficiente = "0";
+                        ParteLiteral = "0";
+                        Grado = "0";
+                        break;
+                    }
+                    else if (double.TryParse(item, out number))
                     {
                         Coeficiente += item;
                     }
@@ -118,17 +125,21 @@ namespace ALGEBRA
 
                         //Obtencion de parte Literal
                         if (ParteLiteral.Equals(""))
-                            ParteLiteral += $"{item}";
+                            ParteLiteral += $"{item}"; 
                         else
                             ParteLiteral += $"{Producto.Simbolo}{item}";
                     }
                 }
 
                 //Terminando de obtener grado Absoluto
-                if (Grado.Equals(""))
-                    Grado += $"{grado}";
-                else
-                    Grado += $"{Suma.Simbolo}{grado}";
+                if (!ParteLiteral.Equals("0"))
+                {
+                    if (Grado.Equals(""))
+                        Grado += $"{grado}";
+                    else
+                        Grado += $"{Suma.Simbolo}{grado}";
+                }
+                
 
             }
 
