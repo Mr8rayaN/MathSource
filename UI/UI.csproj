@@ -82,5 +82,8 @@
   <ItemGroup>
     <None Include="Properties\Iconos\Verificacion Positiva.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Cerrar Ventana.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

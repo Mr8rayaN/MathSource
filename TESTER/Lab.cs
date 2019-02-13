@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using UI;
 using ENTITY;
 using ALGEBRA;
 
@@ -10,15 +12,22 @@ namespace TESTER
 {
     public class Lab
     {
-        public static void Main (string[] args)
+        public static void main (string[] args)
+        {
+            
+        }
+
+        
+
+        private static void TEST_Consola()
         {
             string[] PRUEBA_OPS_MATHS = { "0", "x", "2*x", "44", "y" };
             string[] PRUEBA_MONOMIO_COE = { "0", "-2", "3", "21.5", "4/5", "2^2" };
-            string[] PRUEBA_MONOMIO_LIT = { "{x^2}*y", "x*y*{z^2}", "x*y", "x", "y", "y*z"};
+            string[] PRUEBA_MONOMIO_LIT = { "{x^2}*y", "x*y*{z^2}", "x*y", "x", "y", "y*z" };
 
-            for(int i=0; i<5; ++i)
+            for (int i = 0; i < 5; ++i)
             {
-                for(int j=0; j<5; ++j)
+                for (int j = 0; j < 5; ++j)
                 {
                     Console.WriteLine($"ENTRADAS {PRUEBA_MONOMIO_COE[i]} | {PRUEBA_MONOMIO_LIT[j]}");
 

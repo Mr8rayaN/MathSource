@@ -16,5 +16,20 @@ namespace UI
         {
             InitializeComponent();
         }
+
+        private void PBoxCerrar(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void PBoxMaximizar(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void PBoxMinimizar(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
     }
 }

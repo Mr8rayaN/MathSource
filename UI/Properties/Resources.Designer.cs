@@ -63,6 +63,16 @@ namespace UI.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cerrar_Ventana {
+            get {
+                object obj = ResourceManager.GetObject("Cerrar Ventana", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Flecha_Atras {
             get {
                 object obj = ResourceManager.GetObject("Flecha Atras", resourceCulture);
