@@ -8,11 +8,14 @@ namespace ENTITY
 {
     public class Pasos
     {
-        public Funcion Entrada { get; private set; }
-        public Funcion Salida { get; private set; }
+        public string Id;
+        public string Id_Funcion;
+        public string Id_Resultado;
+        public List<Funcion> Entrada { get; set; }
+        public List<Funcion> Salida { get; set; }
         public string Nombre { get; private set; }
 
-        public Pasos (Funcion Entrada, Funcion Salida, string Nombre)
+        public Pasos (List<Funcion> Entrada, List<Funcion> Salida, string Nombre)
         {
             this.Entrada = Entrada;
             this.Salida = Salida;

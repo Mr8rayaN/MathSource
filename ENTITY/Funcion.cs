@@ -8,6 +8,7 @@ namespace ENTITY
 {
     public class Funcion
     {
+        public string Id { get; set; }
         public string Nombre { get; set; }
         public string Contenido { get; set; }
         public int Dominio { get; set; }
