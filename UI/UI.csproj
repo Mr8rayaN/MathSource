@@ -85,5 +85,17 @@
   <ItemGroup>
     <None Include="Properties\Iconos\Cerrar Ventana.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Maximizar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Minimizar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Flecha Menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
