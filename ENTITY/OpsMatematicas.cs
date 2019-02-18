@@ -11,11 +11,11 @@ namespace ENTITY
     {
         public override string Nombre => "SUMA";
         public override int Modulo { get { return 0; } }
+        public string Contenido { get; private set; }
         public override string Simbolo { get { return "+"; } }
-        protected string SumandoUno { get; private set; }
-        protected string SumandoDos { get; private set; }
+        public List<string> Sumandos { get; set; }
 
-        bool A = false, B = false;
+        bool A = false, B = false, C = false;
         double number, a, b;
 
         public Sumas()
@@ -32,16 +32,27 @@ namespace ENTITY
                 
         }
 
-        public Sumas(string Suma)
+        public Sumas(string Expresion)
         {
-            ObtenerElementos(Suma);
+            ObtenerElementos(Expresion);
 
             ProcesoInterno();
         }
 
         private void ObtenerElementos(string Expresion)
         {
-            string[] Elementos = Expresion.Split(Simbolo.ElementAtOrDefault(0));
+            string OperacionAjena = "";
+
+            foreach (var item in Expresion.Split(Simbolo.ElementAtOrDefault(0)))
+            {
+                A = 
+                B =
+                C =
+
+                if()
+                Sumandos.Add(item);
+            }
+            ;
             SumandoUno = Elementos[0];
             SumandoDos = Elementos[1]; 
         } //OK

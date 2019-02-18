@@ -15,159 +15,136 @@ namespace UI
 
         public int X_Click { get; set; }
         public int Y_Click { get; set; }
+        private PictureBox PBox;
+        private Panel Pnl;
+        private Panel PMenu;
+        private Control Ctl;
+        private Form Ventana;
 
         public VentanaPpal()
         {
             InitializeComponent();
-            SeleccionIniciar();
+            PMenu = new Panel();
         }
 
-        private void SeleccionIniciar()
+        
+        private void PBoxDimensionSize (object sender, EventArgs e)
         {
-            PBoxSeleccionUno.Hide();
-            PBoxSeleccionDos.Hide();
-            PBoxSeleccionTres.Hide();
-            PBoxSeleccionCuatro.Hide();
-            PBoxSeleccionCinco.Hide();
-            PBoxSeleccionSeis.Hide();
+            PBox = (PictureBox)sender;
 
+            if (PBox.Name.Contains("Cerrar"))
+            {
+                this.Dispose();
+            }
+            else if (PBox.Name.Contains("Maximizar"))
+            {
+                if (WindowState.Equals(FormWindowState.Maximized))
+
+                    WindowState = FormWindowState.Normal;
+                else
+                    this.WindowState = FormWindowState.Maximized;
+                 
+            }
+            else if (PBox.Name.Contains("Minimizar"))
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
         }
 
-        private void PBoxCerrar(object sender, EventArgs e)
+        private void DimensionPreseleccion (object sender, EventArgs e)
         {
-            this.Dispose();
+            PBox = (PictureBox)sender;
+
+            if (PBox.Name.Contains("Cerrar"))
+            {
+                PBoxBCerrar.BackColor = Color.Tomato;
+            }
+            else if (PBox.Name.Contains("Maximizar"))
+            {
+                PBoxBMaximizar.BackColor = Color.DimGray;
+            }
+            else if (PBox.Name.Contains("Minimizar"))
+            {
+                PBoxBMinimizar.BackColor = Color.DimGray;
+            }
         }
 
-        private void PBoxMaximizar(object sender, EventArgs e)
+        private void DimensionNoSeleccion (object sender, EventArgs e)
         {
-            if (WindowState.Equals(FormWindowState.Maximized))
+            PBox = (PictureBox)sender;
 
-                WindowState = FormWindowState.Normal;
-            else
-
-                this.WindowState = FormWindowState.Maximized;
+            if (PBox.Name.Contains("Cerrar"))
+            {
+                PBoxBCerrar.BackColor = Color.Transparent;
+            }
+            else if (PBox.Name.Contains("Maximizar"))
+            {
+                PBoxBMaximizar.BackColor = Color.Transparent;
+            }
+            else if (PBox.Name.Contains("Minimizar"))
+            {
+                PBoxBMinimizar.BackColor = Color.Transparent;
+            }
         }
 
-        private void PBoxMinimizar(object sender, EventArgs e)
+        private void Preseleccion (object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            Panel Sender = ((Panel)sender);
+
+            Sender.BackColor = PanelGeneral.BackColor;
+
+            foreach (var item in Sender.Controls)
+            {
+                if (item.GetType().ToString().Contains("Label"))
+                {
+                    Label Lbl = (Label)item;
+                    Lbl.ForeColor = Color.Black;
+                    Lbl.Font = new Font(Lbl.Font,FontStyle.Bold);
+                    break;
+                }
+            }
+
+            foreach (var item in Sender.Controls)
+            {
+                if (item.GetType().ToString().Contains("PictureBox"))
+                {
+                    PictureBox PB = (PictureBox)item;
+                    PB.Show();
+                    break;
+                }
+            }
         }
 
-
-        private void PreseleccionUno(object sender, EventArgs e)
+        private void NoSeleccion(object sender, EventArgs e)
         {
-            PanelOpcionUno.BackColor = Color.FromArgb(24, 24, 24);
-            PBoxSeleccionUno.Show();
-            LblOpciopnUno.ForeColor = Color.White; 
-        }
+            Panel Sender = (Panel)sender;
 
-        private void NoSeleccionUno(object sender, EventArgs e)
-        {
-            PanelOpcionUno.BackColor = Color.FromArgb(39,39,39);
-            PBoxSeleccionUno.Hide();
-            LblOpciopnUno.ForeColor = Color.Black;
-        }
+            Sender.BackColor = Color.FromArgb(24,24,24);
 
-        private void PreseleccionDos(object sender, EventArgs e)
-        {
-            PanelOpcionDos.BackColor = Color.FromArgb(24, 24, 24);
-            PBoxSeleccionDos.Show();
-            LblOpciopnDos.ForeColor = Color.White;
-        }
+            foreach (var item in Sender.Controls)
+            {
+                if (item.GetType().ToString().Contains("Label"))
+                {
+                    Label Lbl = (Label)item;
+                    Lbl.ForeColor = Color.White;
+                    Lbl.Font = new Font(Lbl.Font, FontStyle.Regular);
+                    break;
+                }
+            }
 
-        private void NoSeleccionDos(object sender, EventArgs e)
-        {
-            PanelOpcionDos.BackColor = Color.FromArgb(39, 39, 39);
-            PBoxSeleccionDos.Hide();
-            LblOpciopnDos.ForeColor = Color.Black;
-        }
+            foreach (var item in Sender.Controls)
+            {
+                if (item.GetType().ToString().Contains("PictureBox"))
+                {
+                    PictureBox PB = (PictureBox)item;
+                    PB.Hide();
+                    break;
+                }
+            }
 
-        private void PreseleccionTres(object sender, EventArgs e)
-        {
-            PanelOpcionTres.BackColor = Color.FromArgb(24, 24, 24);
-            PBoxSeleccionTres.Show();
-            LblOpciopnTres.ForeColor = Color.White;
+            
         }
-
-        private void NoSeleccionTres(object sender, EventArgs e)
-        {
-            PanelOpcionTres.BackColor = Color.FromArgb(39, 39, 39);
-            PBoxSeleccionTres.Hide();
-            LblOpciopnTres.ForeColor = Color.Black;
-        }
-
-        private void PreseleccionCuatro(object sender, EventArgs e)
-        {
-            PanelOpcionCuatro.BackColor = Color.FromArgb(24, 24, 24);
-            PBoxSeleccionCuatro.Show();
-            LblOpciopnCuatro.ForeColor = Color.White;
-        }
-
-        private void NoSeleccionCuatro(object sender, EventArgs e)
-        {
-            PanelOpcionCuatro.BackColor = Color.FromArgb(39, 39, 39);
-            PBoxSeleccionCuatro.Hide();
-            LblOpciopnCuatro.ForeColor = Color.Black;
-        }
-
-        private void PreseleccionCinco(object sender, EventArgs e)
-        {
-            PanelOpcionCinco.BackColor = Color.FromArgb(24, 24, 24);
-            PBoxSeleccionCinco.Show();
-            LblOpciopnCinco.ForeColor = Color.White;
-        }
-
-        private void NoSeleccionCinco(object sender, EventArgs e)
-        {
-            PanelOpcionCinco.BackColor = Color.FromArgb(39, 39, 39);
-            PBoxSeleccionCinco.Hide();
-            LblOpciopnCinco.ForeColor = Color.Black;
-        }
-
-        private void PreseleccionSeis(object sender, EventArgs e)
-        {
-            PanelOpcionSeis.BackColor = Color.FromArgb(24, 24, 24);
-            PBoxSeleccionSeis.Show();
-            LblOpciopnSeis.ForeColor = Color.White;
-        }
-
-        private void NoSeleccionSeis(object sender, EventArgs e)
-        {
-            PanelOpcionSeis.BackColor = Color.FromArgb(39, 39, 39);
-            PBoxSeleccionSeis.Hide();
-            LblOpciopnSeis.ForeColor = Color.Black;
-        }
-
-        private void PreSeleccionCerrar(object sender, EventArgs e)
-        {
-            PBoxBCerrar.BackColor = Color.Tomato;
-        }
-
-        private void NoSeleccionCerrar(object sender, EventArgs e)
-        {
-            PBoxBCerrar.BackColor = Color.Transparent;
-        }
-
-        private void PreSeleccionMaximizar(object sender, EventArgs e)
-        {
-            PBoxBMaximizar.BackColor = Color.DimGray;
-        }
-
-        private void NoSeleccionMaximizar(object sender, EventArgs e)
-        {
-            PBoxBMaximizar.BackColor = Color.Transparent;
-        }
-
-        private void PreSeleccionMinimizar(object sender, EventArgs e)
-        {
-            PBoxBMinimizar.BackColor = Color.DimGray;
-        }
-
-        private void NoSeleccionMinimizar(object sender, EventArgs e)
-        {
-            PBoxBMinimizar.BackColor = Color.Transparent;
-        }
-
+        
         private void ArrastrarVentana(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -181,5 +158,125 @@ namespace UI
                 this.Top += (e.Y - Y_Click);
             }
         }
+
+        private void ControlsOpcionesHover(object sender, EventArgs e)
+        {
+            Ctl = (Control)sender;
+            Preseleccion(Ctl.Parent, EventArgs.Empty);
+        }
+
+        private void ControlsOpcionesLeave(object sender, EventArgs e)
+        {
+            Ctl = (Control)sender;
+            NoSeleccion(Ctl.Parent, EventArgs.Empty);
+        }
+
+        private void ControlOpcionesClick(object sender, EventArgs e)
+        {
+            Ctl = (Control)sender;
+            OpcionesClick(Ctl.Parent, EventArgs.Empty);
+        }
+
+        private void OpcionesClick(object sender, EventArgs e)
+        {
+            Pnl = (Panel)sender;
+            bool Cambiar = false;
+
+            if (PMenu.Name.Equals(""))
+            {
+                Preseleccion(Pnl, EventArgs.Empty);
+                PMenu = Pnl;
+            }
+            else if (PMenu.Name.Equals(Pnl.Name))
+            {
+                Cambiar = true;
+            }
+            else
+            {
+                NoSeleccion(PMenu, EventArgs.Empty);
+                Preseleccion(Pnl, EventArgs.Empty);
+                PMenu = Pnl;
+
+            }
+
+            
+            if (!Cambiar)
+            {
+                if (Pnl.Name.Contains("Uno"))
+                {
+                    Ventana = new OpcionUno(this, PanelGeneral);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Dos"))
+                {
+                    Ventana = new OpcionDos(this, PanelGeneral);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Tres"))
+                {
+                    Ventana = new OpcionTres(this, PanelGeneral);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Cuatro"))
+                {
+                    Ventana = new OpcionCuatro(this, PanelGeneral);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Cinco"))
+                {
+                    Ventana = new OpcionCinco(this, PanelGeneral);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Seis"))
+                {
+                    Ventana = new OpcionSeis(this, PanelGeneral);
+                    Abrir(Ventana);
+                }
+            }
+
+            
+        }
+
+        private void Abrir(Form ventana)
+        {
+            //Limpiar Controles del Panel
+            PanelGeneral.Controls.Clear();
+
+            ventana.TopLevel = false;
+            this.PanelGeneral.Controls.Add(ventana);
+            this.PanelGeneral.Tag = true;
+            ventana.Dock = DockStyle.Fill;
+            ventana.Show();
+        }
+
+        private void ResizePrincipal(object sender, EventArgs e)
+        {
+            foreach (Control item in PanelGeneral.Controls)
+            {
+                try
+                {
+                    Ventana = (Form)item;
+                    Ventana.Size = this.PanelGeneral.Size;
+                    break;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
+
+        private void Deseleccionar(object Obj)
+        {
+            NoSeleccion(Obj, EventArgs.Empty);
+        }
+
+        private void OpcionLeave(object sender, EventArgs e)
+        {
+            Pnl = (Panel)sender;
+            if(!Pnl.Name.Equals(PMenu.Name))
+                NoSeleccion(Pnl, EventArgs.Empty);
+        }
+            
     }
 }

@@ -8,7 +8,7 @@ using GRAMATICA;
 
 namespace ALGEBRA
 {
-    public class Monomios 
+    public class Monomios
     {
         public string Nombre { get; set; }
         public string Expresion { get; private set; }
@@ -29,7 +29,7 @@ namespace ALGEBRA
         {
             this.Coeficiente = Coeficiente;
             this.ParteLiteral = ParteLiteral;
-            ObtenerGrado();            
+            ObtenerGrado();
             Producto = new Productos(Coeficiente, ParteLiteral);
             Expresion = Producto.Result;
             Nombre = $"Monomio {Producto.Result}";
@@ -40,7 +40,7 @@ namespace ALGEBRA
             Expresion = Monomio;
             ObtenerElementos();
             Producto = new Productos(Coeficiente, ParteLiteral);
-            Expresion = Producto.Result;            
+            Expresion = Producto.Result;
             Nombre = $"Monomio {Producto.Result}";
         }
 
@@ -125,7 +125,7 @@ namespace ALGEBRA
 
                         //Obtencion de parte Literal
                         if (ParteLiteral.Equals(""))
-                            ParteLiteral += $"{item}"; 
+                            ParteLiteral += $"{item}";
                         else
                             ParteLiteral += $"{Producto.Simbolo}{item}";
                     }
@@ -139,16 +139,16 @@ namespace ALGEBRA
                     else
                         Grado += $"{Suma.Simbolo}{grado}";
                 }
-                
+
 
             }
 
-            
+
         }
 
         private void ObtenerGrado()
         {
-            if(ParteLiteral.Equals("") || ParteLiteral == null || ParteLiteral.Equals("1") || Producto.Result.Equals(Producto.ModuloCancelativo))
+            if (ParteLiteral.Equals("") || ParteLiteral == null || ParteLiteral.Equals("1") || Producto.Result.Equals(Producto.ModuloCancelativo))
             {
                 Grado = "0";
             }
@@ -167,7 +167,7 @@ namespace ALGEBRA
                     A = double.TryParse(item, out number);
                     B = item.Contains(Cociente.Simbolo.ElementAtOrDefault(0));
 
-                    if(!A & !B)
+                    if (!A & !B)
                     {
                         A = item.Contains(Potencia.Simbolo);
 
@@ -206,4 +206,3 @@ namespace ALGEBRA
             }
         }
     }
-}

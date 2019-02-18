@@ -47,6 +47,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpcionCinco.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcionCinco.Designer.cs">
+      <DependentUpon>OpcionCinco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpcionCuatro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcionCuatro.Designer.cs">
+      <DependentUpon>OpcionCuatro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpcionDos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcionDos.Designer.cs">
+      <DependentUpon>OpcionDos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpcionSeis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcionSeis.Designer.cs">
+      <DependentUpon>OpcionSeis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpcionTres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcionTres.Designer.cs">
+      <DependentUpon>OpcionTres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpcionUno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcionUno.Designer.cs">
+      <DependentUpon>OpcionUno.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -62,6 +98,24 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="OpcionCinco.resx">
+      <DependentUpon>OpcionCinco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpcionCuatro.resx">
+      <DependentUpon>OpcionCuatro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpcionDos.resx">
+      <DependentUpon>OpcionDos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpcionSeis.resx">
+      <DependentUpon>OpcionSeis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpcionTres.resx">
+      <DependentUpon>OpcionTres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpcionUno.resx">
+      <DependentUpon>OpcionUno.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -96,6 +150,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Iconos\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Isotipo 25x25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Isotipo 100x100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Isotipo 200x200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Logo 400x400.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Logotipo 175x100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Logotipo 350x200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Logotipo 700x400.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Tipografia 100x25.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
