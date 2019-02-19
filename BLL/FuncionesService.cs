@@ -3,42 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DERIVADAS;
 using DAL;
-using ALGEBRA;
 using ENTITY;
+using Oracle.ManagedDataAccess.Client;
 
 namespace BLL
 {
     public class FuncionesService
     {
-        Derivada derivada = new Derivada();
-        DerivadaParcial derivadaParcial = new DerivadaParcial();
-        public ProcesosOld proceso = new ProcesosOld();
-        PropsMatematicas propiedad = new PropsMatematicas();
+        string CadenaConexion;
+        private OracleConnection Conexion;
+        private FuncionesRepository DAL;
+        public string Respuesta { get; set; }
 
-        FuncionesRepository gestion = new FuncionesRepository();
-
-        public string Derivar (string laFuncion, string laVariable)
+        public FuncionesService()
         {
-            laFuncion = laFuncion.ToLower();
-            laVariable = laVariable.ToLower();
-
-            if (laFuncion == null || laFuncion.Equals("")) return "La derivada de nada es nada ;)";
-            if (laVariable == null || laVariable.Equals("")) laVariable = "x";
-            if (!laFuncion.Contains(laVariable)) return "0";
-
-            return derivada.Derivar( laFuncion , laVariable );
+            CadenaConexion = "Data Source=localhost:1521/xe;user Id=brayan;Password=0608";
+            Conexion = new OracleConnection(CadenaConexion);
+            DAL = new FuncionesRepository(Conexion);
         }
 
-        public List<string> DerivadaParcial (string funcion)
+        public void Guardar(Funcion Expresion)
         {
-            return derivadaParcial.Derivar(funcion);
+            try
+            {
+                Conexion.Open();
+                DAL.Guardar(Expresion);
+                Conexion.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public bool IsParcial(string funcion)
-        {
-            return derivadaParcial.IsParcial(funcion);
-        }
     }
 }
