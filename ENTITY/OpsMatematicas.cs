@@ -23,41 +23,24 @@ namespace ENTITY
             
         }
 
-        public Sumas(string SumandoUno, string SumandoDos)
-        {
-            this.SumandoUno = SumandoUno;
-            this.SumandoDos = SumandoDos;
-
-            ProcesoInterno();
-                
-        }
-
         public Sumas(string Expresion)
         {
             ObtenerElementos(Expresion);
 
-            ProcesoInterno();
+            ProcesoInterno("SUMANDO_UNO","SUMANDO_DOS");
         }
 
         private void ObtenerElementos(string Expresion)
         {
-            string OperacionAjena = "";
-
             foreach (var item in Expresion.Split(Simbolo.ElementAtOrDefault(0)))
             {
-                A = 
-                B =
-                C =
-
-                if()
+                A = false;
+                B = false;
+                C = false;
                 Sumandos.Add(item);
-            }
-            ;
-            SumandoUno = Elementos[0];
-            SumandoDos = Elementos[1]; 
-        } //OK
+            }        } //OK
 
-        private void ProcesoInterno()
+        private void ProcesoInterno(string SumandoUno, string SumandoDos)
         {
             A = double.TryParse(SumandoUno, out number);
             B = double.TryParse(SumandoDos, out number);
@@ -72,11 +55,11 @@ namespace ENTITY
 
             else
             {
-                PolinomialProcess();
+                PolinomialProcess("SUMANDO_UNO","SUMANDO_DOS");
             }
         }
 
-        private void PolinomialProcess ()
+        private void PolinomialProcess (string SumandoUno, string SumandoDos)
         {
             
             string SumandoSinSigno = SumandoUno.TrimStart('-');
@@ -93,7 +76,7 @@ namespace ENTITY
             } 
         }//OK
         
-        public void Conmutar ()
+        public void Conmutar (string SumandoUno, string SumandoDos)
         {
             Result = SumandoDos + Simbolo + SumandoUno;
         }//OK

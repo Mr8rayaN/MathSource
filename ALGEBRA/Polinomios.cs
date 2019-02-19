@@ -13,7 +13,7 @@ namespace ALGEBRA
         public string Expresion { get; private set;}
         public List<Monomios> Polinomio { get; private set; }
         private Monomios Monomio;
-        private AMathOps Suma = new Sumas(null, null);
+        private AMathOps Suma = new Sumas(null);
         private AMathOps Resta = new Sustracciones(null, null);
 
         public Polinomios(List<Monomios> Polinomio)

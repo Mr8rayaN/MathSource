@@ -51,7 +51,7 @@ namespace TESTER
 
         private static void TEST_ENTITY_Suma(string Uno, string Dos)
         {
-            Sumas SUMA = new Sumas(Uno,Dos);
+            Sumas SUMA = new Sumas(Uno + "+" + Dos);
             Console.WriteLine(SUMA.Nombre);
             Console.WriteLine(SUMA.Result);
         }//OK

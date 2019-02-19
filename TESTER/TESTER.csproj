@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TESTER.Lab</StartupObject>
+    <StartupObject>TESTER.TestOperacionesMaths</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
