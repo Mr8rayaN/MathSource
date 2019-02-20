@@ -21,5 +21,12 @@ namespace ENTITY
         public List<string> CortesOrdenadas { get; set; }
         public List<string> Partes { get; set; }
 
+        public Funcion(string Id, string Nombre, string Contenido)
+        {
+            this.Id = Id;
+            this.Nombre = Nombre;
+            this.Contenido = Contenido;
+        }
+
     }
 }

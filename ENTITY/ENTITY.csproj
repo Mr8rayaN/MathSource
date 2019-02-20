@@ -47,7 +47,6 @@
     <Compile Include="Pasos.cs" />
     <Compile Include="ProcesosOld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resultados.cs" />
     <Compile Include="Signos.cs" />
     <Compile Include="Variables.cs" />
   </ItemGroup>

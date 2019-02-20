@@ -23,10 +23,12 @@ namespace DAL
             //SIMULACION USANDO F0003, CREAR PROCESO DE AUTO GENERACION DE LLAVE PRIMARIA (FUNCION_ID)
             using(var Comando = Conexion.CreateCommand())
             {
-                Comando.CommandText = "INSERT INTO FUNCIONES VALUES (@FUNCION_ID,@NOMBRE,@EXPRESION)";
-                Comando.Parameters.Add("@FUNCION_ID", OracleDbType.NChar).Value = "F0003";
-                Comando.Parameters.Add("@NOMBRE", OracleDbType.NVarchar2).Value = Expresion.Nombre;
-                Comando.Parameters.Add("@EXPRESION", OracleDbType.NVarchar2).Value = Expresion.Contenido;
+                Comando.CommandText = $"INSERT INTO FUNCIONES VALUES ('{Expresion.Id}','{Expresion.Nombre}','{Expresion.Contenido}')";
+                /*Comando.CommandText = "INSERT INTO FUNCIONES VALUES"+"(@Id,@Name,@Contenido)";
+                Comando.Parameters.Add("@Id", OracleDbType.NChar).Value = Expresion.Id;
+                Comando.Parameters.Add("@Name", OracleDbType.NVarchar2).Value = Expresion.Nombre;
+                Comando.Parameters.Add("@Contenido", OracleDbType.NVarchar2).Value = Expresion.Contenido;*/
+                Comando.ExecuteNonQuery(); //Error al ejecutar Query
             }
         } 
     }

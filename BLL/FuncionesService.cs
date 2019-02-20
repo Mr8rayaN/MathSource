@@ -29,12 +29,12 @@ namespace BLL
             {
                 Conexion.Open();
                 DAL.Guardar(Expresion);
+                Respuesta = DAL.Respuesta;
                 Conexion.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                Respuesta = e.Message;
             }
         }
 
