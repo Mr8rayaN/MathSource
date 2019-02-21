@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    
+
     public class Sumas : AMathOps
     {
         public override string Nombre => "SUMA";
@@ -14,74 +14,81 @@ namespace ENTITY
         public string Contenido { get; private set; }
         public override string Simbolo { get { return "+"; } }
         public List<string> Sumandos { get; set; }
+        private List<string> Temporal { get; set; }
+        private List<string> SumandosParciales { get; set; }
 
         bool A = false, B = false, C = false;
         double number, a, b;
 
         public Sumas()
         {
-            
+            Sumandos = new List<string>();
+            Temporal = new List<string>();
         }
 
         public Sumas(string Expresion)
         {
-            ObtenerElementos(Expresion);
-
-            ProcesoInterno("SUMANDO_UNO","SUMANDO_DOS");
+            Sumandos = new List<string>();
+            Temporal = new List<string>();
+            ObtenerSumandos(Expresion);
+            Sumar();
         }
 
-        private void ObtenerElementos(string Expresion)
+        private void ObtenerSumandos(string Expresion)
         {
-            foreach (var item in Expresion.Split(Simbolo.ElementAtOrDefault(0)))
+            foreach (var item in Expresion.Split('+'))
             {
-                A = false;
-                B = false;
-                C = false;
                 Sumandos.Add(item);
-            }        } //OK
-
-        private void ProcesoInterno(string SumandoUno, string SumandoDos)
-        {
-            A = double.TryParse(SumandoUno, out number);
-            B = double.TryParse(SumandoDos, out number);
-
-            if (A & B)
-            {
-                a = double.Parse(SumandoUno);
-                b = double.Parse(SumandoDos);
-
-                Result = (a + b).ToString();
-            }
-
-            else
-            {
-                PolinomialProcess("SUMANDO_UNO","SUMANDO_DOS");
             }
         }
 
-        private void PolinomialProcess (string SumandoUno, string SumandoDos)
+        private void Sumar()
         {
-            
-            string SumandoSinSigno = SumandoUno.TrimStart('-');
-            A = SumandoUno.StartsWith("-");
+            SumandosParciales = Sumandos;
+            string Uno, Dos;
+            double SumaUno, SumaDos = 0;
 
-            if (SumandoSinSigno.Equals(SumandoDos) & A)
+            int i, j, k;
+            i = j = k = 0;
+
+            bool PremisaUno , PremisaDos, PremisaTres;
+            PremisaUno = PremisaDos = PremisaTres = true;
+
+            while (PremisaUno)
             {
-                Result = Modulo.ToString();
+                A = double.TryParse(SumandosParciales[i], out number);
+                Uno = SumandosParciales[i];
+
+                while (PremisaDos)
+                {
+                    B = double.TryParse(SumandosParciales[j], out number);
+                    Dos = SumandosParciales[j];
+
+                    if (A & B)
+                    {
+                        SumaUno = double.Parse(Uno);
+                        SumaDos = double.Parse(Dos);
+
+                        Temporal.Add($"{SumaUno + SumaDos}");
+                    }
+                    else if (Uno.Equals(Dos))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
+                    ++j;
+                }
+
+                ++i;
             }
-
-            else
-            {
-                Result = SumandoUno + Simbolo + SumandoDos;
-            } 
-        }//OK
+        }
         
-        public void Conmutar (string SumandoUno, string SumandoDos)
-        {
-            Result = SumandoDos + Simbolo + SumandoUno;
-        }//OK
-                
-    } //OK
+
+    }
     
     public class Sustracciones : AMathOps
     {
