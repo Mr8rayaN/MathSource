@@ -15,6 +15,8 @@ namespace ENTITY
         public string Result { get; protected set; }
         public int NumeroElementos { get; protected set; }
         public List<string> Elementos = new List<string>();
+        protected EProcesos Proceso = new EProcesos();
+
 
         public virtual void Operar()
         {
@@ -29,6 +31,8 @@ namespace ENTITY
                 Elementos.Add(item);
                 Contenido += item + Simbolo;
             }
+
+            Contenido = Contenido.TrimEnd(Simbolo);
         }
 
         public override string ToString()

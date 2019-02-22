@@ -26,7 +26,7 @@ namespace TESTER
 
                     //Aplicacion del TEST
 
-                    TEST_ENTITY_Suma(PRUEBA_OPS_MATHS[i], PRUEBA_OPS_MATHS[j]);
+                    TEST_ENTITY_Resta(PRUEBA_OPS_MATHS[i], PRUEBA_OPS_MATHS[j]);
 
                     Console.WriteLine("----------------------------------");
                 }
@@ -45,14 +45,14 @@ namespace TESTER
         private static void TEST_ENTITY_Suma(string Uno, string Dos)
         {
             SumaNatural SUMA = new SumaNatural(Uno + "+" + Dos + "+" + Uno + "+" + Dos);
-            Console.WriteLine(SUMA.Nombre);
+            Console.WriteLine(SUMA.ToString());
             Console.WriteLine(SUMA.Result);
         }//OK
 
         private static void TEST_ENTITY_Resta(string Uno, string Dos)
         {
-            Sustracciones RESTA = new Sustracciones();
-            Console.WriteLine(RESTA.Nombre);
+            RestaNatural RESTA = new RestaNatural(Uno + "-" + Dos + "-" + Uno + "-" + Dos);
+            Console.WriteLine(RESTA.ToString());
             Console.WriteLine(RESTA.Result);
 
         }
