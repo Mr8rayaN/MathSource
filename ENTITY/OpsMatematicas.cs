@@ -11,8 +11,7 @@ namespace ENTITY
     {
         public override string Nombre => "SUMA";
         public override int Modulo { get { return 0; } }
-        public string Contenido { get; private set; }
-        public override string Simbolo { get { return "+"; } }
+        public override char Simbolo => '+';
         public List<string> Sumandos { get; set; }
         private List<string> Temporal { get; set; }
         private List<string> SumandosParciales { get; set; }
@@ -28,9 +27,9 @@ namespace ENTITY
         public Sumas(string Expresion)
         {
             Sumandos = new List<string>();
-            ObtenerSumandos(Expresion);
+            ObtenerElementos(Expresion);
             PropiedadesInternas();
-            Sumar();
+            Operar();
         }
 
         private void PropiedadesInternas()
@@ -67,15 +66,7 @@ namespace ENTITY
                 
         }
 
-        private void ObtenerSumandos(string Expresion)
-        {
-            foreach (var item in Expresion.Split('+'))
-            {
-                Sumandos.Add(item);
-            }
-        }
-
-        private void Sumar()
+        public override void Operar()
         {
             int i = 0, j = 0;
             if (Temporal.Count > 1)
@@ -172,9 +163,12 @@ namespace ENTITY
     {
         public override string Nombre => "RESTA";
         public override int Modulo { get { return 0; } }
-        public override string Simbolo { get { return "-"; } }
+        public override char Simbolo => '-';
         protected string Minuendo { get; private set; }
         protected string Sustraendo { get; private set; }
+
+        private List<string> Temporal { get; set; }
+        private List<string> PartesParciales { get; set; }
         
         bool A = false, B = false;
         double number;
@@ -184,30 +178,16 @@ namespace ENTITY
 
         }
 
-        public Sustracciones(string Minuendo, string Sustraendo)
-        {
-            this.Minuendo = Minuendo;
-            this.Sustraendo = Sustraendo;
-
-            ProcesoInterno();
-
-        }
-
         public Sustracciones(string Resta)
         {
             ObtenerElementos(Resta);
 
-            ProcesoInterno();
+            Operar();
         }
 
-        private void ObtenerElementos(string Expresion)
-        {
-            string[] Elementos = Expresion.Split(Simbolo.ElementAtOrDefault(0));
-            Sustraendo = Elementos[0];
-            Minuendo = Elementos[1];
-        } //OK
 
-        private void ProcesoInterno()
+
+        public override void Operar()
         {
             if (Sustraendo.Equals(Modulo.ToString()))
             {
@@ -251,7 +231,7 @@ namespace ENTITY
         public override string Nombre => "COCIENTE";
         public override int Modulo { get { return 1;} }
         public int ModuloCancelativo { get { return 0; } }
-        public override string Simbolo { get { return "/"; } }
+        public override char Simbolo => '/';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
         public char Abrir => '{';
@@ -272,14 +252,14 @@ namespace ENTITY
             this.Dividendo = Dividendo;
             this.Divisor = Divisor;
 
-            Resolucion();
+            Operar();
 
         } //OK
 
         public Cocientes (string Cociente)
         {
             ExtraerPartes(Cociente);
-            Resolucion();
+            Operar();
         } //OK
 
         private void ExtraerPartes(string Cociente)
@@ -289,7 +269,7 @@ namespace ENTITY
             Divisor = Cociente.Substring(indexOperador + 1);
         } //OK
 
-        private void Resolucion()
+        public override void Operar()
         {
             //Propiedades de cociente
             bool A = false, B = false, C = false, D = false, E = false;
@@ -528,7 +508,7 @@ namespace ENTITY
         public override string Nombre => "PRODUCTO";
         public override int Modulo { get { return 1; } }
         public int ModuloCancelativo => 0;
-        public override string Simbolo { get { return "*"; } }
+        public override char Simbolo => '*';
         public string FactorUno { get; private set; }
         public string FactorDos { get; private set; }
 
@@ -545,17 +525,17 @@ namespace ENTITY
             this.FactorUno = FactorUno;
             this.FactorDos = FactorDos;
 
-            ProcesoInterno();
+            Operar();
         }
 
         public Productos(string Producto)
         {
             ObtenerElementos(Producto);
 
-            ProcesoInterno();
+            Operar();
         }
 
-        private void ProcesoInterno()
+        public override void Operar()
         {
             A = double.TryParse(FactorUno, out number) & double.TryParse(FactorDos, out number);
             B = FactorUno.Equals(ModuloCancelativo.ToString()) || FactorDos.Equals(ModuloCancelativo.ToString());
@@ -577,13 +557,6 @@ namespace ENTITY
             }
         } //OK
 
-        private void ObtenerElementos(string Expresion)
-        {
-            string[] Operadores = Expresion.Split(Simbolo.ElementAtOrDefault(0));
-            FactorUno = Operadores[0];
-            FactorDos = Operadores[1];
-        }//OK
-
         public void Conmutar()
         {
             Result = FactorDos + Simbolo + FactorUno;
@@ -597,7 +570,7 @@ namespace ENTITY
         public override string Nombre => "POTENCIA";
         public override int Modulo { get { return 1; } }
         public int ModuloCancelativo { get { return 0; } }
-        public override string Simbolo { get { return "^"; } }
+        public override char Simbolo => '^';
         public string Base { get; private set; }
         public string Exponente { get; private set; }
         public char Abrir => '{';
@@ -617,7 +590,7 @@ namespace ENTITY
             this.Base = Base;
             this.Exponente = Exponente;
 
-            Procesointerno();
+            Operar();
             
         }
 
@@ -625,17 +598,10 @@ namespace ENTITY
         {
             ObtenerElementos(Potencia);
 
-            Procesointerno();
+            Operar();
         }
 
-        private void ObtenerElementos(string Expresion)
-        {
-            string[] Elemento = Expresion.Split(Simbolo.ElementAtOrDefault(0));
-            Base = Elemento[0];
-            Exponente = Elemento[1]; 
-        } //OK
-
-        private void Procesointerno()
+        public override void Operar()
         {
             A = B = C = D = E = false;
             A = double.TryParse(Base, out number) & double.TryParse(Exponente, out number);

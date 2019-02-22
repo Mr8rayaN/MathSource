@@ -74,7 +74,7 @@ namespace ALGEBRA
 
             else
             {
-                string[] Elementos = Expresion.Split(Producto.Simbolo.ElementAtOrDefault(0));
+                string[] Elementos = Expresion.Split(Producto.Simbolo);
 
                 Coeficiente = ParteLiteral = Grado = "";
                 double grado = 0;
@@ -158,14 +158,14 @@ namespace ALGEBRA
             }
             else
             {
-                string[] Elementos = ParteLiteral.Split(Producto.Simbolo.ElementAtOrDefault(0));
+                string[] Elementos = ParteLiteral.Split(Producto.Simbolo);
                 double grado = 0;
                 Grado = "";
 
                 foreach (var item in Elementos)
                 {
                     A = double.TryParse(item, out number);
-                    B = item.Contains(Cociente.Simbolo.ElementAtOrDefault(0));
+                    B = item.Contains(Cociente.Simbolo);
 
                     if (!A & !B)
                     {

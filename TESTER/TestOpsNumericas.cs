@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLL;
 using ENTITY;
 
 namespace TESTER
 {
-    public class TestOperacionesMaths
+    public class TestOpsNumericas
     {
-
         public static void Main(string[] args)
         {
             TEST_Consola();
@@ -18,7 +16,7 @@ namespace TESTER
 
         private static void TEST_Consola()
         {
-            string[] PRUEBA_OPS_MATHS = { "0", "44", "x", "2*x",  "y" };
+            string[] PRUEBA_OPS_MATHS = { "0", "44", "3", "-2", "x" };
 
             for (int i = 0; i < 5; ++i)
             {
@@ -39,14 +37,14 @@ namespace TESTER
 
         private static void TEST_ENTITY_Cociente(string Uno, string Dos)
         {
-            Cocientes COCIENTE = new Cocientes();
+            CocienteNatural COCIENTE = new CocienteNatural();
             Console.WriteLine(COCIENTE.Nombre);
             Console.WriteLine(COCIENTE.Result);
         }//OK
 
         private static void TEST_ENTITY_Suma(string Uno, string Dos)
         {
-            Sumas SUMA = new Sumas(Uno + "+" + Dos + "+"+ Uno + "+" + Dos);
+            SumaNatural SUMA = new SumaNatural(Uno + "+" + Dos + "+" + Uno + "+" + Dos);
             Console.WriteLine(SUMA.Nombre);
             Console.WriteLine(SUMA.Result);
         }//OK
@@ -61,14 +59,14 @@ namespace TESTER
 
         private static void TEST_ENTITY_Producto(string Uno, string Dos)
         {
-            Productos Producto = new Productos();
+            Productos Producto = new Productos(Uno, Dos);
             Console.WriteLine(Producto.Nombre);
             Console.WriteLine(Producto.Result);
         }
 
         private static void TEST_ENTITY_Potencia(string Uno, string Dos)
         {
-            Potencias POTENCIA = new Potencias();
+            Potencias POTENCIA = new Potencias(Uno, Dos);
             Console.WriteLine(POTENCIA.Nombre);
             Console.WriteLine(POTENCIA.Result);
         }

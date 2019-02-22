@@ -44,6 +44,8 @@
     <Compile Include="AMathOps.cs" />
     <Compile Include="Funcion.cs" />
     <Compile Include="OpsMatematicas.cs" />
+    <Compile Include="IOpsMetodos.cs" />
+    <Compile Include="OpsNumerica.cs" />
     <Compile Include="Pasos.cs" />
     <Compile Include="ProcesosOld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
