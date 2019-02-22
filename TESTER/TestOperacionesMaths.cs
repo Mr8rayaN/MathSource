@@ -18,13 +18,13 @@ namespace TESTER
 
         private static void TEST_Consola()
         {
-            string[] PRUEBA_OPS_MATHS = { "0", "x", "2*x", "44", "y" };
+            string[] PRUEBA_OPS_MATHS = { "0", "44", "x", "2*x",  "y" };
 
             for (int i = 0; i < 5; ++i)
             {
                 for (int j = 0; j < 5; ++j)
                 {
-                    Console.WriteLine($"ENTRADAS {PRUEBA_OPS_MATHS[i]} | {PRUEBA_OPS_MATHS[j]}");
+                    Console.WriteLine($"ENTRADAS {PRUEBA_OPS_MATHS[i]} | {PRUEBA_OPS_MATHS[j]} | {PRUEBA_OPS_MATHS[i]} | {PRUEBA_OPS_MATHS[j]}");
 
                     //Aplicacion del TEST
 
@@ -46,7 +46,7 @@ namespace TESTER
 
         private static void TEST_ENTITY_Suma(string Uno, string Dos)
         {
-            Sumas SUMA = new Sumas(Uno + "+" + Dos);
+            Sumas SUMA = new Sumas(Uno + "+" + Dos + "+"+ Uno + "+" + Dos);
             Console.WriteLine(SUMA.Nombre);
             Console.WriteLine(SUMA.Result);
         }//OK

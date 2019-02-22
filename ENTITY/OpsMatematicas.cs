@@ -22,16 +22,49 @@ namespace ENTITY
 
         public Sumas()
         {
-            Sumandos = new List<string>();
-            Temporal = new List<string>();
+            
         }
 
         public Sumas(string Expresion)
         {
             Sumandos = new List<string>();
-            Temporal = new List<string>();
             ObtenerSumandos(Expresion);
+            PropiedadesInternas();
             Sumar();
+        }
+
+        private void PropiedadesInternas()
+        {
+            Temporal = new List<string>();
+            if (Sumandos.Count == 1)
+            {
+                if (Sumandos.ElementAtOrDefault(0).Equals(Modulo))
+                {
+                    Result = $"{Modulo}";
+                }
+                else
+                {
+                    Result = $"{Sumandos.ElementAtOrDefault(0)}";
+                }
+            }
+
+            foreach (var sumando in Sumandos)
+            {
+                if (!sumando.Equals($"{Modulo}")) {
+                    Temporal.Add(sumando);
+                }
+            }
+
+            if (Temporal.Count == 0)
+            {
+                Temporal.Add($"{Modulo}");
+                Result = $"{Modulo}";
+            }
+            else if(Temporal.Count == 1)
+            {
+                Result = Temporal.ElementAtOrDefault(0);
+            }
+                
         }
 
         private void ObtenerSumandos(string Expresion)
@@ -44,50 +77,95 @@ namespace ENTITY
 
         private void Sumar()
         {
-            SumandosParciales = Sumandos;
-            string Uno, Dos;
-            double SumaUno, SumaDos = 0;
-
-            int i, j, k;
-            i = j = k = 0;
-
-            bool PremisaUno , PremisaDos, PremisaTres;
-            PremisaUno = PremisaDos = PremisaTres = true;
-
-            while (PremisaUno)
+            int i = 0, j = 0;
+            if (Temporal.Count > 1)
             {
-                A = double.TryParse(SumandosParciales[i], out number);
-                Uno = SumandosParciales[i];
+                Result = "";
+                SumandosParciales = Temporal;
+                string Uno, Dos;
+                double SumaUno, SumaDos = 0;
+                bool Sumado = false, Agrupado = false; ;
 
-                while (PremisaDos)
+                i = j = 0;
+                while (i < SumandosParciales.Count)
                 {
-                    B = double.TryParse(SumandosParciales[j], out number);
-                    Dos = SumandosParciales[j];
-
-                    if (A & B)
+                    if (Sumado)
                     {
-                        SumaUno = double.Parse(Uno);
-                        SumaDos = double.Parse(Dos);
+                        Sumado = false;
+                        --i;
+                    }                        
 
-                        Temporal.Add($"{SumaUno + SumaDos}");
-                    }
-                    else if (Uno.Equals(Dos))
+                    j = 0;
+
+                    Uno = SumandosParciales[i];
+                    A = double.TryParse(SumandosParciales[i], out number);
+
+                    if (Agrupado == true)
                     {
-
+                        Agrupado = false;
+                        i++;
                     }
                     else
                     {
+                        Sumado = false;
+                        
+                        if (i < Sumandos.Count - 1)
+                        {
+                            j = i + 1;
 
+                            while (j < SumandosParciales.Count)
+                            {
+                                B = double.TryParse(SumandosParciales[j], out number);
+                                Dos = SumandosParciales[j];
+
+                                if (A & B)
+                                {
+                                    SumaUno = double.Parse(Uno);
+                                    SumaDos = double.Parse(Dos);
+
+                                    SumaUno += SumaDos;
+
+                                    SumandosParciales[i] = Uno = $"{SumaUno}";
+                                    SumandosParciales.RemoveAt(j);
+                                    Sumado = true;
+                                }
+                                else if (Uno.Equals(Dos))
+                                {
+                                    if (i < j - 1)
+                                    {
+                                        SumandosParciales.Insert(i, Dos);
+                                        SumandosParciales.RemoveAt(j + 1);
+                                        Agrupado = true;
+                                    }
+                                }
+
+                                ++j;
+                            }
+                        }
+
+                        
+                        ++i;
                     }
+                    
 
-                    ++j;
                 }
 
-                ++i;
+
+                i = 0;
+                foreach (var item in SumandosParciales)
+                {
+                    if (i > 0)
+                        Result += Simbolo + SumandosParciales[i];
+                    else
+                        Result += SumandosParciales[i];
+
+                    ++i;
+                }
             }
+            
+
         }
         
-
     }
     
     public class Sustracciones : AMathOps
