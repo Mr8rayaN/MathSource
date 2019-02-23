@@ -10,7 +10,8 @@ namespace ENTITY
     {
         private char Pos => '+';
         private char Neg => '-';
-        public char SignoAbs { get; private set; }
+        public char SignoAbs { get { return ObtenerSignoAbs(); } }
+        public string ListaSignos { get; private set; }
 
         public string OperarSignos(string Expresion)
         {
@@ -34,6 +35,8 @@ namespace ENTITY
                         {
                             Expresion = Expresion.Replace($"{elemento}{siguiente}", $"{Neg}");
                         }
+
+                        --i;
                     }
                 }
 
@@ -41,6 +44,52 @@ namespace ENTITY
             }
 
             return Expresion;
+        }
+
+        public void ObtenerSignos (string Expresion)
+        {
+            Expresion = OperarSignos(Expresion);
+            ListaSignos = "";
+            int i = 0;
+
+            foreach (var elemento in Expresion)
+            {
+                if (EsUnSigno(elemento))
+                {
+                    ListaSignos += elemento;
+                }
+                else if(i == 0)
+                {
+                    ListaSignos += Pos;
+                }
+
+                ++i;
+            }
+        }
+
+        private char ObtenerSignoAbs ()
+        {
+            char Signo = Pos;
+
+            if (ListaSignos.Equals(""))
+                return Signo;
+            else
+            {
+                foreach (var elemento in ListaSignos)
+                {
+                    Signo = ProductoSignos(Signo, elemento);
+                }
+            }
+
+            return Signo;
+        }
+
+        private char ProductoSignos(char SignoUno, char SignoDos)
+        {
+            if (SignoUno.Equals(SignoDos))
+                return Pos;
+            else
+                return Neg;
         }
 
         private bool EsUnSigno(char elemento)

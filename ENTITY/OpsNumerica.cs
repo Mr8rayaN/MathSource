@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    public class SumaNatural : AMathOps
+    public class SumaEntera : AMathOps 
     {
         public override string Nombre => "SUMA";
         public override int Modulo => 0;
         public override char Simbolo => '+';
         private List<string> Temporal = new List<string>();
 
-        public SumaNatural(string Expresion)
+        public SumaEntera(string Expresion)
         {
+            Expresion = OperarSignos(Expresion);
             Contenido = Expresion;
-            ObtenerElementos(Expresion);
+            ObtenerSignos(Expresion);
+            ObtenerElementos(Expresion, NumEntero.Simbolos);
             Proceso.CopyList(Temporal, Elementos);
             Operar();
         }
@@ -24,16 +26,26 @@ namespace ENTITY
 
         public override void Operar()
         {
-            double Acomulador = 0;
-
+            double Acomulador, Parseo; int index;
+            Acomulador = Parseo = index = 0;
+            
             foreach(var elemento in Elementos)
             {
                 try
                 {
-                    Acomulador += double.Parse(elemento);
+                    Parseo = double.Parse(elemento);
+                    char signo = ListaSignos.ElementAt(index);
+
+                    if (signo.Equals(NumEntero.SimboloLocal))
+                        Acomulador -= Parseo;
+                    else
+                        Acomulador += Parseo;
+
                     Temporal.Remove(elemento);
                 }
                 catch (Exception) { }
+
+                ++index;
             }
 
             NumeroElementos = Temporal.Count;
@@ -53,6 +65,25 @@ namespace ENTITY
             Result = OperarSignos(Result);
 
         }
+
+        private void ObtenerElementos(string LElementos, string Simbolos)
+        {
+            Elementos.Clear();
+            
+            char simboloComun = '@';
+
+            foreach (var simbolo in Simbolos)
+            {
+                LElementos = LElementos.Replace(simbolo, simboloComun);
+            }
+
+            foreach (var elemento in LElementos.Split(simboloComun))
+            {
+                Elementos.Add(elemento);
+            }
+            
+        }
+
     }
 
     public class RestaNatural : AMathOps
@@ -64,7 +95,6 @@ namespace ENTITY
 
         public RestaNatural(string Expresion)
         {
-            Expresion = OperarSignos(Expresion);
             ObtenerElementos(Expresion);
             Proceso.CopyList(Temporal, Elementos);
             Operar();
