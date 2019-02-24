@@ -191,6 +191,10 @@ namespace ENTITY
         public override char Simbolo => '/';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
+        public char O => '{';
+        public char C => '}';
+        public List<Variables> ListaVariables = new List<Variables>();
+        private Variables variable { get; set; }
         private List<string> Temporal = new List<string>();
         private string SignosTemporal { get; set; }
         List<int> FactoresPrimosDividendo = new List<int>();
@@ -203,6 +207,15 @@ namespace ENTITY
         }
 
         public CocienteEntero(string Expresion)
+        {
+            Contenido = Expresion;
+            ObtenerElementos(Expresion);
+            ObtenerSignos(Elementos);
+            Proceso.CopyList(Temporal, Elementos);
+            Operar();
+        }
+
+        private void ObtenerElementos(string Expresion)
         {
 
         }

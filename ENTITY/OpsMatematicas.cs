@@ -234,8 +234,8 @@ namespace ENTITY
         public override char Simbolo => '/';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
-        public char Abrir => '{';
-        public char Cerrar => '}';
+        public char O => '{';
+        public char C => '}';
         int signo = 1;
 
         List<int> FactoresPrimosDividendo = new List<int>();

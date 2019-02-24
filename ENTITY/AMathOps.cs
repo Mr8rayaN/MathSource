@@ -30,10 +30,12 @@ namespace ENTITY
             foreach (var item in LElementos.Split(Simbolo))
             {
                 Elementos.Add(item);
-                Contenido += item + Simbolo;
-            }
 
-            Contenido = Contenido.TrimEnd(Simbolo);
+                if(Contenido.Equals(""))
+                    Contenido += item;
+                else
+                    Contenido += Simbolo + item;
+            }
         }
         
 

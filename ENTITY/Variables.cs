@@ -11,6 +11,7 @@ namespace ENTITY
         public string Nombre { get; private set; }
         public string Simbolo { get; private set; }
         public bool Operable { get; set; }
+        public object Contenido { get; set; }
 
         public Variables(string Simbolo)
         {
