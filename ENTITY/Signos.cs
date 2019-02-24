@@ -46,41 +46,50 @@ namespace ENTITY
             return Expresion;
         }
 
-        public void ObtenerSignos (string Expresion)
+        public void ObtenerSignos (string SumaEnteros)
         {
-            Expresion = OperarSignos(Expresion);
             ListaSignos = "";
             int i = 0;
 
-            foreach (var elemento in Expresion)
+            foreach (var elemento in SumaEnteros)
             {
                 if (EsUnSigno(elemento))
                 {
                     ListaSignos += elemento;
                 }
-                else if(i == 0)
+                else if (i == 0)
                 {
                     ListaSignos += Pos;
+                    ++i;
                 }
-
-                ++i;
             }
         }
 
-        public char SignoDe(string Expresion)
+        public void ObtenerSignos (List<string> Elementos)
         {
+            ListaSignos = "";
+
+            foreach (var elemento in Elementos)
+            {
+                ListaSignos += SignoDeAbs(elemento);
+            }
+        }
+
+        public char SignoAbsDe(string Expresion)
+        {
+            char signo = Pos;
             foreach (var elemento in Expresion)
             {
                 if (EsUnSigno(elemento))
                 {
-                    return elemento;
+                    signo = ProductoSignos(signo,elemento);
                 }
             }
 
-            return Pos;
+            return signo;
         }
 
-        private char ObtenerSignoAbs ()
+        private char ObtenerSignoAbs()
         {
             char Signo = Pos;
 

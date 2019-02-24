@@ -16,7 +16,7 @@ namespace TESTER
 
         private static void TEST_Consola_Especifico()
         {
-            TEST_ENTITY_Suma("-2","0");
+            TEST_ENTITY_Producto("-2","1");
 
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
@@ -34,7 +34,7 @@ namespace TESTER
 
                     //Aplicacion del TEST
 
-                    TEST_ENTITY_Suma(PRUEBA_OPS_MATHS[i], PRUEBA_OPS_MATHS[j]);
+                    TEST_ENTITY_Producto(PRUEBA_OPS_MATHS[i], PRUEBA_OPS_MATHS[j]);
 
                     Console.WriteLine("----------------------------------");
                 }
@@ -45,7 +45,7 @@ namespace TESTER
 
         private static void TEST_ENTITY_Cociente(string Uno, string Dos)
         {
-            CocienteNatural COCIENTE = new CocienteNatural();
+            CocienteEntero COCIENTE = new CocienteEntero();
             Console.WriteLine(COCIENTE.Nombre);
             Console.WriteLine(COCIENTE.Result);
         }//OK
@@ -61,7 +61,7 @@ namespace TESTER
 
         private static void TEST_ENTITY_Producto(string Uno, string Dos)
         {
-            Productos Producto = new Productos(Uno, Dos);
+            ProductoEntero Producto = new ProductoEntero(Uno + "*" + Dos + "*" + Dos + "*" + Dos);
             Console.WriteLine(Producto.Nombre);
             Console.WriteLine(Producto.Result);
         }
