@@ -39,11 +39,11 @@ namespace ENTITY
                 return null;
 
             string Temporal = Expresion;
-            int Acomulador, i, j, k;
+            int Acomulador, i, j, k, Izq, Der;
             bool A, B;
             A = B = true;
-            Acomulador = i = j = k = 0;
-
+            Acomulador = i = j = k = Izq = Der = 0;
+            
             foreach (var elemento in Expresion)
             {
                 if (elemento.Equals(Symbol))
@@ -55,25 +55,39 @@ namespace ENTITY
                         if (A)
                         {
                             //CUERPO
-
-                            if (i < 0)
+                            Izq += IsLlave(Expresion.ElementAt(i));
+                            //FINCUERPO
+                            if (i <= 0)
                                 A = false;
                             --i;
                         }
                         if (B)
                         {
                             //CUERPO
-
-                            if (j >= Expresion.Length)
+                            Der += IsLlave(Expresion.ElementAt(j));
+                            //FINCUERPO
+                            if (j >= Expresion.Length - 1)
                                 B = false;
                             ++j;
                         }
                     }
+
+                    //MANIPULAR LA CANTIDAD DE PARENTESIS Y APLICAR RESULTADOS
                 }
 
                 ++k;
             }
 
+        }
+
+        private int IsLlave(char elemento)
+        {
+            if (elemento == '(' || elemento == '{')
+                return 1;
+            else if (elemento == ')' || elemento == '}')
+                return -1;
+            else
+                return 0;
         }
     }
 }
