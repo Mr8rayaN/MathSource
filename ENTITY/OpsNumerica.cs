@@ -134,6 +134,21 @@ namespace ENTITY
             Operar();
         }
 
+        public override void ObtenerElementos(string LElementos)
+        {
+            Contenido = "";
+
+            foreach (var item in LElementos.Split(Simbolo))
+            {
+                Elementos.Add(item);
+
+                if (Contenido.Equals(""))
+                    Contenido += item;
+                else
+                    Contenido += Simbolo + item;
+            }
+        }
+
         public override void Operar()
         {
             double Parseo, Acomulador;
@@ -215,9 +230,21 @@ namespace ENTITY
             Operar();
         }
 
-        private void ObtenerElementos(string Expresion)
+        public override void ObtenerElementos(string LElementos)
         {
+            string Acomulador = "";
+            foreach (var elemento in LElementos)
+            {
+                if (!elemento.Equals(Simbolo))
+                {
+                    Acomulador += elemento;
+                }
+                else
+                {
+                    Dividendo = Acomulador;
 
+                }
+            }
         }
 
         public override void Operar()

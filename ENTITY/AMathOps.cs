@@ -23,21 +23,10 @@ namespace ENTITY
 
         }
 
-        public void ObtenerElementos(string LElementos)
+        public virtual void ObtenerElementos(string LElementos)
         {
-            Contenido = "";
-
-            foreach (var item in LElementos.Split(Simbolo))
-            {
-                Elementos.Add(item);
-
-                if(Contenido.Equals(""))
-                    Contenido += item;
-                else
-                    Contenido += Simbolo + item;
-            }
         }
-        
+
         public override string ToString()
         {
             return $"{Nombre} ({Contenido})";
