@@ -9,22 +9,24 @@ namespace ENTITY
     public class Variables
     {
         public string Nombre { get; private set; }
-        public string Simbolo { get; private set; }
         public bool Operable { get; set; }
+        public string Etiqueta { get; set; }
         public object Contenido { get; set; }
 
-        public Variables(string Simbolo)
+        public Variables(string Nombre)
         {
             Operable = true;
-            this.Simbolo = Simbolo;
-            Nombre = $"Variable {Simbolo}";
+            this.Nombre = Nombre;
         }
 
-        public Variables(string Simbolo, bool Operable)
+        public Variables(string Nombre, bool Operable)
         {
-            this.Simbolo = Simbolo;
+            this.Nombre = Nombre;
             this.Operable = Operable;
-            Nombre = $"Variable {Simbolo}";
+        }
+        public override string ToString()
+        {
+            return $"VARIABLE {Nombre} CONTIENE {Etiqueta} OPERABLE {Operable}";
         }
 
     }
