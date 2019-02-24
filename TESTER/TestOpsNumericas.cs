@@ -11,10 +11,18 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola();
+            TEST_Consola_Multiple();
         }
 
-        private static void TEST_Consola()
+        private static void TEST_Consola_Especifico()
+        {
+            TEST_ENTITY_Suma("-2","0");
+
+            Console.WriteLine("----------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Consola_Multiple()
         {
             string[] PRUEBA_OPS_MATHS = { "0", "-44", "3", "-2", "x" };
 

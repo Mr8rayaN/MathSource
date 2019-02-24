@@ -12,6 +12,7 @@ namespace ENTITY
         public override int Modulo => 0;
         public override char Simbolo => '+';
         private List<string> Temporal = new List<string>();
+        private string SignosTemporal { get; set; }
 
         public SumaEntera(string Expresion)
         {
@@ -20,12 +21,13 @@ namespace ENTITY
             ObtenerSignos(Expresion);
             ObtenerElementos(Expresion, NumEntero.Simbolos);
             Proceso.CopyList(Temporal, Elementos);
+            SignosTemporal = ListaSignos;
             Operar();
         }
         
-
         public override void Operar()
         {
+            char signo = ' ';
             double Acomulador, Parseo; int index;
             Acomulador = Parseo = index = 0;
             
@@ -34,13 +36,14 @@ namespace ENTITY
                 try
                 {
                     Parseo = double.Parse(elemento);
-                    char signo = ListaSignos.ElementAt(index);
-
+                    signo = ListaSignos.ElementAt(index);
+                    
                     if (signo.Equals(NumEntero.SimboloLocal))
                         Acomulador -= Parseo;
                     else
                         Acomulador += Parseo;
 
+                    SignosTemporal = Proceso.ReplaceCharIn(SignosTemporal, "@", index);
                     Temporal.Remove(elemento);
                 }
                 catch (Exception) { }
@@ -48,20 +51,35 @@ namespace ENTITY
                 ++index;
             }
 
+            SignosTemporal = SignosTemporal.Replace("@","");
+
             NumeroElementos = Temporal.Count;
 
-            if(Acomulador != 0)
-                Temporal.Add($"{Acomulador}");
-
+            if (Acomulador != 0) {
+                SignosTemporal += SignoDe($"{Acomulador}");
+                Temporal.Add($"{Math.Abs(Acomulador)}");
+            }
+                
             else if(NumeroElementos == 0)
+            {
                 Temporal.Add($"{Modulo}");
+                SignosTemporal += SignoDe($"{Modulo}");
+            }
+
+            index = 0;
+            Result = "";
 
             foreach (var elemento in Temporal)
             {
-                Result += elemento + Simbolo;
+                signo = SignosTemporal.ElementAtOrDefault(index);
+                if(signo.Equals(NumEntero.Naturales.SimboloLocal) & Result.Equals(""))
+                    Result += elemento;
+                else
+                    Result += signo + elemento;
+
+                ++index;
             }
 
-            Result = Result.TrimEnd(Simbolo);
             Result = OperarSignos(Result);
 
         }
@@ -76,6 +94,8 @@ namespace ENTITY
             {
                 LElementos = LElementos.Replace(simbolo, simboloComun);
             }
+
+            LElementos = LElementos.Trim(simboloComun);
 
             foreach (var elemento in LElementos.Split(simboloComun))
             {

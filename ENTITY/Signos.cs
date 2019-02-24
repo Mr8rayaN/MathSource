@@ -67,6 +67,19 @@ namespace ENTITY
             }
         }
 
+        public char SignoDe(string Expresion)
+        {
+            foreach (var elemento in Expresion)
+            {
+                if (EsUnSigno(elemento))
+                {
+                    return elemento;
+                }
+            }
+
+            return Pos;
+        }
+
         private char ObtenerSignoAbs ()
         {
             char Signo = Pos;
@@ -83,7 +96,7 @@ namespace ENTITY
 
             return Signo;
         }
-
+        
         private char ProductoSignos(char SignoUno, char SignoDos)
         {
             if (SignoUno.Equals(SignoDos))

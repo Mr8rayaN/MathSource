@@ -17,7 +17,7 @@ namespace ENTITY
     public class NumerosEnteros
     {
         public string Nombre => "NUMERO ENTERO";
-        NumerosNaturales Naturales = new NumerosNaturales();
+        public NumerosNaturales Naturales = new NumerosNaturales();
         public char SimboloLocal => '-';
         public string Simbolos => $"{SimboloLocal}{Naturales.Simbolos}";
         
