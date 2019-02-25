@@ -236,7 +236,6 @@ namespace ENTITY
             Expresion = Proceso.DescorcharParentesis(Expresion);
             Contenido = Expresion;
             ObtenerElementos(Expresion);
-            ObtenerSignos(Elementos);
             Operar();
         }
 
@@ -680,19 +679,35 @@ namespace ENTITY
 
         private void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
-            string Cont = "", Nombre = "", Actual = "", Acomulador;
-            int k, i, j; bool A = false;
+            LVariables.Reverse();
+            string Nomb = "", Conten = "", Acomulador;
+            int k, i, j; bool A = false, B = false;
 
-            if (LVariables.Count == 1)
-                Acomulador = (string)LVariables.ElementAt(0).Contenido;
-            else
+            i = 0;
+            variable = LVariables.ElementAt(i);
+            Acomulador = (string)variable.Contenido;
+
+            if (Acomulador.Contains(variable.Simbolo))
             {
-                foreach (var variable in LVariables)
-                {
-                     //ALGORITMO QUE ACOMULA Y REEMPLAZAZ LOS VALORES DE CADA VARIABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                while(Acomulador.Contains(variable.Simbolo)){
+
+                    Nomb = $"{variable.Simbolo}{LVariables.ElementAt(i).Nombre}";
+                    Conten = (string)LVariables.ElementAt(i).Contenido;
+
+                    A = (Conten.Length > 2);
+                    //B = VALIDAR QUE EL CONTENIDO DE LA VARIABLE NO VENGA YA AGRUPADO;
+
+                    if (A & !B)
+                    {
+                        Conten = Proceso.EncorcharFuncion(Conten);
+                    }
+
+                    Acomulador = Acomulador.Replace( Nomb, Conten);
+                    ++i;
                 }
             }
-            
+
+            Contenido = Acomulador;
 
             foreach (var orden in Orden)
             {
