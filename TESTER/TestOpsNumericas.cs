@@ -16,7 +16,9 @@ namespace TESTER
 
         private static void TEST_Consola_Especifico()
         {
-            CocienteEntero COCIENTE = new CocienteEntero("{{x/2}/6}/{4/16}");
+            string Entrada = "4/6";
+            Console.WriteLine($"ENTRADA = {Entrada}");
+            CocienteEntero COCIENTE = new CocienteEntero(Entrada);
             Console.WriteLine(COCIENTE.Nombre);
             Console.WriteLine(COCIENTE.Result);
             Console.WriteLine("----------------------------------");

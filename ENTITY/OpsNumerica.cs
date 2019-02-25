@@ -210,13 +210,12 @@ namespace ENTITY
         public char Cl => '}';
         public ProductoEntero Producto = new ProductoEntero();
         public List<Variables> ListaVariables = new List<Variables>();
-        private Variables variable { get; set; }
+        private Variables variable = new Variables();
         private List<string> Temporal = new List<string>();
         private string SignosTemporal { get; set; }
         List<int> FactoresPrimosDividendo = new List<int>();
         List<int> FactoresPrimosDivisor = new List<int>();
         double number; int signo = 1;
-        int IndexOperacionPpal = 0;
 
         public CocienteEntero()
         {
@@ -232,11 +231,22 @@ namespace ENTITY
 
         public CocienteEntero(string Expresion)
         {
-            Expresion = Proceso.DescorcharFunciones(Expresion);
-            Expresion = Proceso.DescorcharParentesis(Expresion);
-            Contenido = Expresion;
+            if (Proceso.IsAgrupate(Expresion))
+            {
+                Contenido = DescorcharA(Expresion);
+            }
+            else
+                Contenido = Expresion;
+
             ObtenerElementos(Expresion);
             Operar();
+        }
+
+        private string DescorcharA(string Expresion)
+        {
+            
+            Expresion = Proceso.DescorcharFunciones(Expresion);
+            return Proceso.DescorcharParentesis(Expresion);
         }
 
         public override void ObtenerElementos(string LElementos)
@@ -268,7 +278,8 @@ namespace ENTITY
             }
             else
             {
-                CocientesInternos();
+                //CocientesInternos();
+                ResolverNiveles();
             }
         }
 
@@ -283,6 +294,9 @@ namespace ENTITY
             D = Divisor.Equals(Modulo.ToString());
             E = Dividendo.Equals(Divisor);
             F = double.TryParse(Dividendo, out number) & double.TryParse(Divisor, out number);
+
+            Dividendo = Proceso.DescorcharFunciones(Dividendo);
+            Divisor = Proceso.DescorcharFunciones(Divisor);
 
             if (B)
             {
@@ -317,10 +331,13 @@ namespace ENTITY
             }
             else
             {
-                A = (Dividendo.Length > 2);
-                B = (Divisor.Length > 2);
+                string Dvo = Dividendo.Replace($"{variable.Simbolo}", "");
+                string Dvr = Divisor.Replace($"{variable.Simbolo}", "");
 
-                if(A & B)
+                A = (Dvo.Length > 2);
+                B = (Dvr.Length > 2);
+
+                if (A & B)
                 {
                     Result = $"{Op}{Op}{Dividendo}{Cl}{Simbolo}{Op}{Divisor}{Cl}{Cl}";
                 }
@@ -334,6 +351,8 @@ namespace ENTITY
                 }
                 else
                     Result = $"{Dividendo}{Simbolo}{Divisor}";
+
+                //Result = $"{Op}{Dividendo}{Simbolo}{Divisor}{Cl}";
             }
 
         } //OK
@@ -598,31 +617,138 @@ namespace ENTITY
                 ++k;
             }
 
-            ResolverNiveles(Nivel, NivelOrden);
+            //ResolverNiveles(Nivel, NivelOrden);
         }
 
-        public void ResolverNiveles(string Niveles, string Orden)
+        private string ObtenerNiveles(string Expresion)
         {
-            int i, j, k, q = 0, Izq, Der;
-            bool A = true, B = true;
+            string  Nivel = "";
+            int Acomulador, i, j, k, Izq, Der;
+            bool A, B;
+            A = B = true;
+            Acomulador = i = j = k = Izq = Der = 0;
+            
+            foreach (var elemento in Expresion)
+            {
+                if (elemento.Equals(Simbolo))
+                {
+                    i = j = k;
+                    Izq = Der = 0;
+                    A = B = true;
+
+                    while (A || B)
+                    {
+                        if (A)
+                        {
+                            //CUERPO
+                            Izq += Proceso.IsLlave(Expresion.ElementAt(i));
+                            //FINCUERPO
+                            if (i <= 0)
+                                A = false;
+                            --i;
+                        }
+                        if (B)
+                        {
+                            //CUERPO
+                            Der += Proceso.IsLlave(Expresion.ElementAt(j));
+                            //FINCUERPO
+                            if (j >= Expresion.Length - 1)
+                                B = false;
+                            ++j;
+                        }
+                    }
+
+                    //MANIPULAR LA CANTIDAD DE PARENTESIS Y APLICAR RESULTADOS
+
+                    //A = true;
+                    //i = 0;
+                    Nivel += Izq;
+
+                }
+
+                ++k;
+            }
+
+            return Nivel;
+        }
+
+        private string ObtenerOrden(string Niveles)
+        {
+            int i = 0, Acomulador = 0; bool A = false; string NivelOrden = "";
+            foreach (var nivel in Niveles)
+            {
+                i = 0; A = true;
+
+                if (!NivelOrden.Contains(nivel))
+                {
+                    if (NivelOrden.Equals(""))
+                        NivelOrden += nivel;
+                    else
+                    {
+                        while (A)
+                        {
+                            if (i < NivelOrden.Length)
+                                Acomulador = int.Parse($"{NivelOrden.ElementAt(i)}");
+                            else
+                                Acomulador = -1;
+
+                            if (Acomulador > int.Parse($"{nivel}"))
+                                ++i;
+                            else
+                            {
+                                if (i < NivelOrden.Length)
+                                    NivelOrden = NivelOrden.Insert(i, $"{nivel}");
+                                else
+                                    NivelOrden += nivel;
+
+                                A = false;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            return NivelOrden;
+        }
+
+        public void ResolverNiveles()
+        {
             string Temporal = Contenido;
 
-            foreach (var orden in Orden)
+            string Niveles = ObtenerNiveles(Temporal);
+            string NivelesCop = Niveles;
+
+            string Orden = ObtenerOrden(Niveles);
+            string OrdenCop = Orden;
+
+            int i, j, k, q = 0,  Izq, Der, Uno, Dos;
+            bool A = true, B = true, WUno = true, WDos = true;
+
+            Uno = 0;
+            while(WUno)
             {
-                k = 0;
-                foreach (var nivel in Niveles)
+                var orden = Orden.ElementAt(Uno);
+                k = 0; Dos = 0;
+
+                while(WDos)
                 {
+                    var nivel = Niveles.ElementAt(Dos);
                     ++k;
+
                     if (nivel.Equals(orden))
                     {
-                        if (!Niveles.StartsWith($"{nivel}"))
-                            --k;
-
-                        i = j = 0;
+                        i = j = 0; B = false;
                         while (i < Temporal.Length)
                         {
-                            if (Temporal.ElementAt(i).Equals(Simbolo))
+                            A = Temporal.ElementAt(i).Equals(Simbolo);
+                            //B = Temporal.ElementAt(i).Equals(variable.Simbolo);
+
+                            if (A)
+                            {
                                 ++j;
+                            }
+                                
                             if (j == k || i == Temporal.Length - 1)
                                 break;
                             ++i;
@@ -660,20 +786,44 @@ namespace ENTITY
                         ++q;
                         //OBTENIDOS LOS INDICES DE INICIO (i) Y FIN (j) DE LA OP INTERNA
                         string Nom= $"U{q}";
+                        //PROBLEMA DE RECURSIVIDAD INFINITA SI LA ETIQUETA ES IGUAL A LA FUNCION
+                        //DEBE SER UN DERIVADO DE LA FUNCION A RESOLVER
+                        //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
                         Temporal = Temporal.Replace(Etiqueta, $"@{Nom}");
+                        Etiqueta = Proceso.DescorcharFunciones(Etiqueta);
 
                         CocienteEntero Interino = new CocienteEntero(Etiqueta);
+                        string Res = Proceso.DescorcharFunciones(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
-                        Variables Var = new Variables(Nom, Etiqueta, Interino.Result, true);
+                        Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
                         ListaVariables.Add(Var);
 
+                        if (!Temporal.Equals(Contenido))
+                        {
+                            Niveles = ObtenerNiveles(Temporal);
+                            Orden = ObtenerOrden(Niveles);
+
+                            Uno = -1;
+                            break;
+                        }
+
                     }
+
+                    ++Dos;
+
+                    if (Dos == Niveles.Length)
+                        WDos = false;
                 }
+
+                ++Uno;
+
+                if (Uno == Orden.Length)
+                    WUno = false;
             }
 
-            ResolverVariables(ListaVariables, Niveles, Orden);
+            ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
 
         }
 
@@ -693,9 +843,10 @@ namespace ENTITY
 
                     Nomb = $"{variable.Simbolo}{LVariables.ElementAt(i).Nombre}";
                     Conten = (string)LVariables.ElementAt(i).Contenido;
+                    //ENCORCHAR EL CONTENIDO SI ES NECESARIO;
 
                     A = (Conten.Length > 2);
-                    //B = VALIDAR QUE EL CONTENIDO DE LA VARIABLE NO VENGA YA AGRUPADO;
+                    B = Proceso.IsAgrupate(Conten);
 
                     if (A & !B)
                     {
@@ -711,7 +862,7 @@ namespace ENTITY
 
             foreach (var orden in Orden)
             {
-                k = 0;
+                k = 0; A = false;
                 foreach (var nivel in Niveles)
                 {
                     ++k;
@@ -720,7 +871,9 @@ namespace ENTITY
                         i = j = 0;
                         if (Orden.EndsWith($"{orden}"))
                         {
-                            foreach (var elemento in Contenido)
+                            Acomulador = Proceso.DescorcharFunciones(Contenido);
+
+                            foreach (var elemento in Acomulador)
                             {
                                 if (elemento.Equals(Simbolo))
                                 {
@@ -730,8 +883,8 @@ namespace ENTITY
                                     break;
                                 ++i;
                             }
-                            Dividendo = Proceso.DescorcharFunciones(Contenido.Substring(0, i));
-                            Divisor = Proceso.DescorcharFunciones(Contenido.Substring(i + 1));
+                            Dividendo = Proceso.DescorcharFunciones(Acomulador.Substring(0, i));
+                            Divisor = Proceso.DescorcharFunciones(Acomulador.Substring(i + 1));
                             A = true;
                             break;
                         }

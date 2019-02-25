@@ -165,5 +165,32 @@ namespace ENTITY
         {
             return $"({Expresion})";
         }
+
+        public bool IsAgrupate(string Expresion)
+        {
+            string E = Expresion;
+            bool A, B, C;
+            A = E.StartsWith($"{Open}");
+            int i = CierreFunciones(E, E.IndexOf(Open));
+            B = E.LastIndexOf(Close).Equals(i);
+            C = E.EndsWith($"{Close}");
+
+            if (A & B & C)
+            {
+                return true;
+            }
+
+            A = E.StartsWith("(");
+            i = CierreFunciones(E, E.IndexOf("("));
+            B = E.LastIndexOf(")").Equals(i);
+            C = E.EndsWith(")");
+
+            if (A & B & C)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

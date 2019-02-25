@@ -14,6 +14,11 @@ namespace ENTITY
         public object Contenido { get; set; }
         public char Simbolo => '@';
 
+        public Variables()
+        {
+
+        }
+
         public Variables(string Nombre)
         {
             Operable = true;
