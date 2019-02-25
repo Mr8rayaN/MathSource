@@ -8,6 +8,17 @@ namespace ENTITY
 {
     public class EProcesos
     {
+        private Funcion Fun = new Funcion();
+        private List<Variables> Variables = new List<Variables>();
+        char Open;
+        char Close;
+
+        public EProcesos()
+        {
+            Open = Fun.AgrupadorOpen;
+            Close = Fun.AgrupadorClose;
+        }
+
         public void CopyList(List<string> Copia, List<string> Original)
         {
             Copia.Clear();
@@ -31,56 +42,7 @@ namespace ENTITY
             return $"{PreCorte}{NewChar}{PostCorte}";
         }
 
-        public List<Variables> EncapsularOps(string Expresion, char Symbol)
-        {
-            if (Expresion == null)
-                return null;
-            else if (!Expresion.Contains(Symbol))
-                return null;
-
-            string Temporal = Expresion;
-            int Acomulador, i, j, k, Izq, Der;
-            bool A, B;
-            A = B = true;
-            Acomulador = i = j = k = Izq = Der = 0;
-            
-            foreach (var elemento in Expresion)
-            {
-                if (elemento.Equals(Symbol))
-                {
-                    i = j = k;
-
-                    while(A || B)
-                    {
-                        if (A)
-                        {
-                            //CUERPO
-                            Izq += IsLlave(Expresion.ElementAt(i));
-                            //FINCUERPO
-                            if (i <= 0)
-                                A = false;
-                            --i;
-                        }
-                        if (B)
-                        {
-                            //CUERPO
-                            Der += IsLlave(Expresion.ElementAt(j));
-                            //FINCUERPO
-                            if (j >= Expresion.Length - 1)
-                                B = false;
-                            ++j;
-                        }
-                    }
-
-                    //MANIPULAR LA CANTIDAD DE PARENTESIS Y APLICAR RESULTADOS
-                }
-
-                ++k;
-            }
-
-        }
-
-        private int IsLlave(char elemento)
+        public int IsLlave(char elemento)
         {
             if (elemento == '(' || elemento == '{')
                 return 1;
@@ -88,6 +50,120 @@ namespace ENTITY
                 return -1;
             else
                 return 0;
+        }
+
+        private int CierreParentesis(string Expresion, int startIndex)
+        {
+            //retorna el indice de cierre;
+
+            string E = Expresion;
+
+            if (startIndex < 0)
+            {
+                return E.Length;
+            }
+
+            int abierto, i;
+
+            abierto = i = 0;
+
+            E = E.Substring(startIndex);
+
+            foreach (var elemento in E)
+            {
+                if (elemento.Equals('('))
+                    ++abierto;
+
+                if (elemento.Equals(')'))
+                    --abierto;
+
+                if (abierto == 0)
+                    break;
+
+                ++i;
+            }
+
+            return i;
+
+        }
+
+        private int CierreFunciones(string Expresion, int startIndex)
+        {
+            //retorna el indice de cierre;
+            
+
+            string E = Expresion;
+
+            if (startIndex < 0)
+            {
+                return E.Length;
+            }
+
+            int abierto, i;
+
+            abierto = i = 0;
+
+            E = E.Substring(startIndex);
+
+            foreach (var elemento in E)
+            {
+                if (elemento.Equals(Open))
+                    ++abierto;
+
+                if (elemento.Equals(Close))
+                    --abierto;
+
+                if (abierto == 0)
+                    break;
+
+                ++i;
+            }
+
+            return i;
+
+        }
+
+        public string DescorcharFunciones(string Expresion)
+        {
+            string E = Expresion;
+            bool A, B, C;
+            A = E.StartsWith($"{Open}");
+            int i = CierreFunciones(E, E.IndexOf(Open));
+            B = E.LastIndexOf(Close).Equals(i);
+            C = E.EndsWith($"{Close}");
+
+            if (A & B & C)
+            {
+                return E.Substring(1, E.LastIndexOf(Close) - 1);
+            }
+
+            return E;
+        }
+
+        public string DescorcharParentesis(string Expresion)
+        {
+            string E = Expresion;
+            bool A, B, C;
+            A = E.StartsWith("(");
+            B = E.LastIndexOf(")").Equals(CierreParentesis(E, E.IndexOf("(")));
+            C = E.EndsWith(")");
+
+            if (A & B & C)
+            {
+                return E.Substring(1, E.LastIndexOf(")") - 1);
+            }
+
+            return E;
+        }
+
+        public string EncorcharFuncion (string Expresion)
+        {
+            return $"{Open}{Expresion}{Close}";
+        }
+
+        public string EncorcharParentesis(string Expresion)
+        {
+            return $"({Expresion})";
         }
     }
 }

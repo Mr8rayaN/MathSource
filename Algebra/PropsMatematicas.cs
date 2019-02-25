@@ -122,8 +122,8 @@ namespace ALGEBRA
                                 inicio = baseFuncion.Length + 1;
                                 exponente = foco.Substring(inicio, proceso.CierreFuncion(foco, inicio));
 
-                                bas = Asociar(Fragmentar(proceso.Descorchar(baseFuncion)));
-                                expo = Asociar(Fragmentar(proceso.Descorchar(exponente)));
+                                bas = Asociar(Fragmentar(proceso.DescorcharParentesis(baseFuncion)));
+                                expo = Asociar(Fragmentar(proceso.DescorcharParentesis(exponente)));
 
                                 if (baseFuncion.Length < bas.Length + 2)
                                 {
@@ -141,7 +141,7 @@ namespace ALGEBRA
                             else
                             {
                                 baseFuncion = argumento;
-                                foreach (var segmentoBase in Asociar(Fragmentar(proceso.Descorchar(baseFuncion))))
+                                foreach (var segmentoBase in Asociar(Fragmentar(proceso.DescorcharParentesis(baseFuncion))))
                                 {
                                     bas = bas + segmentoBase;
                                 }
@@ -204,7 +204,7 @@ namespace ALGEBRA
                         inicio = proceso.InicioFuncion(lista[i], lista[i].IndexOf("^") - 1);
                         cierre = proceso.CierreFuncion(lista[i], inicio);
                         baseFuncionI = lista[i].Substring(inicio, cierre);
-                        baseDescorchada = proceso.Descorchar(baseFuncionI);
+                        baseDescorchada = proceso.DescorcharParentesis(baseFuncionI);
 
                         cierre = proceso.CierreFuncion(lista[i], lista[i].IndexOf("^") + 1);
                         inicio = lista[i].IndexOf("^") + 1;
@@ -221,7 +221,7 @@ namespace ALGEBRA
                             inicio = proceso.InicioFuncion(lista[i], lista[i].IndexOf("^") - 1);
                             cierre = proceso.CierreFuncion(lista[i], inicio);
                             baseFuncionI = lista[i].Substring(inicio, cierre);
-                            baseDescorchada = proceso.Descorchar(baseFuncionI);
+                            baseDescorchada = proceso.DescorcharParentesis(baseFuncionI);
 
                             cierre = proceso.CierreFuncion(lista[i], lista[i].IndexOf("^") + 1);
                             inicio = lista[i].IndexOf("^") + 1;
@@ -253,13 +253,13 @@ namespace ALGEBRA
                         else if (lista[j].Equals(baseDescorchada) || lista[j].Equals(baseFuncionI))
                         {
                             lista.RemoveAt(j);
-                            if (double.TryParse(proceso.Descorchar(exponenteI), out number))
+                            if (double.TryParse(proceso.DescorcharParentesis(exponenteI), out number))
                             {
-                                double exp = double.Parse(proceso.Descorchar(exponenteI));
+                                double exp = double.Parse(proceso.DescorcharParentesis(exponenteI));
                                 lista[i] = $"{baseFuncionI}^({exp + 1})";
                             }
                             else
-                                lista[i] = $"{baseFuncionI}^({proceso.Descorchar(exponenteI)}+1)";
+                                lista[i] = $"{baseFuncionI}^({proceso.DescorcharParentesis(exponenteI)}+1)";
                             cambios = true;
                         }
 
@@ -280,12 +280,12 @@ namespace ALGEBRA
                                 {
                                     if (exponenteI.StartsWith("("))
                                     {
-                                        lista[i] = $"{baseFuncionI}^(2{proceso.Descorchar(exponenteI)})";
+                                        lista[i] = $"{baseFuncionI}^(2{proceso.DescorcharParentesis(exponenteI)})";
                                     }
                                     else
                                         lista[i] = $"{baseFuncionI}^(2{exponenteI})";
                                 }
-                                lista[i] = $"{baseFuncionI}^({proceso.Descorchar(exponenteI)}+{proceso.Descorchar(exponenteJ)})";
+                                lista[i] = $"{baseFuncionI}^({proceso.DescorcharParentesis(exponenteI)}+{proceso.DescorcharParentesis(exponenteJ)})";
                                 string prueba = lista[i];
                                 cambios = true;
 

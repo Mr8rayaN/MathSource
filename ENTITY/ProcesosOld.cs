@@ -87,39 +87,7 @@ namespace ENTITY
             return false;
         }
 
-        public int CierreFuncion (string funcion , int startIndex)
-        {
-
-            if (startIndex < 0)
-            {
-                return funcion.Length;
-            }
-            
-            bool seguir = true;
-            int final, abierto, cerrado, i;
-
-            final = abierto = cerrado = i = 0;
-
-            funcion = funcion.Substring(startIndex);
-            char[] caracter = funcion.ToCharArray();
-
-            while(seguir)
-            {
-                if (caracter[i] == '(')
-                    abierto = abierto + 1;
-
-                if (caracter[i] == ')')
-                    -- abierto;
-
-                if (abierto == 0)
-                    seguir = false;
-
-                ++i;
-            }
-
-            return i;
-
-        }
+        
 
         public int InicioFuncion (string funcion, int EndIndex)
         {
@@ -527,14 +495,69 @@ namespace ENTITY
             
         }
 
-        public string Descorchar (string funcion)
+        public int CierreFuncion(string Expresion, int startIndex)
         {
-            if (funcion.StartsWith("(") && funcion.LastIndexOf(")") == CierreFuncion(funcion, funcion.IndexOf("(")) - 1)
+            string E = Expresion;
+
+            if (startIndex < 0)
             {
-                return funcion.Substring(1, funcion.LastIndexOf(")") - 1);
+                return E.Length;
             }
 
-            return funcion;
+            bool seguir = true;
+            int final, abierto, cerrado, i;
+
+            final = abierto = cerrado = i = 0;
+
+            E = E.Substring(startIndex);
+            char[] caracter = E.ToCharArray();
+
+            while (seguir)
+            {
+                if (caracter[i] == '(')
+                    abierto = abierto + 1;
+
+                if (caracter[i] == ')')
+                    --abierto;
+
+                if (abierto == 0)
+                    seguir = false;
+
+                ++i;
+            }
+
+            return i;
+
+        }
+
+        public string DescorcharFunciones (string Expresion)
+        {
+            string E = Expresion;
+            bool A, B;
+            A = E.StartsWith("{");
+            B = E.LastIndexOf("}").Equals( CierreFuncion(E, E.IndexOf("{")) - 1 );
+
+            if (A & B)
+            {
+                return E.Substring(1, E.LastIndexOf("}") - 1);
+            }
+
+            return E;
+        }
+
+        public string DescorcharParentesis(string Expresion)
+        {
+            string E = Expresion;
+            bool A, B;
+            A = E.StartsWith("(");
+            B = E.LastIndexOf(")").Equals(CierreFuncion(E, E.IndexOf("(")) - 1);
+
+            if (A & B)
+            {
+                return E.Substring(1, E.LastIndexOf(")") - 1);
+            }
+
+            return E;
         }
 
         public List<int> VariableIndices (string funcion, string variable)

@@ -20,6 +20,13 @@ namespace ENTITY
         public List<string> CortesAbscisas { get; set; }
         public List<string> CortesOrdenadas { get; set; }
         public List<string> Partes { get; set; }
+        public char AgrupadorOpen => '{';
+        public char AgrupadorClose => '}';
+
+        public Funcion()
+        {
+
+        }
 
         public Funcion(string Id, string Nombre, string Contenido)
         {

@@ -11,13 +11,23 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Multiple();
+            TEST_Consola_Especifico();
         }
 
         private static void TEST_Consola_Especifico()
         {
-            TEST_ENTITY_Producto("-2","1");
+            CocienteEntero COCIENTE = new CocienteEntero("{{x/2}/6}/{4/16}");
+            Console.WriteLine(COCIENTE.Nombre);
+            Console.WriteLine(COCIENTE.Result);
+            Console.WriteLine("----------------------------------");
+            Console.ReadKey();
+        }
 
+        private static void TEST_Consola_EProcesos()
+        {
+            EProcesos Proceso = new EProcesos();
+            Console.WriteLine("{x/2}/3");
+            Console.WriteLine(Proceso.DescorcharFunciones("{{{x/2}/6}/{4/7}}"));
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
         }
@@ -45,7 +55,7 @@ namespace TESTER
 
         private static void TEST_ENTITY_Cociente(string Uno, string Dos)
         {
-            CocienteEntero COCIENTE = new CocienteEntero();
+            CocienteEntero COCIENTE = new CocienteEntero("{x/2}/3");
             Console.WriteLine(COCIENTE.Nombre);
             Console.WriteLine(COCIENTE.Result);
         }//OK

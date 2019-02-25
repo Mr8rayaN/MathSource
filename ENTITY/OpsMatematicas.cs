@@ -16,8 +16,8 @@ namespace ENTITY
         private List<string> Temporal { get; set; }
         private List<string> SumandosParciales { get; set; }
 
-        bool A = false, B = false, C = false;
-        double number, a, b;
+        bool A = false, B = false;
+        double number;
 
         public Sumas()
         {
@@ -234,8 +234,8 @@ namespace ENTITY
         public override char Simbolo => '/';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
-        public char O => '{';
-        public char C => '}';
+        public char Abrir => '{';
+        public char Cerrar => '}';
         int signo = 1;
 
         List<int> FactoresPrimosDividendo = new List<int>();

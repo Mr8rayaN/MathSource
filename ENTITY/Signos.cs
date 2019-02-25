@@ -71,7 +71,7 @@ namespace ENTITY
 
             foreach (var elemento in Elementos)
             {
-                ListaSignos += SignoDeAbs(elemento);
+                ListaSignos += SignoAbsDe(elemento);
             }
         }
 

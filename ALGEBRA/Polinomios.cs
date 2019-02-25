@@ -39,7 +39,6 @@ namespace ALGEBRA
 
         private void ObtenerMonomios(string Expresion)
         {
-            int j = 0;
             string index;
             //Monomio = new Monomios(nul);
             Polinomio = new List<Monomios>();

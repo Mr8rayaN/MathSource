@@ -206,8 +206,9 @@ namespace ENTITY
         public override char Simbolo => '/';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
-        public char O => '{';
-        public char C => '}';
+        public char Op => '{';
+        public char Cl => '}';
+        public ProductoEntero Producto = new ProductoEntero();
         public List<Variables> ListaVariables = new List<Variables>();
         private Variables variable { get; set; }
         private List<string> Temporal = new List<string>();
@@ -215,42 +216,128 @@ namespace ENTITY
         List<int> FactoresPrimosDividendo = new List<int>();
         List<int> FactoresPrimosDivisor = new List<int>();
         double number; int signo = 1;
+        int IndexOperacionPpal = 0;
 
         public CocienteEntero()
         {
 
         }
 
+        public CocienteEntero(string Dividendo, string Divisor)
+        {
+            this.Dividendo = Dividendo;
+            this.Divisor = Divisor;
+            Operar();
+        }
+
         public CocienteEntero(string Expresion)
         {
+            Expresion = Proceso.DescorcharFunciones(Expresion);
+            Expresion = Proceso.DescorcharParentesis(Expresion);
             Contenido = Expresion;
             ObtenerElementos(Expresion);
             ObtenerSignos(Elementos);
-            Proceso.CopyList(Temporal, Elementos);
             Operar();
         }
 
         public override void ObtenerElementos(string LElementos)
         {
-            string Acomulador = "";
+            int i = 0, NumeroImplicitoDeOps = 0;
+
             foreach (var elemento in LElementos)
             {
-                if (!elemento.Equals(Simbolo))
-                {
-                    Acomulador += elemento;
-                }
-                else
-                {
-                    Dividendo = Acomulador;
+                if (elemento.Equals(Simbolo))
+                    ++NumeroImplicitoDeOps;
+            }
 
+            if(NumeroImplicitoDeOps == 0)
+            {
+                Dividendo = LElementos;
+                Divisor = $"{Modulo}";
+            }
+            else if (NumeroImplicitoDeOps == 1)
+            {
+                i = 0;
+                foreach (var elemento in LElementos.Split(Simbolo))
+                {
+                    if (i == 0)
+                        Dividendo = elemento;
+                    else if (i == 1)
+                        Divisor = elemento;
+                    ++i;
                 }
+            }
+            else
+            {
+                CocientesInternos();
             }
         }
 
         public override void Operar()
         {
+            //Propiedades de cociente
+            bool A = false, B = false, C = false, D = false, E = false;
+            bool F = false;
+            A = Dividendo.Equals(ModuloCancelativo.ToString());
+            B = Divisor.Equals(ModuloCancelativo.ToString());
+            C = Dividendo.Equals(Modulo.ToString());
+            D = Divisor.Equals(Modulo.ToString());
+            E = Dividendo.Equals(Divisor);
+            F = double.TryParse(Dividendo, out number) & double.TryParse(Divisor, out number);
 
-        }
+            if (B)
+            {
+                Result = ("Math ERROR");
+            }
+
+            else if (A & !B)
+            {
+                Result = (ModuloCancelativo.ToString());
+            }
+
+            else if (C & D)
+            {
+                Result = (Modulo.ToString());
+            }
+
+            else if (D)
+            {
+                Result = (Dividendo);
+            }
+
+            else if (E)
+            {
+                Result = (Modulo.ToString());
+            }
+
+            else if (F)
+            {
+                double dividendo = double.Parse(Dividendo);
+                double divisor = double.Parse(Divisor);
+                SimplificarEnteros(dividendo, divisor);
+            }
+            else
+            {
+                A = (Dividendo.Length > 2);
+                B = (Divisor.Length > 2);
+
+                if(A & B)
+                {
+                    Result = $"{Op}{Op}{Dividendo}{Cl}{Simbolo}{Op}{Divisor}{Cl}{Cl}";
+                }
+                else if (A)
+                {
+                    Result = $"{Op}{Op}{Dividendo}{Cl}{Simbolo}{Divisor}{Cl}";
+                }
+                else if (B)
+                {
+                    Result = $"{Op}{Dividendo}{Simbolo}{Op}{Divisor}{Cl}{Cl}";
+                }
+                else
+                    Result = $"{Dividendo}{Simbolo}{Divisor}";
+            }
+
+        } //OK
 
         private void SimplificarEnteros(double dividendo, double divisor)
         {
@@ -433,8 +520,217 @@ namespace ENTITY
 
             return $"{Dividendo}{Simbolo}{Divisor}";
         } //OK
+
+        private void CocientesInternos()
+        {
+            string Temporal = Contenido, Nivel = "", NivelOrden = "";
+            int Acomulador, i, j, k, Izq, Der;
+            bool A, B;
+            A = B = true;
+            Acomulador = i = j = k = Izq = Der = 0;
+
+            foreach (var elemento in Temporal)
+            {
+                if (elemento.Equals(Simbolo))
+                {
+                    i = j = k;
+                    Izq = Der = 0;
+                    A = B = true;
+
+                    while (A || B)
+                    {
+                        if (A)
+                        {
+                            //CUERPO
+                            Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                            //FINCUERPO
+                            if (i <= 0)
+                                A = false;
+                            --i;
+                        }
+                        if (B)
+                        {
+                            //CUERPO
+                            Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                            //FINCUERPO
+                            if (j >= Contenido.Length - 1)
+                                B = false;
+                            ++j;
+                        }
+                    }
+
+                    //MANIPULAR LA CANTIDAD DE PARENTESIS Y APLICAR RESULTADOS
+
+                    A = true;
+                    i = 0;
+                    Nivel += Izq;
+
+                    if (!NivelOrden.Contains($"{Izq}"))
+                    {
+                        if (NivelOrden.Equals(""))
+                            NivelOrden += $"{Izq}";
+                        else
+                        {
+                            while (A)
+                            {
+                                if (i < NivelOrden.Length)
+                                    Acomulador = int.Parse($"{NivelOrden.ElementAt(i)}");
+                                else
+                                    Acomulador = -1;
+
+                                if (Acomulador > Izq)
+                                    ++i;
+                                else
+                                {
+                                    if (i < NivelOrden.Length)
+                                        NivelOrden = NivelOrden.Insert(i, $"{Izq}");
+                                    else
+                                        NivelOrden += $"{Izq}";
+
+                                    A = false;
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+
+                ++k;
+            }
+
+            ResolverNiveles(Nivel, NivelOrden);
+        }
+
+        public void ResolverNiveles(string Niveles, string Orden)
+        {
+            int i, j, k, q = 0, Izq, Der;
+            bool A = true, B = true;
+            string Temporal = Contenido;
+
+            foreach (var orden in Orden)
+            {
+                k = 0;
+                foreach (var nivel in Niveles)
+                {
+                    ++k;
+                    if (nivel.Equals(orden))
+                    {
+                        if (!Niveles.StartsWith($"{nivel}"))
+                            --k;
+
+                        i = j = 0;
+                        while (i < Temporal.Length)
+                        {
+                            if (Temporal.ElementAt(i).Equals(Simbolo))
+                                ++j;
+                            if (j == k || i == Temporal.Length - 1)
+                                break;
+                            ++i;
+                        }
+
+                        j = i;
+                        Izq = Der = 0;
+                        A = B = true;
+
+                        while (A || B)
+                        {
+                            if (A)
+                            {
+                                //CUERPO
+                                Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                //FINCUERPO
+                                if (Izq == 1 || i <= 0)
+                                    A = false;
+                                else
+                                    --i;
+                            }
+                            if (B)
+                            {
+                                //CUERPO
+                                Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                //FINCUERPO
+                                if (Der == -1 || j >= Temporal.Length - 1)
+                                    B = false;
+                                else
+                                    ++j;
+                            }
+                        }
+
+
+                        ++q;
+                        //OBTENIDOS LOS INDICES DE INICIO (i) Y FIN (j) DE LA OP INTERNA
+                        string Nom= $"U{q}";
+                        string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
+                        Temporal = Temporal.Replace(Etiqueta, $"@{Nom}");
+
+                        CocienteEntero Interino = new CocienteEntero(Etiqueta);
+                        //OBTENER RESULTADO SEGUN LOS TIPOS
+                        Variables Var = new Variables(Nom, Etiqueta, Interino.Result, true);
+
+                        ListaVariables.Add(Var);
+
+                    }
+                }
+            }
+
+            ResolverVariables(ListaVariables, Niveles, Orden);
+
+        }
+
+        private void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
+        {
+            string Cont = "", Nombre = "", Actual = "", Acomulador;
+            int k, i, j; bool A = false;
+
+            if (LVariables.Count == 1)
+                Acomulador = (string)LVariables.ElementAt(0).Contenido;
+            else
+            {
+                foreach (var variable in LVariables)
+                {
+                     //ALGORITMO QUE ACOMULA Y REEMPLAZAZ LOS VALORES DE CADA VARIABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                }
+            }
+            
+
+            foreach (var orden in Orden)
+            {
+                k = 0;
+                foreach (var nivel in Niveles)
+                {
+                    ++k;
+                    if (nivel.Equals(orden))
+                    {
+                        i = j = 0;
+                        if (Orden.EndsWith($"{orden}"))
+                        {
+                            foreach (var elemento in Contenido)
+                            {
+                                if (elemento.Equals(Simbolo))
+                                {
+                                    ++j;
+                                }
+                                if (j == k)
+                                    break;
+                                ++i;
+                            }
+                            Dividendo = Proceso.DescorcharFunciones(Contenido.Substring(0, i));
+                            Divisor = Proceso.DescorcharFunciones(Contenido.Substring(i + 1));
+                            A = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (A)
+                    break;
+            }
+        }
     }
     
+    
+
     public class PotenciaNatural : AMathOps
     {
 
