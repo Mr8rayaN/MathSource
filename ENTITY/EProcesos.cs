@@ -166,6 +166,12 @@ namespace ENTITY
             return $"({Expresion})";
         }
 
+        public string DescorcharA(string Expresion)
+        {
+            Expresion = DescorcharFunciones(Expresion);
+            return DescorcharParentesis(Expresion);
+        }
+
         public bool IsAgrupate(string Expresion)
         {
             string E = Expresion;

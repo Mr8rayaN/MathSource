@@ -233,20 +233,13 @@ namespace ENTITY
         {
             if (Proceso.IsAgrupate(Expresion))
             {
-                Contenido = DescorcharA(Expresion);
+                Contenido = Proceso.DescorcharA(Expresion);
             }
             else
                 Contenido = Expresion;
 
             ObtenerElementos(Expresion);
             Operar();
-        }
-
-        private string DescorcharA(string Expresion)
-        {
-            
-            Expresion = Proceso.DescorcharFunciones(Expresion);
-            return Proceso.DescorcharParentesis(Expresion);
         }
 
         public override void ObtenerElementos(string LElementos)
@@ -278,7 +271,6 @@ namespace ENTITY
             }
             else
             {
-                //CocientesInternos();
                 ResolverNiveles();
             }
         }
@@ -539,180 +531,7 @@ namespace ENTITY
             return $"{Dividendo}{Simbolo}{Divisor}";
         } //OK
 
-        private void CocientesInternos()
-        {
-            string Temporal = Contenido, Nivel = "", NivelOrden = "";
-            int Acomulador, i, j, k, Izq, Der;
-            bool A, B;
-            A = B = true;
-            Acomulador = i = j = k = Izq = Der = 0;
-
-            foreach (var elemento in Temporal)
-            {
-                if (elemento.Equals(Simbolo))
-                {
-                    i = j = k;
-                    Izq = Der = 0;
-                    A = B = true;
-
-                    while (A || B)
-                    {
-                        if (A)
-                        {
-                            //CUERPO
-                            Izq += Proceso.IsLlave(Temporal.ElementAt(i));
-                            //FINCUERPO
-                            if (i <= 0)
-                                A = false;
-                            --i;
-                        }
-                        if (B)
-                        {
-                            //CUERPO
-                            Der += Proceso.IsLlave(Temporal.ElementAt(j));
-                            //FINCUERPO
-                            if (j >= Contenido.Length - 1)
-                                B = false;
-                            ++j;
-                        }
-                    }
-
-                    //MANIPULAR LA CANTIDAD DE PARENTESIS Y APLICAR RESULTADOS
-
-                    A = true;
-                    i = 0;
-                    Nivel += Izq;
-
-                    if (!NivelOrden.Contains($"{Izq}"))
-                    {
-                        if (NivelOrden.Equals(""))
-                            NivelOrden += $"{Izq}";
-                        else
-                        {
-                            while (A)
-                            {
-                                if (i < NivelOrden.Length)
-                                    Acomulador = int.Parse($"{NivelOrden.ElementAt(i)}");
-                                else
-                                    Acomulador = -1;
-
-                                if (Acomulador > Izq)
-                                    ++i;
-                                else
-                                {
-                                    if (i < NivelOrden.Length)
-                                        NivelOrden = NivelOrden.Insert(i, $"{Izq}");
-                                    else
-                                        NivelOrden += $"{Izq}";
-
-                                    A = false;
-                                }
-
-                            }
-                        }
-                    }
-
-                }
-
-                ++k;
-            }
-
-            //ResolverNiveles(Nivel, NivelOrden);
-        }
-
-        private string ObtenerNiveles(string Expresion)
-        {
-            string  Nivel = "";
-            int Acomulador, i, j, k, Izq, Der;
-            bool A, B;
-            A = B = true;
-            Acomulador = i = j = k = Izq = Der = 0;
-            
-            foreach (var elemento in Expresion)
-            {
-                if (elemento.Equals(Simbolo))
-                {
-                    i = j = k;
-                    Izq = Der = 0;
-                    A = B = true;
-
-                    while (A || B)
-                    {
-                        if (A)
-                        {
-                            //CUERPO
-                            Izq += Proceso.IsLlave(Expresion.ElementAt(i));
-                            //FINCUERPO
-                            if (i <= 0)
-                                A = false;
-                            --i;
-                        }
-                        if (B)
-                        {
-                            //CUERPO
-                            Der += Proceso.IsLlave(Expresion.ElementAt(j));
-                            //FINCUERPO
-                            if (j >= Expresion.Length - 1)
-                                B = false;
-                            ++j;
-                        }
-                    }
-
-                    //MANIPULAR LA CANTIDAD DE PARENTESIS Y APLICAR RESULTADOS
-
-                    //A = true;
-                    //i = 0;
-                    Nivel += Izq;
-
-                }
-
-                ++k;
-            }
-
-            return Nivel;
-        }
-
-        private string ObtenerOrden(string Niveles)
-        {
-            int i = 0, Acomulador = 0; bool A = false; string NivelOrden = "";
-            foreach (var nivel in Niveles)
-            {
-                i = 0; A = true;
-
-                if (!NivelOrden.Contains(nivel))
-                {
-                    if (NivelOrden.Equals(""))
-                        NivelOrden += nivel;
-                    else
-                    {
-                        while (A)
-                        {
-                            if (i < NivelOrden.Length)
-                                Acomulador = int.Parse($"{NivelOrden.ElementAt(i)}");
-                            else
-                                Acomulador = -1;
-
-                            if (Acomulador > int.Parse($"{nivel}"))
-                                ++i;
-                            else
-                            {
-                                if (i < NivelOrden.Length)
-                                    NivelOrden = NivelOrden.Insert(i, $"{nivel}");
-                                else
-                                    NivelOrden += nivel;
-
-                                A = false;
-                            }
-
-                        }
-                    }
-                }
-            }
-
-            return NivelOrden;
-        }
-
-        public void ResolverNiveles()
+        public override void ResolverNiveles()
         {
             string Temporal = Contenido;
 
@@ -827,7 +646,8 @@ namespace ENTITY
 
         }
 
-        private void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
+        //APLICAR LA PROPIEDAD DE LA OREJITA ANTES DE REEMPLAZAR LAS VARIABLES
+        public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
             LVariables.Reverse();
             string Nomb = "", Conten = "", Acomulador;
@@ -895,10 +715,11 @@ namespace ENTITY
                     break;
             }
         }
+
     }
     
     public class PotenciaNatural : AMathOps
     {
-
+        
     }
 }

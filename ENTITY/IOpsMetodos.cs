@@ -10,5 +10,9 @@ namespace ENTITY
     {
         void Operar();
         void ObtenerElementos(string LElementos);
+        string ObtenerNiveles(string Expresion);
+        string ObtenerOrden(string Niveles);
+        void ResolverNiveles();
+        void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden);
     }
 }
