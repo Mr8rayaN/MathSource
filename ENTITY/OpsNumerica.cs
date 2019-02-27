@@ -897,8 +897,6 @@ namespace ENTITY
         }
     }
     
-    
-
     public class PotenciaNatural : AMathOps
     {
 
