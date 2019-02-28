@@ -11,6 +11,8 @@ namespace ENTITY
         public virtual int Modulo { get;}
         public virtual string Nombre { get; }
         public virtual char Simbolo { get; }
+        public virtual char Op { get; }
+        public virtual char Cl { get; }
         public string Contenido { get; protected set; }
         public string Result { get; protected set; }
         public int NumeroElementos { get; protected set; }

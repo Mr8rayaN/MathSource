@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
+    //ACTUALIZAR SUMAS PARA OPERAR EN SUMAS ANIDADAS E INDEPENDIENTES DE LAS SUMAS PRINCIPALES
     public class SumaEntera : AMathOps 
     {
         public override string Nombre => "SUMA";
         public override int Modulo => 0;
         public override char Simbolo => '+';
+        public override char Op => '(';
+        public override char Cl => ')';
         private List<string> Temporal = new List<string>();
         private string SignosTemporal { get; set; }
 
@@ -111,18 +114,31 @@ namespace ENTITY
 
     }
 
+    //ACTUALIZAR PRODUCTOS PARA OPERAR EN PRODUCTOS ANIDADOS E INDEPENDIENTES DE LOS PRODUCTOS PRINCIPALES
     public class ProductoEntero : AMathOps
     {
         public override string Nombre => "PRODUCTO";
         public override int Modulo => 1;
         public int ModuloCancelativo => 0;
         public override char Simbolo => '*';
+        public override char Op => '(';
+        public override char Cl => ')';
         private List<string> Temporal = new List<string>();
         private string SignosTemporal { get; set; }
 
         public ProductoEntero()
         {
 
+        }
+
+        public ProductoEntero(string Multiplicando, string Multiplicador)
+        {
+            Contenido = Multiplicando + Simbolo + Multiplicador;
+            Elementos.Add(Multiplicando);
+            Elementos.Add(Multiplicador);
+            ObtenerSignos(Elementos);
+            Proceso.CopyList(Temporal, Elementos);
+            Operar();
         }
 
         public ProductoEntero(string Expresion)
@@ -204,10 +220,10 @@ namespace ENTITY
         public override int Modulo => 1;
         public int ModuloCancelativo => 0;
         public override char Simbolo => '/';
+        public override char Op => '{';
+        public override char Cl => '}';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
-        public char Op => '{';
-        public char Cl => '}';
         public ProductoEntero Producto = new ProductoEntero();
         public List<Variables> ListaVariables = new List<Variables>();
         private Variables variable = new Variables();
@@ -531,6 +547,7 @@ namespace ENTITY
             return $"{Dividendo}{Simbolo}{Divisor}";
         } //OK
 
+        //APLICAR LA PROPIEDAD DE LA OREJITA ANTES DE CREAR LAS VARIABLES
         public override void ResolverNiveles()
         {
             string Temporal = Contenido;
@@ -646,7 +663,20 @@ namespace ENTITY
 
         }
 
-        //APLICAR LA PROPIEDAD DE LA OREJITA ANTES DE REEMPLAZAR LAS VARIABLES
+        public CocienteEntero PropiedadDistributiva(CocienteEntero Dividendo, CocienteEntero Divisor)
+        {
+            Producto = new ProductoEntero(Dividendo.Dividendo, Divisor.Divisor);
+            string ProductoDividendo = Producto.Result;
+
+            Producto = new ProductoEntero(Dividendo.Divisor, Divisor.Dividendo);
+            string ProductoDivisor = Producto.Result;
+
+            Producto = new ProductoEntero();
+
+            return new CocienteEntero(ProductoDividendo, ProductoDivisor);
+
+        }
+
         public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
             LVariables.Reverse();
