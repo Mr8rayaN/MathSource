@@ -558,6 +558,8 @@ namespace ENTITY
             string Orden = ObtenerOrden(Niveles);
             string OrdenCop = Orden;
 
+            char nivelAnterior = ' ';
+
             int i, j, k, q = 0,  Izq, Der, Uno, Dos;
             bool A = true, B = true, WUno = true, WDos = true;
 
@@ -626,7 +628,7 @@ namespace ENTITY
                         //DEBE SER UN DERIVADO DE LA FUNCION A RESOLVER
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
-                        Temporal = Temporal.Replace(Etiqueta, $"@{Nom}");
+                        Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
                         Etiqueta = Proceso.DescorcharFunciones(Etiqueta);
 
                         CocienteEntero Interino = new CocienteEntero(Etiqueta);
@@ -635,12 +637,11 @@ namespace ENTITY
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
                         ListaVariables.Add(Var);
-
+                        
                         if (!Temporal.Equals(Contenido))
                         {
                             Niveles = ObtenerNiveles(Temporal);
                             Orden = ObtenerOrden(Niveles);
-
                             Uno = -1;
                             break;
                         }
@@ -651,6 +652,7 @@ namespace ENTITY
 
                     if (Dos == Niveles.Length)
                         WDos = false;
+
                 }
 
                 ++Uno;
@@ -659,6 +661,8 @@ namespace ENTITY
                     WUno = false;
             }
 
+            //CONFIRMAR Y ENVIAR NIVELES Y ORDENES CORRECTAS YA QUE LA FUNCION HA
+            //PODIDO QUEDAR SIMPLIFICADA EN PARTES POR LO TANTO ALGUNOS NIVELES PUDIERON DESAPARECER
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
 
         }
