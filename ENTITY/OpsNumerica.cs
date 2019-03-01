@@ -224,6 +224,8 @@ namespace ENTITY
         public override char Cl => '}';
         public string Dividendo { get; private set; }
         public string Divisor { get; private set; }
+        public string DividendoOut { get; private set; }
+        public string DivisorOut { get; private set; }
         public ProductoEntero Producto = new ProductoEntero();
         public List<Variables> ListaVariables = new List<Variables>();
         private Variables variable = new Variables();
@@ -254,7 +256,7 @@ namespace ENTITY
             else
                 Contenido = Expresion;
 
-            ObtenerElementos(Expresion);
+            ObtenerElementos(Contenido);
             Operar();
         }
 
@@ -313,21 +315,29 @@ namespace ENTITY
 
             else if (A & !B)
             {
+                DividendoOut = Dividendo;
+                DivisorOut = Divisor;
                 Result = (ModuloCancelativo.ToString());
             }
 
             else if (C & D)
             {
+                DividendoOut = Dividendo;
+                DivisorOut = Divisor;
                 Result = (Modulo.ToString());
             }
 
             else if (D)
             {
+                DividendoOut = Dividendo;
+                DivisorOut = Divisor;
                 Result = (Dividendo);
             }
 
             else if (E)
             {
+                DividendoOut = Dividendo;
+                DivisorOut = Divisor;
                 Result = (Modulo.ToString());
             }
 
@@ -360,6 +370,8 @@ namespace ENTITY
                 else
                     Result = $"{Dividendo}{Simbolo}{Divisor}";
 
+                DividendoOut = Dividendo;
+                DivisorOut = Divisor;
                 //Result = $"{Op}{Dividendo}{Simbolo}{Divisor}{Cl}";
             }
 
@@ -386,11 +398,16 @@ namespace ENTITY
             if (dividendo % divisor == 0)
             {
                 dividendo *= signo;
+
+                DividendoOut = $"{dividendo}";
+                DivisorOut = $"{divisor}";
                 Result = (dividendo / divisor).ToString();
             }
             else if (dividendo == Modulo)
             {
                 dividendo *= signo;
+                DividendoOut = $"{dividendo}";
+                DivisorOut = $"{divisor}";
                 Result = $"{dividendo}{Simbolo}{divisor}";
             }
             else
@@ -471,6 +488,8 @@ namespace ENTITY
                 divisor *= item;
             }
 
+            DividendoOut = $"{dividendo}";
+            DivisorOut = $"{divisor}";
             Dividendo = dividendo.ToString();
             Divisor = divisor.ToString();
 
@@ -541,13 +560,14 @@ namespace ENTITY
                 divisor *= item;
             }
 
+            DividendoOut = $"{dividendo}";
+            DivisorOut = $"{divisor}";
             Dividendo = dividendo.ToString();
             Divisor = divisor.ToString();
 
             return $"{Dividendo}{Simbolo}{Divisor}";
         } //OK
 
-        //APLICAR LA PROPIEDAD DE LA OREJITA ANTES DE CREAR LAS VARIABLES
         public override void ResolverNiveles()
         {
             string Temporal = Contenido;
@@ -557,8 +577,6 @@ namespace ENTITY
 
             string Orden = ObtenerOrden(Niveles);
             string OrdenCop = Orden;
-
-            char nivelAnterior = ' ';
 
             int i, j, k, q = 0,  Izq, Der, Uno, Dos;
             bool A = true, B = true, WUno = true, WDos = true;
@@ -661,8 +679,6 @@ namespace ENTITY
                     WUno = false;
             }
 
-            //CONFIRMAR Y ENVIAR NIVELES Y ORDENES CORRECTAS YA QUE LA FUNCION HA
-            //PODIDO QUEDAR SIMPLIFICADA EN PARTES POR LO TANTO ALGUNOS NIVELES PUDIERON DESAPARECER
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
 
         }
@@ -712,7 +728,12 @@ namespace ENTITY
                 }
             }
 
+            //APLICA OREJITAS
+            Acomulador = AplicarPropiedadPorSectores(Acomulador);
             Contenido = Acomulador;
+
+            Niveles = ObtenerNiveles(Contenido);
+            Orden = ObtenerOrden(Niveles);
 
             foreach (var orden in Orden)
             {
@@ -750,7 +771,279 @@ namespace ENTITY
             }
         }
 
+        private string AplicarPropiedadPorSectores(string Expresion)
+        {
+            string Temporal = Expresion;
+
+            string Niveles = ObtenerNiveles(Temporal);
+            string NivelesCop = Niveles;
+
+            string Orden = ObtenerOrden(Niveles);
+            string OrdenCop = Orden;
+
+            int i, j, k, q = 0, Izq, Der, Uno, Dos;
+            bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
+
+            Uno = 0;
+            while (WUno)
+            {
+                var orden = Orden.ElementAt(Uno);
+                k = 0; Dos = 0;
+
+                while (WDos)
+                {
+                    Distribuyo = false;
+                    var nivel = Niveles.ElementAt(Dos);
+                    ++k;
+
+                    if (nivel.Equals(orden))
+                    {
+                        i = j = 0; B = false;
+                        while (i < Temporal.Length)
+                        {
+                            A = Temporal.ElementAt(i).Equals(Simbolo);
+
+                            if (A)
+                            {
+                                ++j;
+                            }
+
+                            if (j == k || i == Temporal.Length - 1)
+                                break;
+                            ++i;
+                        }
+
+                        j = i;
+                        Izq = Der = 0;
+                        A = B = true;
+
+                        while (A || B)
+                        {
+                            if (A)
+                            {
+                                //CUERPO
+                                Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                //FINCUERPO
+                                if (Izq == 1 || i <= 0)
+                                    A = false;
+                                else
+                                    --i;
+                            }
+                            if (B)
+                            {
+                                //CUERPO
+                                Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                //FINCUERPO
+                                if (Der == -1 || j >= Temporal.Length - 1)
+                                    B = false;
+                                else
+                                    ++j;
+                            }
+                        }
+
+                        //OBTENGO LA OPERACION INTERNA Y VEO SI PUEDO APLICARLE LA PROPIEDAD
+                        string OpInterna = $"{Temporal.Substring(i, (j - i) + 1)}";
+                        //VALIDO SI PUEDO APLICARLE PROPIEDAD
+                        if (IsDistribuible(OpInterna, Temporal))
+                        {
+                            //PROGRAMANDO DISTRIBUIR
+                            Temporal = Distribuir(OpInterna, Temporal);
+                            Distribuyo = true;
+                        }
+
+
+                        //FIN VALIDACION
+
+                        if (!Temporal.Equals(Expresion) & Distribuyo)
+                        {
+                            Niveles = ObtenerNiveles(Temporal);
+                            Orden = ObtenerOrden(Niveles);
+                            Uno = -1;
+                            break;
+                        }
+
+                    }
+
+                    ++Dos;
+
+                    if (Dos == Niveles.Length)
+                        WDos = false;
+
+                }
+
+                ++Uno;
+
+                if (Uno == Orden.Length)
+                    WUno = false;
+            }
+
+            //RETORNAR EL OBJETO
+            return Temporal;
+        }
+
+        private bool IsDistribuible(string Contenido, string Contenedor)
+        {
+            if (!Contenedor.Contains(Contenido))
+                return false;
+
+            int i = 0, j = 0;
+            i = Contenedor.IndexOf(Contenido);
+            j = (i) + (Contenido.Length - 1);
+
+            if (Contenedor.Equals(Contenido))
+                return false;
+            else if (Contenedor.StartsWith(Contenido))
+            {
+                ++j;
+                if (Contenedor.ElementAt(j).Equals(Simbolo))
+                    return true;
+                else
+                    return false;
+            }
+            else if (Contenedor.EndsWith(Contenido))
+            {
+                --i;
+                if (Contenedor.ElementAt(i).Equals(Simbolo))
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                --i; ++j;
+                bool A = Contenedor.ElementAt(j).Equals(Simbolo);
+                bool B = Contenedor.ElementAt(i).Equals(Simbolo);
+
+                if (A || B)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        private string Distribuir(string Contenido, string Contenedor)
+        {
+            CocienteEntero dividendo = new CocienteEntero();
+            CocienteEntero divisor = new CocienteEntero();
+            int i = 0, j = 0; bool seguir = true;
+            i = Contenedor.IndexOf(Contenido);
+            j = (i) + (Contenido.Length - 1);
+
+            string Resuelto = "";
+            string Operador = "";
+            string Operacion = "";
+
+            if (Contenedor.StartsWith(Contenido))
+            {
+                dividendo = new CocienteEntero(Contenido);
+                j = j + 2;
+                int inicio = j;
+                while (j < Contenedor.Length & seguir)
+                {
+                    if (Proceso.IsLlave(Contenedor.ElementAt(j)) == -1)
+                    {
+                        seguir = false;
+                    }
+                    ++j;
+                }
+
+                if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
+                    --j;
+
+                //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
+                Operador = Contenedor.Substring(inicio, (j - inicio));
+                Operacion = Contenido + Simbolo + Operador;
+                divisor = new CocienteEntero(Operador);
+
+                Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
+                return Contenedor.Replace(Operacion, Resuelto);
+            }
+
+            else if (Contenedor.EndsWith(Contenido))
+            {
+                divisor = new CocienteEntero(Contenido);
+                i = i - 2;
+                int final = i;
+                while(i >= 0 & seguir)
+                {
+                    if (Proceso.IsLlave(Contenedor.ElementAt(i)) == 1 )
+                    {
+                        seguir = false;
+                    }
+                    --i;
+                }
+
+                //AGREGADO EL NO SEGUIR
+                if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
+                    ++i;
+
+                Operador = Contenedor.Substring(i, final + 1);
+                Operacion = Operador + Simbolo + Contenido;
+                dividendo = new CocienteEntero(Operador);
+
+                Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
+                return Contenedor.Replace(Operacion, Resuelto);
+            }
+
+            else
+            {
+                --i; ++j;
+                bool A = Contenedor.ElementAt(j).Equals(Simbolo);
+                bool B = Contenedor.ElementAt(i).Equals(Simbolo);
+
+                if (A)
+                {
+                    ++j;
+                    dividendo = new CocienteEntero(Contenido);
+                    int inicio = j;
+                    while (j < Contenedor.Length & seguir)
+                    {
+                        if (Proceso.IsLlave(Contenedor.ElementAt(j)) == -1)
+                        {
+                            seguir = false;
+                        }
+                        ++j;
+                    }
+
+                    //AGREGADO EL NO SEGUIR
+                    if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
+                        --j;
+
+                    Operador = Contenedor.Substring(inicio, (j - inicio));
+                    Operacion = Contenido + Simbolo + Operador;
+                    divisor = new CocienteEntero(Operador);
+
+                }
+                else if (B)
+                {
+                    --i;
+                    divisor = new CocienteEntero(Contenido);
+                    int final = i;
+                    while (i >= 0 & seguir)
+                    {
+                        if (Proceso.IsLlave(Contenedor.ElementAt(i)) == 1)
+                        {
+                            seguir = false;
+                        }
+                        --i;
+                    }
+
+                    //AGREGADO EL NO SEGUIR
+                    if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
+                        ++i;
+
+                    Operador = Contenedor.Substring(i, final + 1);
+                    Operacion = Operador + Simbolo + Contenido;
+                    dividendo = new CocienteEntero(Operador);
+
+                }
+
+                Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
+                return Contenedor.Replace(Operacion, Resuelto);
+            }
+        }
     }
+
     
     public class PotenciaNatural : AMathOps
     {
