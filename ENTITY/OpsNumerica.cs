@@ -1045,8 +1045,47 @@ namespace ENTITY
     }
 
     
-    public class PotenciaNatural : AMathOps
+    public class PotenciaEntera : AMathOps
     {
-        
+        public override string Nombre => "POTENCIA";
+        public override int Modulo => 1;
+        public int ModuloCancelativo => 0;
+        public override char Simbolo => '^';
+        public override char Op => '{';
+        public override char Cl => '}';
+        public string Base { get; private set; }
+        public string Exponente { get; private set; }
+        double number;
+
+        private ProductoEntero Producto = new ProductoEntero();
+        private CocienteEntero Cociente = new CocienteEntero();
+        private SumaEntera Suma = new SumaEntera();
+
+        public PotenciaEntera()
+        {
+
+        }
+
+        public PotenciaEntera(string Expresion)
+        {
+            Contenido = Proceso.DescorcharA(Expresion);
+            Console.WriteLine(ObtenerNiveles(Contenido));
+            Console.WriteLine(ObtenerOrden(ObtenerNiveles(Contenido)));
+        }
+
+        public override void Operar()
+        {
+            
+        }
+
+        public override void ObtenerElementos(string LElementos)
+        {
+            
+        }
+
+        public override void ResolverNiveles()
+        {
+            
+        }
     }
 }

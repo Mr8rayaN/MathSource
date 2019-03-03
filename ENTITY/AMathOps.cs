@@ -20,14 +20,11 @@ namespace ENTITY
         protected EProcesos Proceso = new EProcesos();
         protected NumerosEnteros NumEntero = new NumerosEnteros();
 
-        public virtual void Operar()
-        {
+        //Sobreescribir en el hijo
+        public virtual void Operar() { }
 
-        }
-
-        public virtual void ObtenerElementos(string LElementos)
-        {
-        }
+        //Sobreescribir en el hijo
+        public virtual void ObtenerElementos(string LElementos) { }
 
         public string ObtenerNiveles(string Expresion)
         {

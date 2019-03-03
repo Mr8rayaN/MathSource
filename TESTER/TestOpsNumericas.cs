@@ -16,11 +16,11 @@ namespace TESTER
 
         private static void TEST_Consola_Especifico()
         {
-            string Entrada = "{{x/2}/3}";
+            string Entrada = "{x^{2*{{{2}^{3x+1}}^{2}}}}";
             Console.WriteLine($"ENTRADA = {Entrada}");
-            CocienteEntero COCIENTE = new CocienteEntero(Entrada);
-            Console.WriteLine(COCIENTE.Nombre);
-            Console.WriteLine(COCIENTE.Result);
+            PotenciaEntera  POTENCIA = new PotenciaEntera(Entrada);
+            Console.WriteLine(POTENCIA.Nombre);
+            Console.WriteLine(POTENCIA.Result);
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
         }
@@ -80,7 +80,7 @@ namespace TESTER
 
         private static void TEST_ENTITY_Potencia(string Uno, string Dos)
         {
-            Potencias POTENCIA = new Potencias(Uno, Dos);
+            Potencias POTENCIA = new Potencias(Uno + "^" + Dos);
             Console.WriteLine(POTENCIA.Nombre);
             Console.WriteLine(POTENCIA.Result);
         }
