@@ -11,16 +11,16 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Especifico();
+            TEST_Consola_EProcesos();
         }
 
         private static void TEST_Consola_Especifico()
         {
-            string Entrada = "{x^{2*{{{2}^{3x+1}}^{2}}}}";
+            string Entrada = "{2/{{2/x}/{4/2}}}";
             Console.WriteLine($"ENTRADA = {Entrada}");
-            PotenciaEntera  POTENCIA = new PotenciaEntera(Entrada);
-            Console.WriteLine(POTENCIA.Nombre);
-            Console.WriteLine(POTENCIA.Result);
+            CocienteEntero  COCIENTE = new CocienteEntero(Entrada);
+            Console.WriteLine(COCIENTE.Nombre);
+            Console.WriteLine(COCIENTE.Result);
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
         }
@@ -28,8 +28,8 @@ namespace TESTER
         private static void TEST_Consola_EProcesos()
         {
             EProcesos Proceso = new EProcesos();
-            Console.WriteLine("{x/2}/3");
-            Console.WriteLine(Proceso.DescorcharFunciones("{{{x/2}/6}/{4/7}}"));
+            Console.WriteLine("{x*2*2}/2");
+            Console.WriteLine("Está agrupado ? "+Proceso.IsAgrupate("{x*2*2}/2"));
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
         }
