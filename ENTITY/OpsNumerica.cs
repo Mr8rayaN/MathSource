@@ -1029,9 +1029,9 @@ namespace ENTITY
                 return Contenedor.Replace(Operacion, Resuelto);
             }
         }
-    }
+    } //FUNCIONANDO 100%
 
-    
+
     public class PotenciaEntera : AMathOps
     {
         public override string Nombre => "POTENCIA";
@@ -1634,5 +1634,5 @@ namespace ENTITY
                 return Contenedor.Replace(Operacion, Resuelto);
             }
         }
-    }
+    } //FUNCIONANDO 100%
 }
