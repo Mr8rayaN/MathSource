@@ -11,16 +11,27 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_EProcesos();
+            TEST_Consola_Potencia();
         }
 
-        private static void TEST_Consola_Especifico()
+        private static void TEST_Consola_Cociente()
         {
             string Entrada = "{2/{{2/x}/{4/2}}}";
             Console.WriteLine($"ENTRADA = {Entrada}");
             CocienteEntero  COCIENTE = new CocienteEntero(Entrada);
             Console.WriteLine(COCIENTE.Nombre);
             Console.WriteLine(COCIENTE.Result);
+            Console.WriteLine("----------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Consola_Potencia()
+        {
+            string Entrada = "{{{{x}^{2x}}^{2}}^{3x}}";
+            Console.WriteLine($"ENTRADA = {Entrada}");
+            PotenciaEntera POTENCIA = new PotenciaEntera(Entrada);
+            Console.WriteLine(POTENCIA.Nombre);
+            Console.WriteLine(POTENCIA.Result);
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
         }

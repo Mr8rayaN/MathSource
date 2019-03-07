@@ -960,7 +960,8 @@ namespace ENTITY
                 if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                     ++i;
 
-                Operador = Contenedor.Substring(i, final + 1);
+                //Operador = Contenedor.Substring(i, final + 1);
+                Operador = Contenedor.Substring(i, (final - i) + 1);
                 Operacion = Operador + Simbolo + Contenido;
                 dividendo = new CocienteEntero(Operador);
 
@@ -1018,7 +1019,8 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                         ++i;
 
-                    Operador = Contenedor.Substring(i, final + 1);
+                    //Operador = Contenedor.Substring(i, final + 1);
+                    Operador = Contenedor.Substring(i, (final - i) + 1);
                     Operacion = Operador + Simbolo + Contenido;
                     dividendo = new CocienteEntero(Operador);
 
@@ -1561,14 +1563,18 @@ namespace ENTITY
                     {
                         seguir = false;
                     }
-                    --i;
+                    if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                        --i;
+                    else //ACABADO DE COLOCAR PARA PRUEBAS
+                        break;
                 }
 
                 //AGREGADO EL NO SEGUIR
                 if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                     ++i;
 
-                Operador = Contenedor.Substring(i, final + 1);
+                //Operador = Contenedor.Substring(i, final + 1);
+                Operador = Contenedor.Substring(i, (final - i) + 1);
                 Operacion = Operador + Simbolo + Contenido;
                 thisBase = new PotenciaEntera(Operador);
 
@@ -1617,14 +1623,18 @@ namespace ENTITY
                         {
                             seguir = false;
                         }
-                        --i;
+                        if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                            --i;
+                        else //ACABADO DE COLOCAR PARA PRUEBAS
+                            break;
                     }
 
                     //AGREGADO EL NO SEGUIR
                     if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                         ++i;
 
-                    Operador = Contenedor.Substring(i, final + 1);
+                    //Operador = Contenedor.Substring(i, final + 1);
+                    Operador = Contenedor.Substring(i, (final - i) + 1);
                     Operacion = Operador + Simbolo + Contenido;
                     thisBase = new PotenciaEntera(Operador);
 
