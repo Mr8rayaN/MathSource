@@ -123,8 +123,10 @@ namespace ENTITY
         public override char Simbolo => '*';
         public override char Op => '(';
         public override char Cl => ')';
-        private List<string> Temporal = new List<string>();
         private string SignosTemporal { get; set; }
+        public List<Variables> ListaVariables = new List<Variables>();
+        private Variables variable = new Variables();
+        double number;
 
         public ProductoEntero()
         {
@@ -133,85 +135,541 @@ namespace ENTITY
 
         public ProductoEntero(string Multiplicando, string Multiplicador)
         {
-            Contenido = Multiplicando + Simbolo + Multiplicador;
-            Elementos.Add(Multiplicando);
-            Elementos.Add(Multiplicador);
-            ObtenerSignos(Elementos);
-            Proceso.CopyList(Temporal, Elementos);
+            Contenido = Proceso.DescorcharA(Multiplicando) + Simbolo + Proceso.DescorcharA(Multiplicador);
+            ObtenerElementos(Contenido);
             Operar();
         }
 
         public ProductoEntero(string Expresion)
         {
-            Contenido = Expresion;
-            ObtenerElementos(Expresion);
+            Contenido = Proceso.DescorcharA(Expresion);
+            ObtenerElementos(Contenido);
             ObtenerSignos(Elementos);
-            Proceso.CopyList(Temporal,Elementos);
+            //Proceso.CopyList(Temporal,Elementos);
             Operar();
         }
 
         public override void ObtenerElementos(string LElementos)
         {
-            Contenido = "";
+            int i = 0, NumeroImplicitoDeOps = 0;
 
-            foreach (var item in LElementos.Split(Simbolo))
+            foreach (var elemento in LElementos)
             {
-                Elementos.Add(item);
+                if (elemento.Equals(Simbolo))
+                    ++NumeroImplicitoDeOps;
+            }
 
-                if (Contenido.Equals(""))
-                    Contenido += item;
-                else
-                    Contenido += Simbolo + item;
+            if (NumeroImplicitoDeOps == 0)
+            {
+                Elementos.Add(LElementos);
+                Elementos.Add($"{Modulo}");
+            }
+            else if (NumeroImplicitoDeOps == 1)
+            {
+                i = 0;
+                foreach (var elemento in LElementos.Split(Simbolo))
+                {
+                    if (i == 0)
+                        Elementos.Add(elemento);
+                    else if (i == 1)
+                        Elementos.Add(elemento);
+                    ++i;
+                }
+            }
+            else
+            {
+                ResolverNiveles();
             }
         }
 
         public override void Operar()
         {
-            double Parseo, Acomulador;
-            Parseo = Acomulador = Modulo;
+            double Acomulador = Modulo;
+            bool Cancelado = false;
+            List<string> Temporal = new List<string>();
+            Proceso.CopyList(Temporal, Elementos);
 
             foreach (var elemento in Elementos)
             {
-                try
+                if (elemento.Equals($"{ModuloCancelativo}"))
                 {
-                    Parseo = double.Parse(elemento);
-                    if(Parseo == ModuloCancelativo)
-                    {
-                        Temporal.Clear();
-                        Acomulador = ModuloCancelativo;
-                        Temporal.Add($"{ModuloCancelativo}");
-                        break;
-                    }
-                    Acomulador *= Parseo;
+                    Temporal.Clear();
+                    Cancelado = true;
+                    break;
+                }
+                else if(double.TryParse(elemento,out number))
+                {
                     Temporal.Remove(elemento);
+                    Acomulador *= double.Parse(elemento);
                 }
-                catch (Exception) { }
             }
 
-            if (Acomulador != ModuloCancelativo)
+            if (Cancelado)
+                Result = $"{ModuloCancelativo}";
+            else if (Temporal.Count < 1)
+                Result = $"{Acomulador}";
+            else
             {
-                if (Temporal.Count == 0)
+                string RTA = "";
+                if(Math.Abs(Acomulador) != 1)
+                    RTA = $"{Acomulador}";
+
+                foreach (var elemento in Temporal)
                 {
-                    Temporal.Add($"{Acomulador}");
-                }
-                else if(Acomulador != Modulo)
-                {
-                    Temporal.Add($"{Acomulador}");
+                    RTA += Simbolo + elemento;
                 }
 
-            }
-
-            Result = "";
-
-            foreach (var elemento in Temporal)
-            {
-                if (Result.Equals(""))
-                    Result += elemento;
-                else
-                    Result += Simbolo + elemento;
+                Result = RTA.Trim(Simbolo);
             }
         }
-        
+
+        public override void ResolverNiveles()
+        {
+            string Temporal = Contenido;
+
+            string Niveles = ObtenerNiveles(Temporal);
+            string NivelesCop = Niveles;
+
+            string Orden = ObtenerOrden(Niveles);
+            string OrdenCop = Orden;
+
+            int i, j, k, q = 0, Izq, Der, Uno, Dos;
+            bool A = true, B = true, WUno = true, WDos = true;
+
+            Uno = 0;
+            while (WUno)
+            {
+                var orden = Orden.ElementAt(Uno);
+                k = 0; Dos = 0;
+
+                while (WDos)
+                {
+                    var nivel = Niveles.ElementAt(Dos);
+                    ++k;
+
+                    if (nivel.Equals(orden))
+                    {
+                        i = j = 0; B = false;
+                        while (i < Temporal.Length)
+                        {
+                            A = Temporal.ElementAt(i).Equals(Simbolo);
+                            //B = Temporal.ElementAt(i).Equals(variable.Simbolo);
+
+                            if (A)
+                            {
+                                ++j;
+                            }
+
+                            if (j == k || i == Temporal.Length - 1)
+                                break;
+                            ++i;
+                        }
+
+                        j = i;
+                        Izq = Der = 0;
+                        A = B = true;
+
+                        while (A || B)
+                        {
+                            if (A)
+                            {
+                                //CUERPO
+                                Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                //FINCUERPO
+                                if (Izq == 1 || i <= 0)
+                                    A = false;
+                                else
+                                    --i;
+                            }
+                            if (B)
+                            {
+                                //CUERPO
+                                Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                //FINCUERPO
+                                if (Der == -1 || j >= Temporal.Length - 1)
+                                    B = false;
+                                else
+                                    ++j;
+                            }
+                        }
+
+
+                        ++q;
+                        //OBTENIDOS LOS INDICES DE INICIO (i) Y FIN (j) DE LA OP INTERNA
+                        string Nom = $"U{q}";
+                        //PROBLEMA DE RECURSIVIDAD INFINITA SI LA ETIQUETA ES IGUAL A LA FUNCION
+                        //DEBE SER UN DERIVADO DE LA FUNCION A RESOLVER
+                        //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
+                        string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
+                        Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
+                        Etiqueta = Proceso.DescorcharFunciones(Etiqueta);
+
+                        ProductoEntero Interino = new ProductoEntero(Etiqueta);
+                        string Res = Proceso.DescorcharFunciones(Interino.Result);
+                        //OBTENER RESULTADO SEGUN LOS TIPOS
+                        Variables Var = new Variables(Nom, Etiqueta, Res, true);
+
+                        ListaVariables.Add(Var);
+
+                        if (!Temporal.Equals(Contenido))
+                        {
+                            Niveles = ObtenerNiveles(Temporal);
+                            Orden = ObtenerOrden(Niveles);
+                            Uno = -1;
+                            break;
+                        }
+
+                    }
+
+                    ++Dos;
+
+                    if (Dos == Niveles.Length)
+                        WDos = false;
+
+                }
+
+                ++Uno;
+
+                if (Uno == Orden.Length)
+                    WUno = false;
+            }
+
+            ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
+
+        }
+
+        public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
+        {
+            LVariables.Reverse();
+            string Nomb = "", Conten = "", Acomulador;
+            int k, i, j; bool A = false, B = false;
+
+            i = 0;
+            variable = LVariables.ElementAt(i);
+            Acomulador = (string)variable.Contenido;
+
+            if (Acomulador.Contains(variable.Simbolo))
+            {
+                while (Acomulador.Contains(variable.Simbolo))
+                {
+
+                    Nomb = $"{variable.Simbolo}{LVariables.ElementAt(i).Nombre}";
+                    Conten = (string)LVariables.ElementAt(i).Contenido;
+                    //ENCORCHAR EL CONTENIDO SI ES NECESARIO;
+
+                    A = (Conten.Length > 2);
+                    B = Proceso.IsAgrupate(Conten);
+
+                    if (A & !B)
+                    {
+                        Conten = Proceso.EncorcharParentesis(Conten);
+                    }
+
+                    Acomulador = Acomulador.Replace(Nomb, Conten);
+                    ++i;
+                }
+            }
+
+            //APLICA PROPIEDADES INTERNAS
+            Acomulador = AplicarPropiedadPorSectores(Acomulador);
+            Contenido = Acomulador;
+
+            Niveles = ObtenerNiveles(Contenido);
+            Orden = ObtenerOrden(Niveles);
+
+            //OBTENIENDO VALORES FINALES
+            Acomulador = Proceso.DescorcharFunciones(Contenido);
+            ObtenerElementos(Acomulador);
+            //FIN DE RECAUDAR VALORES
+
+        }
+
+        private string AplicarPropiedadPorSectores(string Expresion)
+        {
+            string Temporal = Expresion;
+
+            string Niveles = ObtenerNiveles(Temporal);
+            string NivelesCop = Niveles;
+
+            string Orden = ObtenerOrden(Niveles);
+            string OrdenCop = Orden;
+
+            int i, j, k, Izq, Der, Uno, Dos;
+            bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
+
+            Uno = 0;
+            while (WUno)
+            {
+                var orden = Orden.ElementAt(Uno);
+                k = 0; Dos = 0;
+
+                while (WDos)
+                {
+                    Distribuyo = false;
+                    var nivel = Niveles.ElementAt(Dos);
+                    ++k;
+
+                    if (nivel.Equals(orden))
+                    {
+                        i = j = 0; B = false;
+                        while (i < Temporal.Length)
+                        {
+                            A = Temporal.ElementAt(i).Equals(Simbolo);
+
+                            if (A)
+                            {
+                                ++j;
+                            }
+
+                            if (j == k || i == Temporal.Length - 1)
+                                break;
+                            ++i;
+                        }
+
+                        j = i;
+                        Izq = Der = 0;
+                        A = B = true;
+
+                        while (A || B)
+                        {
+                            if (A)
+                            {
+                                //CUERPO
+                                Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                //FINCUERPO
+                                if (Izq == 1 || i <= 0)
+                                    A = false;
+                                else
+                                    --i;
+                            }
+                            if (B)
+                            {
+                                //CUERPO
+                                Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                //FINCUERPO
+                                if (Der == -1 || j >= Temporal.Length - 1)
+                                    B = false;
+                                else
+                                    ++j;
+                            }
+                        }
+
+                        //OBTENGO LA OPERACION INTERNA Y VEO SI PUEDO APLICARLE LA PROPIEDAD
+                        string OpInterna = $"{Temporal.Substring(i, (j - i) + 1)}";
+                        //VALIDO SI PUEDO APLICARLE PROPIEDAD
+                        if (IsDistribuible(OpInterna, Temporal))
+                        {
+                            //PROGRAMANDO DISTRIBUIR
+                            Temporal = Distribuir(OpInterna, Temporal);
+                            Distribuyo = true;
+                        }
+
+
+                        //FIN VALIDACION
+
+                        if (!Temporal.Equals(Expresion) & Distribuyo)
+                        {
+                            Niveles = ObtenerNiveles(Temporal);
+                            Orden = ObtenerOrden(Niveles);
+                            Uno = -1;
+                            break;
+                        }
+
+                    }
+
+                    ++Dos;
+
+                    if (Dos == Niveles.Length)
+                        WDos = false;
+
+                }
+
+                ++Uno;
+
+                if (Uno == Orden.Length)
+                    WUno = false;
+            }
+
+            //RETORNAR EL OBJETO
+            return Temporal;
+        }
+
+        private bool IsDistribuible(string Contenido, string Contenedor)
+        {
+            if (!Contenedor.Contains(Contenido))
+                return false;
+
+            int i = 0, j = 0;
+            i = Contenedor.IndexOf(Contenido);
+            j = (i) + (Contenido.Length - 1);
+
+            if (Contenedor.Equals(Contenido))
+                return false;
+            else if (Contenedor.StartsWith(Contenido))
+            {
+                ++j;
+                if (Contenedor.ElementAt(j).Equals(Simbolo))
+                    return true;
+                else
+                    return false;
+            }
+            else if (Contenedor.EndsWith(Contenido))
+            {
+                --i;
+                if (Contenedor.ElementAt(i).Equals(Simbolo))
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                --i; ++j;
+                bool A = Contenedor.ElementAt(j).Equals(Simbolo);
+                bool B = Contenedor.ElementAt(i).Equals(Simbolo);
+
+                if (A || B)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        private string Distribuir(string Contenido, string Contenedor)
+        {
+            ProductoEntero Multiplicando = new ProductoEntero();
+            string Multiplicador = "";
+            int i = 0, j = 0; bool seguir = true;
+            i = Contenedor.IndexOf(Contenido);
+            j = (i) + (Contenido.Length - 1);
+
+            string Resuelto = "";
+            string Operador = "";
+            string Operacion = "";
+
+            if (Contenedor.StartsWith(Contenido))
+            {
+                Multiplicando = new ProductoEntero(Contenido);
+                j = j + 2;
+                int inicio = j;
+                while (j < Contenedor.Length & seguir)
+                {
+                    if (Proceso.IsLlave(Contenedor.ElementAt(j)) == -1)
+                    {
+                        seguir = false;
+                    }
+                    ++j;
+                }
+
+                if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
+                    --j;
+
+                //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
+                Operador = Contenedor.Substring(inicio, (j - inicio));
+                Operacion = Contenido + Simbolo + Operador;
+                Operador = Proceso.DescorcharA(Operador);
+                Multiplicador = Operador;
+
+                Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
+                return Contenedor.Replace(Operacion, Resuelto);
+            }
+
+            else if (Contenedor.EndsWith(Contenido))
+            {
+                Multiplicador = Contenido;
+                i = i - 2;
+                int final = i;
+                while (i >= 0 & seguir)
+                {
+                    if (Proceso.IsLlave(Contenedor.ElementAt(i)) == 1)
+                    {
+                        seguir = false;
+                    }
+                    if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                        --i;
+                    else //ACABADO DE COLOCAR PARA PRUEBAS
+                        break;
+                }
+
+                //AGREGADO EL NO SEGUIR
+                if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
+                    ++i;
+
+                Operador = Contenedor.Substring(i, final + 1);
+                Operacion = Operador + Simbolo + Contenido;
+                Multiplicando = new ProductoEntero(Operador);
+
+                Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
+                return Contenedor.Replace(Operacion, Resuelto);
+            }
+
+            else
+            {
+                --i; ++j;
+                bool A = Contenedor.ElementAt(j).Equals(Simbolo);
+                bool B = Contenedor.ElementAt(i).Equals(Simbolo);
+
+                if (A)
+                {
+                    ++j;
+                    Multiplicando = new ProductoEntero(Contenido);
+                    int inicio = j;
+                    while (j < Contenedor.Length & seguir)
+                    {
+                        if (Proceso.IsLlave(Contenedor.ElementAt(j)) == -1)
+                        {
+                            seguir = false;
+                        }
+                        ++j;
+                    }
+
+                    //AGREGADO EL NO SEGUIR
+                    if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
+                        --j;
+
+                    Operador = Contenedor.Substring(inicio, (j - inicio));
+                    Operacion = Contenido + Simbolo + Operador;
+                    Operador = Proceso.DescorcharA(Operador);
+                    Multiplicador = Operador;
+
+                }
+                else if (B)
+                {
+                    --i;
+                    Multiplicador = Contenido;
+                    int final = i;
+                    while (i >= 0 & seguir)
+                    {
+                        if (Proceso.IsLlave(Contenedor.ElementAt(i)) == 1)
+                        {
+                            seguir = false;
+                        }
+                        if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                            --i;
+                        else //ACABADO DE COLOCAR PARA PRUEBAS
+                            break;
+                    }
+
+                    //AGREGADO EL NO SEGUIR
+                    if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
+                        ++i;
+
+                    Operador = Contenedor.Substring(i, final + 1);
+                    Operacion = Operador + Simbolo + Contenido;
+                    Multiplicando = new ProductoEntero(Operador);
+
+                }
+
+                Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
+                return Contenedor.Replace(Operacion, Resuelto);
+            }
+        }
+
+        public ProductoEntero PropiedadDistributiva(ProductoEntero Multiplicando, string Multiplicador)
+        {
+            return new ProductoEntero(Multiplicando.Result + Simbolo + Multiplicando);
+
+        }
+
     }
 
     public class CocienteEntero : AMathOps
@@ -1561,7 +2019,10 @@ namespace ENTITY
                     {
                         seguir = false;
                     }
-                    --i;
+                    if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                        --i;
+                    else //ACABADO DE COLOCAR PARA PRUEBAS
+                        break;
                 }
 
                 //AGREGADO EL NO SEGUIR
@@ -1617,7 +2078,10 @@ namespace ENTITY
                         {
                             seguir = false;
                         }
-                        --i;
+                        if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                            --i;
+                        else //ACABADO DE COLOCAR PARA PRUEBAS
+                            break;
                     }
 
                     //AGREGADO EL NO SEGUIR
