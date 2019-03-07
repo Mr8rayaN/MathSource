@@ -11,7 +11,7 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Cociente();
+            TEST_Consola_Especifico();
         }
 
         private static void TEST_Consola_Especifico()

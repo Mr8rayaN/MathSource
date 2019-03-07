@@ -598,6 +598,7 @@ namespace ENTITY
                 Operacion = Operador + Simbolo + Contenido;
                 Multiplicando = new ProductoEntero(Operador);
 
+                //ERROR NO SE PUEDE LLAMAR A ELLA MISMA
                 Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
                 return Contenedor.Replace(Operacion, Resuelto);
             }
@@ -643,7 +644,7 @@ namespace ENTITY
                         {
                             seguir = false;
                         }
-                        if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
+                        if (i > 0 & seguir) //ACABADOD DE COLOCAR PARA PRUEBAS
                             --i;
                         else //ACABADO DE COLOCAR PARA PRUEBAS
                             break;
@@ -653,7 +654,7 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                         ++i;
 
-                    Operador = Contenedor.Substring(i, final + 1);
+                    Operador = Contenedor.Substring(i, (final - i) + 1);
                     Operacion = Operador + Simbolo + Contenido;
                     Multiplicando = new ProductoEntero(Operador);
 
@@ -666,7 +667,7 @@ namespace ENTITY
 
         public ProductoEntero PropiedadDistributiva(ProductoEntero Multiplicando, string Multiplicador)
         {
-            return new ProductoEntero(Multiplicando.Result + Simbolo + Multiplicando);
+            return new ProductoEntero(Multiplicando.Result + Simbolo + Multiplicador);
 
         }
 
