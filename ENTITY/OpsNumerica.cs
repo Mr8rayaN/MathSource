@@ -298,6 +298,8 @@ namespace ENTITY
             int i, j, k, q = 0, Izq, Der, Uno, Dos;
             bool A = true, B = true, WUno = true, WDos = true;
 
+            //RECURSIVIDAD INFINITA SI LOS NIVELES SON TODOS IGUALES, CORREGIR ESE PROBLEMA
+
             Uno = 0;
             while (WUno)
             {
