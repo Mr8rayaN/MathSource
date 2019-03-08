@@ -13,7 +13,7 @@ namespace TESTER
         public static void Main(string[] Args)
         {
             FuncionesService BLL = new FuncionesService();
-            Funcion F = new Funcion("F0004", "TANGENTE", "Tan(x^2)");
+            Funciones F = new Funciones("F0004", "TANGENTE", "Tan(x^2)");
 
             BLL.Guardar(F);
             Console.WriteLine(BLL.Respuesta);

@@ -175,5 +175,15 @@
   <ItemGroup>
     <None Include="Properties\Iconos\Tipografia 100x25.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{588b39c1-e42e-4478-9fdb-3133613ba951}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTITY\ENTITY.csproj">
+      <Project>{e1b0a794-e12d-47f6-8ae2-92440a51b1cb}</Project>
+      <Name>ENTITY</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

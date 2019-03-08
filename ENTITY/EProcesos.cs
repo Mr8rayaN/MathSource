@@ -8,7 +8,7 @@ namespace ENTITY
 {
     public class EProcesos
     {
-        private Funcion Fun = new Funcion();
+        private Funciones Fun = new Funciones();
         private List<Variables> Variables = new List<Variables>();
         char Open;
         char Close;

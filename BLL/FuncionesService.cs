@@ -13,17 +13,17 @@ namespace BLL
     {
         string CadenaConexion;
         private OracleConnection Conexion;
-        private FuncionesRepository DAL;
+        private BDRespository DAL;
         public string Respuesta { get; set; }
 
         public FuncionesService()
         {
             CadenaConexion = "Data Source=localhost:1521/xe;user Id=brayan;Password=0608";
             Conexion = new OracleConnection(CadenaConexion);
-            DAL = new FuncionesRepository(Conexion);
+            DAL = new BDRespository(Conexion);
         }
 
-        public void Guardar(Funcion Expresion)
+        public void Guardar(Funciones Expresion)
         {
             try
             {
