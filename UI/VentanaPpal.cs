@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ENTITY;
+using BLL;
 using System.Windows.Forms;
 
 namespace UI
@@ -19,6 +21,7 @@ namespace UI
         private Panel Pnl;
         private Panel PMenu;
         private Control Ctl;
+        private Service BLL = new Service();
         private Form Ventana;
 
         public VentanaPpal()
@@ -204,22 +207,22 @@ namespace UI
             {
                 if (Pnl.Name.Contains("Uno"))
                 {
-                    Ventana = new OpcionUno(this, PanelGeneral);
+                    Ventana = new OpcionUno(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Dos"))
                 {
-                    Ventana = new OpcionDos(this, PanelGeneral);
+                    Ventana = new OpcionDos(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Tres"))
                 {
-                    Ventana = new OpcionTres(this, PanelGeneral);
+                    Ventana = new OpcionTres(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Cuatro"))
                 {
-                    Ventana = new OpcionCuatro(this, PanelGeneral);
+                    Ventana = new OpcionCuatro(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Cinco"))
@@ -277,6 +280,10 @@ namespace UI
             if(!Pnl.Name.Equals(PMenu.Name))
                 NoSeleccion(Pnl, EventArgs.Empty);
         }
-            
+
+        private void PanelOpcionDos_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

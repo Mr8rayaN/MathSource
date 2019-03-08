@@ -17,6 +17,7 @@ namespace DAL
         List<Funciones> LFunciones;
         List<Resultados> LResultados;
         List<Pasos> LPasos;
+        List<Estados> LEstados;
 
         public BDRespository(OracleConnection Oracle)
         {
@@ -92,12 +93,38 @@ namespace DAL
             return LFunciones;
         }
 
-        public List<Pasos> ConsultarPasos(string FUNCION_ID)
+        public List<Pasos> ConsultarPasosEspecificos(string FUNCION_ID)
         {
             Obtenido = null;
             Pasos Paso;
             LPasos = new List<Pasos>();
-            Sentencia = $"SELECT * FROM FUNCIONES WHERE (FUNCION_ID = '{FUNCION_ID}')";
+            Sentencia = $"SELECT * FROM PASOS WHERE (FUNCION_ID = '{FUNCION_ID}')";
+
+            using (var Comando = new OracleCommand(Sentencia, Conexion))
+            {
+                Comando.CommandType = System.Data.CommandType.Text;
+                Obtenido = Comando.ExecuteReader();
+            }
+
+            while (Obtenido.Read())
+            {
+                //Entrada salida nombre
+                Paso = new Pasos(Obtenido["ENTRADA"].ToString(), Obtenido["SALIDA"].ToString(), Obtenido["NOMBRE"].ToString());
+                Paso.SetId(Obtenido["PASO_ID"].ToString());
+                Paso.SetFuncion(Obtenido["FUNCION_ID"].ToString());
+                Paso.SetResultado(Obtenido["RESULTADO_ID"].ToString());
+                LPasos.Add(Paso);
+            }
+
+            return LPasos;
+        }
+
+        public List<Pasos> ConsultarPasos()
+        {
+            Obtenido = null;
+            Pasos Paso;
+            LPasos = new List<Pasos>();
+            Sentencia = $"SELECT * FROM PASOS";
 
             using (var Comando = new OracleCommand(Sentencia, Conexion))
             {
@@ -140,6 +167,75 @@ namespace DAL
             }
 
             return LResultados;
+        }
+
+        public int CantidadPasos()
+        {
+            Obtenido = null;
+            Sentencia = "SELECT COUNT(*) FROM PASOS";
+
+            using (var Comando = new OracleCommand(Sentencia, Conexion))
+            {
+                Comando.CommandType = System.Data.CommandType.Text;
+                Obtenido = Comando.ExecuteReader();
+            }
+
+            Obtenido.Read();
+            return int.Parse((Obtenido["COUNT(*)"].ToString()));
+        }
+
+        public int CantidadFunciones()
+        {
+            Obtenido = null;
+            Sentencia = "SELECT COUNT(*) FROM FUNCIONES";
+
+            using (var Comando = new OracleCommand(Sentencia, Conexion))
+            {
+                Comando.CommandType = System.Data.CommandType.Text;
+                Obtenido = Comando.ExecuteReader();
+            }
+
+            Obtenido.Read();
+            return int.Parse((Obtenido["COUNT(*)"].ToString()));
+        }
+
+        public int CantidadResultados()
+        {
+            Obtenido = null;
+            Sentencia = "SELECT COUNT(*) FROM RESULTADOS";
+
+            using (var Comando = new OracleCommand(Sentencia, Conexion))
+            {
+
+                Comando.CommandType = System.Data.CommandType.Text;
+                Obtenido = Comando.ExecuteReader();
+            }
+
+            Obtenido.Read();
+            return int.Parse((Obtenido["COUNT(*)"].ToString()));
+        }
+
+        public List<Estados> ConsultarEstados()
+        {
+            Obtenido = null;
+            Estados Estado;
+            LEstados = new List<Estados>();
+            Sentencia = "SELECT * FROM ESTADOS";
+
+            using (var Comando = new OracleCommand(Sentencia, Conexion))
+            {
+                Comando.CommandType = System.Data.CommandType.Text;
+                Obtenido = Comando.ExecuteReader();
+            }
+
+            while (Obtenido.Read())
+            {
+                //id nombre contenido
+                Estado = new Estados(Obtenido["ESTADO_ID"].ToString(), Obtenido["NOMBRE"].ToString());
+                LEstados.Add(Estado);
+            }
+
+            return LEstados;
         }
 
         //HACER BUSQUEDAS ESPECIFICAS EN FUNCIONES Y EMPELADOS Y ELIMINACIONES

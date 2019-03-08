@@ -15,8 +15,8 @@ namespace ENTITY
 
         public EProcesos()
         {
-            Open = Fun.AgrupadorOpen;
-            Close = Fun.AgrupadorClose;
+            Open = '{';
+            Close = '}';
         }
 
         public void CopyList(List<string> Copia, List<string> Original)

@@ -87,6 +87,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Save";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
@@ -118,7 +119,7 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(159, 227);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(79, 21);
+            this.comboBox2.Size = new System.Drawing.Size(178, 21);
             this.comboBox2.TabIndex = 8;
             this.comboBox2.Text = "Estados";
             // 
@@ -128,7 +129,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(251, 219);
+            this.button2.Location = new System.Drawing.Point(412, 318);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(86, 34);
             this.button2.TabIndex = 9;

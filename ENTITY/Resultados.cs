@@ -10,6 +10,8 @@ namespace ENTITY
     {
         public string Estado { get; set; }
 
+        public Resultados() { }
+
         public Resultados(string Id, string Nombre, string Contenido)
         {
             this.Id = Id;

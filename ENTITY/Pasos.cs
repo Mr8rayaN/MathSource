@@ -8,12 +8,14 @@ namespace ENTITY
 {
     public class Pasos
     {
-        public string Id;
-        public string Id_Funcion;
-        public string Id_Resultado;
+        public string Id { get; set; }
+        public string Id_Funcion { get; set; }
+        public string Id_Resultado { get; set; }
         public string Entrada { get; set; }
         public string Salida { get; set; }
-        public string Nombre { get; private set; }
+        public string Nombre { get; set; }
+
+        public Pasos() { }
 
         public Pasos (string Entrada, string Salida, string Nombre)
         {

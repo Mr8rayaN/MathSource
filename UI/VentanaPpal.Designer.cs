@@ -121,6 +121,7 @@
             this.PanelOpcionDos.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionDos.TabIndex = 1;
             this.PanelOpcionDos.Click += new System.EventHandler(this.OpcionesClick);
+            this.PanelOpcionDos.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelOpcionDos_Paint);
             this.PanelOpcionDos.MouseLeave += new System.EventHandler(this.OpcionLeave);
             this.PanelOpcionDos.MouseHover += new System.EventHandler(this.Preseleccion);
             // 

@@ -12,11 +12,10 @@ namespace TESTER
     {
         public static void Main(string[] Args)
         {
-            FuncionesService BLL = new FuncionesService();
+            Service BLL = new Service();
             Funciones F = new Funciones("F0004", "TANGENTE", "Tan(x^2)");
-
-            BLL.Guardar(F);
-            Console.WriteLine(BLL.Respuesta);
+            Console.WriteLine(BLL.ProximoPaso());
+            Console.WriteLine("---------------------------------");
             Console.ReadKey();
         }
     }
