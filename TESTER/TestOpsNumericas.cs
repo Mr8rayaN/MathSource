@@ -11,7 +11,20 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Potencia();
+            TEST_Consola_Producto();
+        }
+
+        private static void TEST_Consola_Producto()
+        {
+            string Entrada = "(((x*2)*2)*({x}^{2}))";
+            Entrada = "((x*2)*4)*y";
+            Entrada = "x*2*2*y";
+            Console.WriteLine($"ENTRADA = {Entrada}");
+            CopProductoEntero PRODUCTO = new CopProductoEntero(Entrada);
+            Console.WriteLine(PRODUCTO.Nombre);
+            Console.WriteLine(PRODUCTO.Result);
+            Console.WriteLine("----------------------------------");
+            Console.ReadKey();
         }
 
         private static void TEST_Consola_Cociente()

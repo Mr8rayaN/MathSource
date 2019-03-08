@@ -187,7 +187,7 @@ namespace ENTITY
             }
 
             A = E.StartsWith("(");
-            i = CierreFunciones(E, E.IndexOf("("));
+            i = CierreParentesis(E, E.IndexOf("("));
             B = E.LastIndexOf(")").Equals(i);
             C = E.EndsWith(")");
 
@@ -198,5 +198,6 @@ namespace ENTITY
 
             return false;
         }
+
     }
 }

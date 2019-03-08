@@ -124,6 +124,14 @@ namespace ENTITY
         //Sobreescribir en el hijo
         public virtual void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden) { }
 
+        public bool IsRecursiva(string Expresion)
+        {
+            if (Expresion.Contains(Simbolo))
+                return true;
+
+            return false;
+        }
+
         public override string ToString()
         {
             return $"{Nombre} ({Contenido})";

@@ -34,7 +34,7 @@ namespace ENTITY
         }
         public override string ToString()
         {
-            return $"VARIABLE {Nombre} CONTIENE {Etiqueta} OPERABLE {Operable}";
+            return $"  VARIABLE {Nombre}; ETIQUETA {Etiqueta}; CONTENIDO {Contenido.ToString()}  ";
         }
 
     }

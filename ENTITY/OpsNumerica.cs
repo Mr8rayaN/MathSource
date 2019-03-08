@@ -135,17 +135,67 @@ namespace ENTITY
 
         public ProductoEntero(string Multiplicando, string Multiplicador)
         {
-            Contenido = Proceso.DescorcharA(Multiplicando) + Simbolo + Proceso.DescorcharA(Multiplicador);
-            ObtenerElementos(Contenido);
-            Operar();
+            Result = Multiplicando + Simbolo + Multiplicador;
         }
 
         public ProductoEntero(string Expresion)
         {
-            Contenido = Proceso.DescorcharA(Expresion);
+            Result = Proceso.DescorcharA(Expresion);
+        }
+
+        
+
+    }
+
+    public class CopProductoEntero : AMathOps
+    {
+        public override string Nombre => "PRODUCTO";
+        public override int Modulo => 1;
+        public int ModuloCancelativo => 0;
+        public override char Simbolo => '*';
+        public override char Op => '(';
+        public override char Cl => ')';
+        private string Multiplicando = "";
+        private string Multiplicador = "";
+        private string SignosTemporal { get; set; }
+        public List<Variables> ListaVariables = new List<Variables>();
+        private Variables variable = new Variables();
+        double number;
+
+        public CopProductoEntero() { }
+
+        public CopProductoEntero(string Multiplicando, string Multiplicador)
+        {
+            //VALIDAR SI SE NECESITA DESCORCHAR PARAMETROS
+            Contenido = Multiplicando + Simbolo + Multiplicador;
+            bool A = IsRecursiva(Multiplicando);
+            bool B = IsRecursiva(Multiplicador);
+
+            if( A || B)
+            {
+                ObtenerElementos(Contenido);
+                Operar();
+            }
+
+            else
+            {
+                this.Multiplicador = Multiplicador;
+                this.Multiplicando = Multiplicando;
+                Operar();
+            }
+
+        }
+
+        public CopProductoEntero(string Expresion)
+        {
+            if (Proceso.IsAgrupate(Expresion))
+            {
+                Contenido = Proceso.DescorcharA(Expresion);
+            }
+            else
+                Contenido = Expresion;
+
             ObtenerElementos(Contenido);
-            ObtenerSignos(Elementos);
-            //Proceso.CopyList(Temporal,Elementos);
             Operar();
         }
 
@@ -161,8 +211,8 @@ namespace ENTITY
 
             if (NumeroImplicitoDeOps == 0)
             {
-                Elementos.Add(LElementos);
-                Elementos.Add($"{Modulo}");
+                Multiplicando = LElementos;
+                Multiplicador = $"{Modulo}";
             }
             else if (NumeroImplicitoDeOps == 1)
             {
@@ -170,9 +220,9 @@ namespace ENTITY
                 foreach (var elemento in LElementos.Split(Simbolo))
                 {
                     if (i == 0)
-                        Elementos.Add(elemento);
+                        Multiplicando = elemento;
                     else if (i == 1)
-                        Elementos.Add(elemento);
+                        Multiplicador = elemento;
                     ++i;
                 }
             }
@@ -184,42 +234,54 @@ namespace ENTITY
 
         public override void Operar()
         {
-            double Acomulador = Modulo;
-            bool Cancelado = false;
-            List<string> Temporal = new List<string>();
-            Proceso.CopyList(Temporal, Elementos);
+            bool A, B, C, D, E;
 
-            foreach (var elemento in Elementos)
-            {
-                if (elemento.Equals($"{ModuloCancelativo}"))
-                {
-                    Temporal.Clear();
-                    Cancelado = true;
-                    break;
-                }
-                else if(double.TryParse(elemento,out number))
-                {
-                    Temporal.Remove(elemento);
-                    Acomulador *= double.Parse(elemento);
-                }
-            }
+            A = double.TryParse(Multiplicando, out number);
+            B = double.TryParse(Multiplicador, out number);
+            C = Multiplicando.Equals($"{Modulo}");
+            D = Multiplicador.Equals($"{Modulo}");
+            E = Multiplicando.Equals($"{ModuloCancelativo}") || Multiplicador.Equals($"{ModuloCancelativo}");
 
-            if (Cancelado)
+            Multiplicando = Proceso.DescorcharA(Multiplicando);
+            Multiplicador = Proceso.DescorcharA(Multiplicador);
+
+            if (E)
                 Result = $"{ModuloCancelativo}";
-            else if (Temporal.Count < 1)
-                Result = $"{Acomulador}";
+            else if (D)
+                Result = Multiplicando;
+            else if (C)
+                Result = Multiplicador;
+            else if(A & B)
+            {
+                double multiplicando = double.Parse(Multiplicando);
+                double multiplicador = double.Parse(Multiplicador);
+
+                Result = $"{multiplicador * multiplicando}";
+            }
             else
             {
-                string RTA = "";
-                if(Math.Abs(Acomulador) != 1)
-                    RTA = $"{Acomulador}";
+                string Mdo = Multiplicando.Replace($"{variable.Simbolo}", "");
+                string Mor = Multiplicador.Replace($"{variable.Simbolo}", "");
 
-                foreach (var elemento in Temporal)
+                A = (Mdo.Length > 2);
+                B = (Mor.Length > 2);
+
+                if (A & B)
                 {
-                    RTA += Simbolo + elemento;
+                    Result = $"{Op}{Op}{Multiplicando}{Cl}{Simbolo}{Op}{Multiplicador}{Cl}{Cl}";
                 }
-
-                Result = RTA.Trim(Simbolo);
+                else if (A)
+                {
+                    //Result = $"{Op}{Op}{Base}{Cl}{Simbolo}{Exponente}{Cl}";
+                    Result = $"{Op}{Multiplicando}{Cl}{Simbolo}{Multiplicador}";
+                }
+                else if (B)
+                {
+                    //Result = $"{Op}{Base}{Simbolo}{Op}{Exponente}{Cl}{Cl}";
+                    Result = $"{Multiplicando}{Simbolo}{Op}{Multiplicador}{Cl}";
+                }
+                else
+                    Result = $"{Multiplicando}{Simbolo}{Multiplicador}";
             }
         }
 
@@ -302,10 +364,10 @@ namespace ENTITY
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
-                        Etiqueta = Proceso.DescorcharFunciones(Etiqueta);
+                        Etiqueta = Proceso.DescorcharA(Etiqueta);
 
-                        ProductoEntero Interino = new ProductoEntero(Etiqueta);
-                        string Res = Proceso.DescorcharFunciones(Interino.Result);
+                        CopProductoEntero Interino = new CopProductoEntero(Etiqueta);
+                        string Res = Proceso.DescorcharA(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
@@ -335,8 +397,8 @@ namespace ENTITY
             }
 
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
-
         }
+        //CORRECTO HASTA AQUI
 
         public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
@@ -372,16 +434,46 @@ namespace ENTITY
 
             //APLICA PROPIEDADES INTERNAS
             Acomulador = AplicarPropiedadPorSectores(Acomulador);
+            //FIN APLICACION DE PROPS
             Contenido = Acomulador;
 
             Niveles = ObtenerNiveles(Contenido);
             Orden = ObtenerOrden(Niveles);
 
-            //OBTENIENDO VALORES FINALES
-            Acomulador = Proceso.DescorcharFunciones(Contenido);
-            ObtenerElementos(Acomulador);
-            //FIN DE RECAUDAR VALORES
+            foreach (var orden in Orden)
+            {
+                k = 0; A = false;
+                foreach (var nivel in Niveles)
+                {
+                    ++k;
+                    if (nivel.Equals(orden))
+                    {
+                        i = j = 0;
+                        if (Orden.EndsWith($"{orden}"))
+                        {
+                            Acomulador = Proceso.DescorcharA(Contenido);
 
+                            foreach (var elemento in Acomulador)
+                            {
+                                if (elemento.Equals(Simbolo))
+                                {
+                                    ++j;
+                                }
+                                if (j == k)
+                                    break;
+                                ++i;
+                            }
+                            Multiplicando = Proceso.DescorcharA(Acomulador.Substring(0, i));
+                            Multiplicador = Proceso.DescorcharA(Acomulador.Substring(i + 1));
+                            A = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (A)
+                    break;
+            }
         }
 
         private string AplicarPropiedadPorSectores(string Expresion)
@@ -494,6 +586,58 @@ namespace ENTITY
             return Temporal;
         }
 
+        public string PropiedadDistributiva(CopProductoEntero Mdo, CopProductoEntero Mor)
+        {
+            int i = 0; double Acomulador = 1; string elemento, Res; bool Cancelado = false;
+            List<string> LElementos = new List<string>();
+            LElementos.Add(Mdo.Multiplicando);
+            LElementos.Add(Mdo.Multiplicador);
+            LElementos.Add(Mor.Multiplicando);
+            LElementos.Add(Mor.Multiplicador);
+
+            while (i < LElementos.Count)
+            {
+                elemento = LElementos.ElementAt(i);
+                if (elemento.Equals($"{ModuloCancelativo}"))
+                {
+                    LElementos.Clear();
+                    Cancelado = true;
+                    break;
+                }
+                else
+                {
+                    if (double.TryParse(elemento, out number))
+                    {
+                        Acomulador *= double.Parse(elemento);
+                        LElementos.RemoveAt(i);
+                        i = 0;
+                    }
+                    else
+                        ++i;
+                }
+            }
+
+            if (Cancelado)
+                return $"{ModuloCancelativo}";
+            else if (LElementos.Count < 1)
+                return $"{Acomulador}";
+            else
+            {
+                Res = "";
+                if (Acomulador != 1)
+                    Res = $"{Acomulador}";
+
+                foreach (var item in LElementos)
+                {
+                    Res += Simbolo + item;
+                }
+
+                Res = Res.Trim(Simbolo);
+
+                return Res;
+            }
+        }
+
         private bool IsDistribuible(string Contenido, string Contenedor)
         {
             if (!Contenedor.Contains(Contenido))
@@ -536,8 +680,11 @@ namespace ENTITY
 
         private string Distribuir(string Contenido, string Contenedor)
         {
-            ProductoEntero Multiplicando = new ProductoEntero();
-            string Multiplicador = "";
+            //CocienteEntero dividendo = new CocienteEntero();
+            //CocienteEntero divisor = new CocienteEntero();
+            CopProductoEntero FactorUno = new CopProductoEntero();
+            CopProductoEntero FactorDos = new CopProductoEntero();
+
             int i = 0, j = 0; bool seguir = true;
             i = Contenedor.IndexOf(Contenido);
             j = (i) + (Contenido.Length - 1);
@@ -548,7 +695,8 @@ namespace ENTITY
 
             if (Contenedor.StartsWith(Contenido))
             {
-                Multiplicando = new ProductoEntero(Contenido);
+                //dividendo = new CocienteEntero(Contenido);
+                FactorUno = new CopProductoEntero(Contenido);
                 j = j + 2;
                 int inicio = j;
                 while (j < Contenedor.Length & seguir)
@@ -566,16 +714,18 @@ namespace ENTITY
                 //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
                 Operador = Contenedor.Substring(inicio, (j - inicio));
                 Operacion = Contenido + Simbolo + Operador;
-                Operador = Proceso.DescorcharA(Operador);
-                Multiplicador = Operador;
+                //divisor = new CocienteEntero(Operador);
+                FactorDos = new CopProductoEntero(Operador);
 
-                Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
+                //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
+                Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
                 return Contenedor.Replace(Operacion, Resuelto);
             }
 
             else if (Contenedor.EndsWith(Contenido))
             {
-                Multiplicador = Contenido;
+                //divisor = new CocienteEntero(Contenido);
+                FactorDos = new CopProductoEntero(Contenido);
                 i = i - 2;
                 int final = i;
                 while (i >= 0 & seguir)
@@ -584,6 +734,7 @@ namespace ENTITY
                     {
                         seguir = false;
                     }
+
                     if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
                         --i;
                     else //ACABADO DE COLOCAR PARA PRUEBAS
@@ -594,12 +745,14 @@ namespace ENTITY
                 if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                     ++i;
 
-                Operador = Contenedor.Substring(i, final + 1);
+                //Operador = Contenedor.Substring(i, final + 1);
+                Operador = Contenedor.Substring(i, (final - i) + 1);
                 Operacion = Operador + Simbolo + Contenido;
-                Multiplicando = new ProductoEntero(Operador);
+                //dividendo = new CocienteEntero(Operador);
+                FactorUno = new CopProductoEntero(Operador);
 
-                //ERROR NO SE PUEDE LLAMAR A ELLA MISMA
-                Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
+                //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
+                Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
                 return Contenedor.Replace(Operacion, Resuelto);
             }
 
@@ -612,7 +765,9 @@ namespace ENTITY
                 if (A)
                 {
                     ++j;
-                    Multiplicando = new ProductoEntero(Contenido);
+                    //dividendo = new CocienteEntero(Contenido);
+                    FactorUno = new CopProductoEntero(Contenido);
+
                     int inicio = j;
                     while (j < Contenedor.Length & seguir)
                     {
@@ -629,14 +784,16 @@ namespace ENTITY
 
                     Operador = Contenedor.Substring(inicio, (j - inicio));
                     Operacion = Contenido + Simbolo + Operador;
-                    Operador = Proceso.DescorcharA(Operador);
-                    Multiplicador = Operador;
+                    //divisor = new CocienteEntero(Operador);
+                    FactorDos = new CopProductoEntero(Operador);
 
                 }
                 else if (B)
                 {
                     --i;
-                    Multiplicador = Contenido;
+                    //divisor = new CocienteEntero(Contenido);
+                    FactorDos = new CopProductoEntero(Contenido);
+
                     int final = i;
                     while (i >= 0 & seguir)
                     {
@@ -644,7 +801,7 @@ namespace ENTITY
                         {
                             seguir = false;
                         }
-                        if (i > 0 & seguir) //ACABADOD DE COLOCAR PARA PRUEBAS
+                        if (i > 0) //ACABADOD DE COLOCAR PARA PRUEBAS
                             --i;
                         else //ACABADO DE COLOCAR PARA PRUEBAS
                             break;
@@ -654,22 +811,21 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(final)) == 0 & !seguir)
                         ++i;
 
+                    //Operador = Contenedor.Substring(i, final + 1);
                     Operador = Contenedor.Substring(i, (final - i) + 1);
                     Operacion = Operador + Simbolo + Contenido;
-                    Multiplicando = new ProductoEntero(Operador);
+                    //dividendo = new CocienteEntero(Operador);
+                    FactorUno = new CopProductoEntero(Operador);
 
                 }
 
-                Resuelto = PropiedadDistributiva(Multiplicando, Multiplicador).Result;
+                //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
+                Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
+                Resuelto = Proceso.DescorcharA(Resuelto);//ACABADO DE COLOCAR PARA INICIAR PRUEBAS
                 return Contenedor.Replace(Operacion, Resuelto);
             }
         }
 
-        public ProductoEntero PropiedadDistributiva(ProductoEntero Multiplicando, string Multiplicador)
-        {
-            return new ProductoEntero(Multiplicando.Result + Simbolo + Multiplicador);
-
-        }
 
     }
 
@@ -1085,10 +1241,10 @@ namespace ENTITY
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
-                        Etiqueta = Proceso.DescorcharFunciones(Etiqueta);
+                        Etiqueta = Proceso.DescorcharA(Etiqueta);
 
                         CocienteEntero Interino = new CocienteEntero(Etiqueta);
-                        string Res = Proceso.DescorcharFunciones(Interino.Result);
+                        string Res = Proceso.DescorcharA(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
@@ -1184,7 +1340,7 @@ namespace ENTITY
                         i = j = 0;
                         if (Orden.EndsWith($"{orden}"))
                         {
-                            Acomulador = Proceso.DescorcharFunciones(Contenido);
+                            Acomulador = Proceso.DescorcharA(Contenido);
 
                             foreach (var elemento in Acomulador)
                             {
@@ -1196,8 +1352,8 @@ namespace ENTITY
                                     break;
                                 ++i;
                             }
-                            Dividendo = Proceso.DescorcharFunciones(Acomulador.Substring(0, i));
-                            Divisor = Proceso.DescorcharFunciones(Acomulador.Substring(i + 1));
+                            Dividendo = Proceso.DescorcharA(Acomulador.Substring(0, i));
+                            Divisor = Proceso.DescorcharA(Acomulador.Substring(i + 1));
                             A = true;
                             break;
                         }
@@ -1509,10 +1665,7 @@ namespace ENTITY
 
         private ProductoEntero Producto = new ProductoEntero();
 
-        public PotenciaEntera()
-        {
-
-        }
+        public PotenciaEntera() { }
 
         //CREAR FUNCION ISENCORCHABLE EN EPROCESOS Y APLICAR AQUI A CONTENIDOS
         public PotenciaEntera(string Base, string Exponente)
@@ -1538,7 +1691,7 @@ namespace ENTITY
 
         public override void Operar()
         {
-            bool A, B, C, D, E, F, G;
+            bool A, B, C, D, E, F;
 
             A = double.TryParse(Base, out number);
             B = double.TryParse(Exponente, out number);
@@ -1701,10 +1854,10 @@ namespace ENTITY
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
-                        Etiqueta = Proceso.DescorcharFunciones(Etiqueta);
+                        Etiqueta = Proceso.DescorcharA(Etiqueta);
 
                         PotenciaEntera Interino = new PotenciaEntera(Etiqueta);
-                        string Res = Proceso.DescorcharFunciones(Interino.Result);
+                        string Res = Proceso.DescorcharA(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
@@ -1786,7 +1939,7 @@ namespace ENTITY
                         i = j = 0;
                         if (Orden.EndsWith($"{orden}"))
                         {
-                            Acomulador = Proceso.DescorcharFunciones(Contenido);
+                            Acomulador = Proceso.DescorcharA(Contenido);
 
                             foreach (var elemento in Acomulador)
                             {
@@ -1798,8 +1951,8 @@ namespace ENTITY
                                     break;
                                 ++i;
                             }
-                            Base = Proceso.DescorcharFunciones(Acomulador.Substring(0, i));
-                            Exponente = Proceso.DescorcharFunciones(Acomulador.Substring(i + 1));
+                            Base = Proceso.DescorcharA(Acomulador.Substring(0, i));
+                            Exponente = Proceso.DescorcharA(Acomulador.Substring(i + 1));
                             A = true;
                             break;
                         }
@@ -1821,7 +1974,7 @@ namespace ENTITY
             string Orden = ObtenerOrden(Niveles);
             string OrdenCop = Orden;
 
-            int i, j, k, q = 0, Izq, Der, Uno, Dos;
+            int i, j, k, Izq, Der, Uno, Dos;
             bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
 
             Uno = 0;
