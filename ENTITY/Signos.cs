@@ -127,6 +127,58 @@ namespace ENTITY
 
             return false;
         }
+
+        public string MaximizarSignos(string Expresion)
+        {
+            string Maximizado = "";
+            int i = 0;
+            foreach (var elemento in Expresion.Split(Neg))
+            {
+                if (i == 0 & Expresion.StartsWith(elemento))
+                {
+                    Maximizado = elemento;
+                    ++i;
+                }
+                else if (!elemento.Equals(""))
+                {
+                    Maximizado += $"{Pos}{Neg}{elemento}";
+                }
+            }
+
+            return Maximizado;
+        }
         
+        public bool IsOpposite(string ExpresionUno, string ExpresionDos)
+        {
+            if (PrimerSigno(ExpresionUno).Equals(PrimerSigno(ExpresionDos)))
+                return false;
+            else
+            {
+                ExpresionUno = ExtraerPrimerSigno(ExpresionUno);
+                ExpresionDos = ExtraerPrimerSigno(ExpresionDos);
+
+                if (ExpresionUno.Equals(ExpresionDos))
+                    return true;
+
+                return false;
+            }
+        }
+
+        private string ExtraerPrimerSigno(string Expresion)
+        {
+            if (EsUnSigno(Expresion.ElementAt(0)))
+                return Expresion.Substring(1, Expresion.Length - 1);
+
+            return Expresion;
+        }
+
+        private char PrimerSigno(string Expresion)
+        {
+            if (EsUnSigno(Expresion.ElementAt(0)))
+                return Expresion.ElementAt(0);
+
+            return Pos;
+        }
+
     }
 }
