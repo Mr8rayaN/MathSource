@@ -339,8 +339,16 @@ namespace ENTITY
                             {
                                 //CUERPO
                                 Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                //NUEVA CONDICION EN MARCHA
+                                if (i > 0)
+                                {
+                                    if (Temporal.ElementAt(i - 1).Equals(Simbolo))
+                                        Izq += 1;
+                                }
+                                //FIN NUEVA CONDICION
                                 //FINCUERPO
-                                if (Izq == 1 || i <= 0)
+                                //if (Izq == 1 || i <= 0)
+                                if (Izq >= 1 || i <= 0)
                                     A = false;
                                 else
                                     --i;
@@ -349,8 +357,17 @@ namespace ENTITY
                             {
                                 //CUERPO
                                 Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                //NUEVA CONDICION EN MARCHA
+                                //if(j < (Temporal.Length - 1)) MOD POR LA ESTIMACION DE NO PODER SER EL ULTIMO ELEMENTO UN SIMBOLO
+                                if (j < (Temporal.Length - 2))
+                                {
+                                    if (Temporal.ElementAt(j + 1).Equals(Simbolo))
+                                        Der += -1;
+                                }
+                                //FIN NUEVA CONDICION
                                 //FINCUERPO
-                                if (Der == -1 || j >= Temporal.Length - 1)
+                                //if (Der == -1 || j >= Temporal.Length - 1)
+                                if (Der <= -1 || j >= Temporal.Length - 1)
                                     B = false;
                                 else
                                     ++j;
@@ -400,7 +417,7 @@ namespace ENTITY
 
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
         }
-        //CORRECTO HASTA AQUI
+        
 
         public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {

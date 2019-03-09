@@ -17,8 +17,8 @@ namespace TESTER
         private static void TEST_Consola_Producto()
         {
             string Entrada = "(((x*2)*2)*({x}^{2}))";
-            Entrada = "((x*2)*4)*y";
-            Entrada = "x*2*2*y";
+            //Entrada = "((x*2)*4)*y";
+            //Entrada = "x*2*2*y";
             Console.WriteLine($"ENTRADA = {Entrada}");
             CopProductoEntero PRODUCTO = new CopProductoEntero(Entrada);
             Console.WriteLine(PRODUCTO.Nombre);
