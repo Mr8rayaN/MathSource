@@ -114,40 +114,7 @@ namespace ENTITY
 
     }
 
-    //ACTUALIZAR PRODUCTOS PARA OPERAR EN PRODUCTOS ANIDADOS E INDEPENDIENTES DE LOS PRODUCTOS PRINCIPALES
     public class ProductoEntero : AMathOps
-    {
-        public override string Nombre => "PRODUCTO";
-        public override int Modulo => 1;
-        public int ModuloCancelativo => 0;
-        public override char Simbolo => '*';
-        public override char Op => '(';
-        public override char Cl => ')';
-        private string SignosTemporal { get; set; }
-        public List<Variables> ListaVariables = new List<Variables>();
-        private Variables variable = new Variables();
-        double number;
-
-        public ProductoEntero()
-        {
-
-        }
-
-        public ProductoEntero(string Multiplicando, string Multiplicador)
-        {
-            Result = Multiplicando + Simbolo + Multiplicador;
-        }
-
-        public ProductoEntero(string Expresion)
-        {
-            Result = Proceso.DescorcharA(Expresion);
-        }
-
-        
-
-    }
-
-    public class CopProductoEntero : AMathOps
     {
         public override string Nombre => "PRODUCTO";
         public override int Modulo => 1;
@@ -162,9 +129,9 @@ namespace ENTITY
         private Variables variable = new Variables();
         double number;
 
-        public CopProductoEntero() { }
+        public ProductoEntero() { }
 
-        public CopProductoEntero(string Multiplicando, string Multiplicador)
+        public ProductoEntero(string Multiplicando, string Multiplicador)
         {
             //VALIDAR SI SE NECESITA DESCORCHAR PARAMETROS
             Contenido = Multiplicando + Simbolo + Multiplicador;
@@ -186,7 +153,7 @@ namespace ENTITY
 
         }
 
-        public CopProductoEntero(string Expresion)
+        public ProductoEntero(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
             {
@@ -385,7 +352,7 @@ namespace ENTITY
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
                         Etiqueta = Proceso.DescorcharA(Etiqueta);
 
-                        CopProductoEntero Interino = new CopProductoEntero(Etiqueta);
+                        ProductoEntero Interino = new ProductoEntero(Etiqueta);
                         string Res = Proceso.DescorcharA(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
@@ -418,7 +385,6 @@ namespace ENTITY
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
         }
         
-
         public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
             LVariables.Reverse();
@@ -605,7 +571,7 @@ namespace ENTITY
             return Temporal;
         }
 
-        public string PropiedadDistributiva(CopProductoEntero Mdo, CopProductoEntero Mor)
+        public string PropiedadDistributiva(ProductoEntero Mdo, ProductoEntero Mor)
         {
             int i = 0; double Acomulador = 1; string elemento, Res; bool Cancelado = false;
             List<string> LElementos = new List<string>();
@@ -701,8 +667,8 @@ namespace ENTITY
         {
             //CocienteEntero dividendo = new CocienteEntero();
             //CocienteEntero divisor = new CocienteEntero();
-            CopProductoEntero FactorUno = new CopProductoEntero();
-            CopProductoEntero FactorDos = new CopProductoEntero();
+            ProductoEntero FactorUno = new ProductoEntero();
+            ProductoEntero FactorDos = new ProductoEntero();
 
             int i = 0, j = 0; bool seguir = true;
             i = Contenedor.IndexOf(Contenido);
@@ -715,7 +681,7 @@ namespace ENTITY
             if (Contenedor.StartsWith(Contenido))
             {
                 //dividendo = new CocienteEntero(Contenido);
-                FactorUno = new CopProductoEntero(Contenido);
+                FactorUno = new ProductoEntero(Contenido);
                 j = j + 2;
                 int inicio = j;
                 while (j < Contenedor.Length & seguir)
@@ -734,7 +700,7 @@ namespace ENTITY
                 Operador = Contenedor.Substring(inicio, (j - inicio));
                 Operacion = Contenido + Simbolo + Operador;
                 //divisor = new CocienteEntero(Operador);
-                FactorDos = new CopProductoEntero(Operador);
+                FactorDos = new ProductoEntero(Operador);
 
                 //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
                 Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
@@ -744,7 +710,7 @@ namespace ENTITY
             else if (Contenedor.EndsWith(Contenido))
             {
                 //divisor = new CocienteEntero(Contenido);
-                FactorDos = new CopProductoEntero(Contenido);
+                FactorDos = new ProductoEntero(Contenido);
                 i = i - 2;
                 int final = i;
                 while (i >= 0 & seguir)
@@ -768,7 +734,7 @@ namespace ENTITY
                 Operador = Contenedor.Substring(i, (final - i) + 1);
                 Operacion = Operador + Simbolo + Contenido;
                 //dividendo = new CocienteEntero(Operador);
-                FactorUno = new CopProductoEntero(Operador);
+                FactorUno = new ProductoEntero(Operador);
 
                 //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
                 Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
@@ -785,7 +751,7 @@ namespace ENTITY
                 {
                     ++j;
                     //dividendo = new CocienteEntero(Contenido);
-                    FactorUno = new CopProductoEntero(Contenido);
+                    FactorUno = new ProductoEntero(Contenido);
 
                     int inicio = j;
                     while (j < Contenedor.Length & seguir)
@@ -804,14 +770,14 @@ namespace ENTITY
                     Operador = Contenedor.Substring(inicio, (j - inicio));
                     Operacion = Contenido + Simbolo + Operador;
                     //divisor = new CocienteEntero(Operador);
-                    FactorDos = new CopProductoEntero(Operador);
+                    FactorDos = new ProductoEntero(Operador);
 
                 }
                 else if (B)
                 {
                     --i;
                     //divisor = new CocienteEntero(Contenido);
-                    FactorDos = new CopProductoEntero(Contenido);
+                    FactorDos = new ProductoEntero(Contenido);
 
                     int final = i;
                     while (i >= 0 & seguir)
@@ -834,7 +800,7 @@ namespace ENTITY
                     Operador = Contenedor.Substring(i, (final - i) + 1);
                     Operacion = Operador + Simbolo + Contenido;
                     //dividendo = new CocienteEntero(Operador);
-                    FactorUno = new CopProductoEntero(Operador);
+                    FactorUno = new ProductoEntero(Operador);
 
                 }
 
