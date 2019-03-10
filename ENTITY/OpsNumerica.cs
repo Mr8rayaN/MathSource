@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace ENTITY
 {
-    //ACTUALIZAR SUMAS PARA OPERAR EN SUMAS ANIDADAS E INDEPENDIENTES DE LAS SUMAS PRINCIPALES
     public class SumaEntera : AMathOps
     {
         public override string Nombre => "SUMA";
@@ -711,9 +710,7 @@ namespace ENTITY
             }
         }
 
-    }
-
-    //SE DEBE IMPLEMENTAR LA CLASE RESTAR PARA DARLE USO EN LA CLASE SUMAR
+    } //FUNCIONANDO AL 100%
 
     public class ProductoEntero : AMathOps
     {

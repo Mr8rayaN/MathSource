@@ -15,10 +15,10 @@ namespace ALGEBRA
         public string Coeficiente { get; private set; }
         public string ParteLiteral { get; private set; }
         public string Grado { get; private set; }
-        Productos Producto = new Productos();
-        Cocientes Cociente = new Cocientes();
-        Potencias Potencia = new Potencias();
-        AMathOps Suma = new Sumas();
+        ProductoEntero Producto = new ProductoEntero();
+        CocienteEntero Cociente = new CocienteEntero();
+        PotenciaEntera Potencia = new PotenciaEntera();
+        SumaEntera Suma = new SumaEntera();
         double number;
         bool A, B;
         string Desagrupado;
@@ -30,7 +30,7 @@ namespace ALGEBRA
             this.Coeficiente = Coeficiente;
             this.ParteLiteral = ParteLiteral;
             ObtenerGrado();
-            Producto = new Productos(Coeficiente, ParteLiteral);
+            Producto = new ProductoEntero(Coeficiente, ParteLiteral);
             Expresion = Producto.Result;
             Nombre = $"Monomio {Producto.Result}";
         }
@@ -39,7 +39,7 @@ namespace ALGEBRA
         {
             Expresion = Monomio;
             ObtenerElementos();
-            Producto = new Productos(Coeficiente, ParteLiteral);
+            Producto = new ProductoEntero(Coeficiente, ParteLiteral);
             Expresion = Producto.Result;
             Nombre = $"Monomio {Producto.Result}";
         }
@@ -101,9 +101,9 @@ namespace ALGEBRA
                         //Obtener Grado Absoluto
                         if (item.Contains(Potencia.Simbolo))
                         {
-                            Proceso = new ProcesosNew(Potencia.Abrir, Potencia.Cerrar);
+                            Proceso = new ProcesosNew(Potencia.Op, Potencia.Cl);
                             Desagrupado = Proceso.Descorchar(item);
-                            Potencia = new Potencias(Desagrupado);
+                            Potencia = new PotenciaEntera(Desagrupado);
                             A = double.TryParse(Potencia.Exponente, out number);
 
                             if (A)
@@ -173,9 +173,9 @@ namespace ALGEBRA
 
                         if (A)
                         {
-                            Proceso = new ProcesosNew(Potencia.Abrir, Potencia.Cerrar);
+                            Proceso = new ProcesosNew(Potencia.Op, Potencia.Cl);
                             Desagrupado = Proceso.Descorchar(item);
-                            Potencia = new Potencias(Desagrupado);
+                            Potencia = new PotenciaEntera(Desagrupado);
 
                             B = double.TryParse(Potencia.Exponente, out number);
 
