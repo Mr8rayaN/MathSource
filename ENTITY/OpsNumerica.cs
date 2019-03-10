@@ -7,114 +7,7 @@ using System.Threading.Tasks;
 namespace ENTITY
 {
     //ACTUALIZAR SUMAS PARA OPERAR EN SUMAS ANIDADAS E INDEPENDIENTES DE LAS SUMAS PRINCIPALES
-    public class SumaEntera : AMathOps 
-    {
-        public override string Nombre => "SUMA";
-        public override int Modulo => 0;
-        public override char Simbolo => '+';
-        public override char Op => '(';
-        public override char Cl => ')';
-        private List<string> Temporal = new List<string>();
-        private string SignosTemporal { get; set; }
-
-        public SumaEntera()
-        {
-
-        }
-
-        public SumaEntera(string Expresion)
-        {
-            Expresion = OperarSignos(Expresion);
-            Contenido = Expresion;
-            ObtenerSignos(Expresion);
-            ObtenerElementos(Expresion, NumEntero.Simbolos);
-            Proceso.CopyList(Temporal, Elementos);
-            SignosTemporal = ListaSignos;
-            Operar();
-        }
-        
-        public override void Operar()
-        {
-            char signo = ' ';
-            double Acomulador, Parseo; int index;
-            Acomulador = Parseo = index = Modulo;
-            
-            foreach(var elemento in Elementos)
-            {
-                try
-                {
-                    Parseo = double.Parse(elemento);
-                    signo = ListaSignos.ElementAt(index);
-                    
-                    if (signo.Equals(NumEntero.SimboloLocal))
-                        Acomulador -= Parseo;
-                    else
-                        Acomulador += Parseo;
-
-                    SignosTemporal = Proceso.ReplaceCharIn(SignosTemporal, "@", index);
-                    Temporal.Remove(elemento);
-                }
-                catch (Exception) { }
-
-                ++index;
-            }
-
-            SignosTemporal = SignosTemporal.Replace("@","");
-
-            NumeroElementos = Temporal.Count;
-
-            if (Acomulador != 0) {
-                SignosTemporal += SignoAbsDe($"{Acomulador}");
-                Temporal.Add($"{Math.Abs(Acomulador)}");
-            }
-                
-            else if(NumeroElementos == 0)
-            {
-                Temporal.Add($"{Modulo}");
-                SignosTemporal += SignoAbsDe($"{Modulo}");
-            }
-
-            index = 0;
-            Result = "";
-
-            foreach (var elemento in Temporal)
-            {
-                signo = SignosTemporal.ElementAtOrDefault(index);
-                if(signo.Equals(NumEntero.Naturales.SimboloLocal) & Result.Equals(""))
-                    Result += elemento;
-                else
-                    Result += signo + elemento;
-
-                ++index;
-            }
-
-            Result = OperarSignos(Result);
-
-        }
-
-        private void ObtenerElementos(string LElementos, string Simbolos)
-        {
-            Elementos.Clear();
-            
-            char simboloComun = '@';
-
-            foreach (var simbolo in Simbolos)
-            {
-                LElementos = LElementos.Replace(simbolo, simboloComun);
-            }
-
-            LElementos = LElementos.Trim(simboloComun);
-
-            foreach (var elemento in LElementos.Split(simboloComun))
-            {
-                Elementos.Add(elemento);
-            }
-            
-        }
-
-    }
-
-    public class CopSumaEntera : AMathOps
+    public class SumaEntera : AMathOps
     {
         public override string Nombre => "SUMA";
         public override int Modulo => 0;
@@ -127,9 +20,9 @@ namespace ENTITY
         private Variables variable = new Variables();
         double number;
 
-        public CopSumaEntera() { }
+        public SumaEntera() { }
 
-        public CopSumaEntera(string SumandoUno, string SumandoDos)
+        public SumaEntera(string SumandoUno, string SumandoDos)
         {
             //VALIDAR SI SE NECESITA DESCORCHAR PARAMETROS
             Contenido = SumandoUno + Simbolo + SumandoDos;
@@ -152,7 +45,7 @@ namespace ENTITY
             }
         }
 
-        public CopSumaEntera(string Expresion)
+        public SumaEntera(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
             {
@@ -182,12 +75,12 @@ namespace ENTITY
 
             A = double.TryParse(SumandoUno, out number);
             B = double.TryParse(SumandoDos, out number);
-            C = SumandoUno.Equals($"{Modulo}");
-            D = SumandoDos.Equals($"{Modulo}");
+            C = ExtraerPrimerSigno(SumandoUno).Equals($"{Modulo}");
+            D = ExtraerPrimerSigno(SumandoDos).Equals($"{Modulo}");
             E = IsOpposite(SumandoUno, SumandoDos);
 
-            SumandoUno = Proceso.DescorcharA(SumandoUno);
-            SumandoDos = Proceso.DescorcharA(SumandoDos);
+            SumandoUno = Proceso.DescorcharParentesis(SumandoUno);
+            SumandoDos = Proceso.DescorcharParentesis(SumandoDos);
 
             if (E)
                 Result = $"{Modulo}";
@@ -200,7 +93,9 @@ namespace ENTITY
             else
             {
                 string SUno = SumandoUno.Replace($"{variable.Simbolo}", "");
+                //SUno = ExtraerPrimerSigno(SUno);
                 string SDos = SumandoDos.Replace($"{variable.Simbolo}", "");
+                //SDos = ExtraerPrimerSigno(SDos);
 
                 A = (SUno.Length > 2);
                 B = (SDos.Length > 2);
@@ -358,7 +253,7 @@ namespace ENTITY
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
                         Etiqueta = Proceso.DescorcharA(Etiqueta);
 
-                        ProductoEntero Interino = new ProductoEntero(Etiqueta);
+                        SumaEntera Interino = new SumaEntera(Etiqueta);
                         string Res = Proceso.DescorcharA(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
@@ -484,7 +379,7 @@ namespace ENTITY
             while (WUno)
             {
                 var orden = Orden.ElementAt(Uno);
-                k = 0; Dos = 0;
+                k = 0; Dos = 0; WDos = true;
 
                 while (WDos)
                 {
@@ -547,6 +442,7 @@ namespace ENTITY
                             Distribuyo = true;
                         }
 
+                        //SI SE DISTRIBUYE ALGO INDISTRIBUIBLE SE PRODUCE UN BUCLE INFINITO
 
                         //FIN VALIDACION
 
@@ -621,8 +517,8 @@ namespace ENTITY
         {
             //CocienteEntero dividendo = new CocienteEntero();
             //CocienteEntero divisor = new CocienteEntero();
-            CopSumaEntera FactorUno = new CopSumaEntera();
-            CopSumaEntera FactorDos = new CopSumaEntera();
+            SumaEntera FactorUno = new SumaEntera();
+            SumaEntera FactorDos = new SumaEntera();
 
             int i = 0, j = 0; bool seguir = true;
             i = Contenedor.IndexOf(Contenido);
@@ -635,7 +531,7 @@ namespace ENTITY
             if (Contenedor.StartsWith(Contenido))
             {
                 //dividendo = new CocienteEntero(Contenido);
-                FactorUno = new CopSumaEntera(Contenido);
+                FactorUno = new SumaEntera(Contenido);
                 j = j + 2;
                 int inicio = j;
                 while (j < Contenedor.Length & seguir)
@@ -650,11 +546,15 @@ namespace ENTITY
                 if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
                     --j;
 
-                //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
-                Operador = Contenedor.Substring(inicio, (j - inicio));
+                //COLOCADO PARA EVITAR EL DESBORDAMIENTO
+                if( (inicio + (j - inicio)) < Contenedor.Length )
+                    Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
+                else
+                    Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+
                 Operacion = Contenido + Simbolo + Operador;
                 //divisor = new CocienteEntero(Operador);
-                FactorDos = new CopSumaEntera(Operador);
+                FactorDos = new SumaEntera(Operador);
 
                 //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
                 Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
@@ -664,7 +564,7 @@ namespace ENTITY
             else if (Contenedor.EndsWith(Contenido))
             {
                 //divisor = new CocienteEntero(Contenido);
-                FactorDos = new CopSumaEntera(Contenido);
+                FactorDos = new SumaEntera(Contenido);
                 i = i - 2;
                 int final = i;
                 while (i >= 0 & seguir)
@@ -688,7 +588,7 @@ namespace ENTITY
                 Operador = Contenedor.Substring(i, (final - i) + 1);
                 Operacion = Operador + Simbolo + Contenido;
                 //dividendo = new CocienteEntero(Operador);
-                FactorUno = new CopSumaEntera(Operador);
+                FactorUno = new SumaEntera(Operador);
 
                 //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
                 Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
@@ -705,7 +605,7 @@ namespace ENTITY
                 {
                     ++j;
                     //dividendo = new CocienteEntero(Contenido);
-                    FactorUno = new CopSumaEntera(Contenido);
+                    FactorUno = new SumaEntera(Contenido);
 
                     int inicio = j;
                     while (j < Contenedor.Length & seguir)
@@ -721,17 +621,22 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
                         --j;
 
-                    Operador = Contenedor.Substring(inicio, (j - inicio));
+                    //COLOCADO PARA EVITAR EL DESBORDAMIENTO
+                    if ((inicio + (j - inicio)) < Contenedor.Length)
+                        Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
+                    else
+                        Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+
                     Operacion = Contenido + Simbolo + Operador;
                     //divisor = new CocienteEntero(Operador);
-                    FactorDos = new CopSumaEntera(Operador);
+                    FactorDos = new SumaEntera(Operador);
 
                 }
                 else if (B)
                 {
                     --i;
                     //divisor = new CocienteEntero(Contenido);
-                    FactorDos = new CopSumaEntera(Contenido);
+                    FactorDos = new SumaEntera(Contenido);
 
                     int final = i;
                     while (i >= 0 & seguir)
@@ -754,7 +659,7 @@ namespace ENTITY
                     Operador = Contenedor.Substring(i, (final - i) + 1);
                     Operacion = Operador + Simbolo + Contenido;
                     //dividendo = new CocienteEntero(Operador);
-                    FactorUno = new CopSumaEntera(Operador);
+                    FactorUno = new SumaEntera(Operador);
 
                 }
 
@@ -765,9 +670,9 @@ namespace ENTITY
             }
         }
 
-        public string PropiedadDistributiva(CopSumaEntera Mdo, CopSumaEntera Mor)
+        public string PropiedadDistributiva(SumaEntera Mdo, SumaEntera Mor)
         {
-            int i = 0; double Acomulador = 1; string elemento, Res;
+            int i = 0; double Acomulador = Modulo; string elemento, Res;
             List<string> LElementos = new List<string>();
             LElementos.Add(Mdo.SumandoUno);
             LElementos.Add(Mdo.SumandoDos);
@@ -1392,7 +1297,14 @@ namespace ENTITY
                     --j;
 
                 //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
-                Operador = Contenedor.Substring(inicio, (j - inicio));
+                //Operador = Contenedor.Substring(inicio, (j - inicio)); ANTIGUAS SENTENCIAS, TAL VEZ PRODUCIAN DESBORDAMIENTOS
+
+                //COLOCADO PARA EVITAR EL DESBORDAMIENTO
+                if ((inicio + (j - inicio)) < Contenedor.Length)
+                    Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
+                else
+                    Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+
                 Operacion = Contenido + Simbolo + Operador;
                 //divisor = new CocienteEntero(Operador);
                 FactorDos = new ProductoEntero(Operador);
@@ -1462,7 +1374,14 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
                         --j;
 
-                    Operador = Contenedor.Substring(inicio, (j - inicio));
+                    //Operador = Contenedor.Substring(inicio, (j - inicio)); ANTIGUA SENTENCIA TAL VEZ PODRIA OCASIONAR DESBORDAMIENTOS
+
+                    //COLOCADO PARA EVITAR EL DESBORDAMIENTO
+                    if ((inicio + (j - inicio)) < Contenedor.Length)
+                        Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
+                    else
+                        Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+
                     Operacion = Contenido + Simbolo + Operador;
                     //divisor = new CocienteEntero(Operador);
                     FactorDos = new ProductoEntero(Operador);
@@ -2225,7 +2144,14 @@ namespace ENTITY
                     --j;
 
                 //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
-                Operador = Contenedor.Substring(inicio, (j - inicio));
+                //Operador = Contenedor.Substring(inicio, (j - inicio)); ANTIGUAS SENTENCIAS TAL VEZ OCASIONABAN DESBORDAMIENTOS
+
+                //COLOCADO PARA EVITAR EL DESBORDAMIENTO
+                if ((inicio + (j - inicio)) < Contenedor.Length)
+                    Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
+                else
+                    Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+
                 Operacion = Contenido + Simbolo + Operador;
                 divisor = new CocienteEntero(Operador);
 
@@ -2288,7 +2214,14 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
                         --j;
 
-                    Operador = Contenedor.Substring(inicio, (j - inicio));
+                    //Operador = Contenedor.Substring(inicio, (j - inicio)); ANTIGUA SENTENCIA TAL VEZ PODRIA OCASIONAR DESBORDAMIENTOS
+
+                    //COLOCADO PARA EVITAR EL DESBORDAMIENTO
+                    if ((inicio + (j - inicio)) < Contenedor.Length)
+                        Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
+                    else
+                        Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+
                     Operacion = Contenido + Simbolo + Operador;
                     divisor = new CocienteEntero(Operador);
 
@@ -2835,6 +2768,7 @@ namespace ENTITY
 
                 //Operador = Contenedor.Substring(inicio, (j - inicio) + 1);
                 Operador = Contenedor.Substring(inicio, (j - inicio));
+
                 Operacion = Contenido + Simbolo + Operador;
                 Operador = Proceso.DescorcharA(Operador);
                 thisExponente = Operador;
@@ -2898,6 +2832,7 @@ namespace ENTITY
                         --j;
 
                     Operador = Contenedor.Substring(inicio, (j - inicio));
+
                     Operacion = Contenido + Simbolo + Operador;
                     Operador = Proceso.DescorcharA(Operador);
                     thisExponente = Operador;

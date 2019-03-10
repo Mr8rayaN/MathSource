@@ -130,7 +130,7 @@ namespace ENTITY
 
         public string MaximizarSignos(string Expresion)
         {
-            string Maximizado = "";
+            string Maximizado = "", anterior = "";
             int i = 0;
             foreach (var elemento in Expresion.Split(Neg))
             {
@@ -139,10 +139,15 @@ namespace ENTITY
                     Maximizado = elemento;
                     ++i;
                 }
-                else if (!elemento.Equals(""))
+                else if (!elemento.Equals("") & !anterior.EndsWith($"{Pos}"))
                 {
                     Maximizado += $"{Pos}{Neg}{elemento}";
                 }
+                else
+                {
+                    Maximizado += $"{Neg}{elemento}";
+                }
+                anterior = elemento;
             }
 
             return Maximizado;
@@ -164,7 +169,7 @@ namespace ENTITY
             }
         }
 
-        private string ExtraerPrimerSigno(string Expresion)
+        public string ExtraerPrimerSigno(string Expresion)
         {
             if (EsUnSigno(Expresion.ElementAt(0)))
                 return Expresion.Substring(1, Expresion.Length - 1);

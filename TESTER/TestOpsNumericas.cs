@@ -11,16 +11,16 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Suma();
+            TEST_Consola_Potencia();
         }
 
         private static void TEST_Consola_Suma()
         {
-            string Entrada = "(2+2-2-0+1-(x+2))";
+            string Entrada = "((x+2)+{x^2}+2)";
             //Entrada = "((x*2)*4)*y";
             //Entrada = "x*2*2*y";
             Console.WriteLine($"ENTRADA = {Entrada}");
-            CopSumaEntera SUMA = new CopSumaEntera(Entrada);
+            SumaEntera SUMA = new SumaEntera(Entrada);
             Console.WriteLine(SUMA.Nombre);
             Console.WriteLine(SUMA.Result);
             Console.WriteLine("----------------------------------");
@@ -30,8 +30,8 @@ namespace TESTER
         private static void TEST_Consola_Producto()
         {
             string Entrada = "(((x*2)*2)*({x}^{2}))";
-            //Entrada = "((x*2)*4)*y";
-            //Entrada = "x*2*2*y";
+            Entrada = "((x*2)*4)*y";
+            Entrada = "x*2*2*y";
             Console.WriteLine($"ENTRADA = {Entrada}");
             ProductoEntero PRODUCTO = new ProductoEntero(Entrada);
             Console.WriteLine(PRODUCTO.Nombre);
@@ -54,7 +54,7 @@ namespace TESTER
         private static void TEST_Consola_Potencia()
         {
             string Entrada = "{{{{x}^{2x}}^{2}}^{3x}}";
-            Entrada = "{{{{x}^{2*x}}^{2}}^{3*x}}";
+            //Entrada = "{{{{x}^{2*x}}^{2}}^{3*x}}";
             Console.WriteLine($"ENTRADA = {Entrada}");
             PotenciaEntera POTENCIA = new PotenciaEntera(Entrada);
             Console.WriteLine(POTENCIA.Nombre);
@@ -63,11 +63,13 @@ namespace TESTER
             Console.ReadKey();
         }
 
-        private static void TEST_Consola_EProcesos()
+        private static void TEST_Consola_Signos()
         {
-            EProcesos Proceso = new EProcesos();
-            Console.WriteLine("{x*2*2}/2");
-            Console.WriteLine("Está agrupado ? "+Proceso.IsAgrupate("{x*2*2}/2"));
+            SumaEntera SUMA = new SumaEntera();
+            string Entrada = "-x+2-3-2+(-x+3)";
+            Console.WriteLine(Entrada);
+            Console.WriteLine("Maximizando Signos "+SUMA.MaximizarSignos(Entrada));
+            Console.WriteLine("Maximizando Signos " + SUMA.MaximizarSignos(SUMA.MaximizarSignos(Entrada)));
             Console.WriteLine("----------------------------------");
             Console.ReadKey();
         }
