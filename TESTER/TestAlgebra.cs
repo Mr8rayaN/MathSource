@@ -34,7 +34,7 @@ namespace TESTER
         {
             string Entrada = "x*2+(2)+(y^{2*4}*x*2*z*5)";
             Entrada = "x^{2+1}+2*x+1";
-            CopPolinomios POLI = new CopPolinomios(Entrada);
+            Polinomios POLI = new Polinomios(Entrada);
             Console.WriteLine(POLI.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");
             Console.WriteLine("CONTENIDO   " + POLI.Contenido);

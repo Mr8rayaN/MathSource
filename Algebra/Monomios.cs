@@ -10,200 +10,113 @@ namespace ALGEBRA
 {
     public class Monomios
     {
-        public string Nombre { get; set; }
-        public string Expresion { get; private set; }
+        public string Nombre => "MONOMIO";
+        public string Contenido { get; private set; }
         public string Coeficiente { get; private set; }
         public string ParteLiteral { get; private set; }
-        public string Grado { get; private set; }
+        public double GradoAbs { get; private set; }
+        public string Result { get; private set; }
+        public List<PotenciaEntera> Elementos = new List<PotenciaEntera>();
         ProductoEntero Producto = new ProductoEntero();
-        CocienteEntero Cociente = new CocienteEntero();
         PotenciaEntera Potencia = new PotenciaEntera();
-        SumaEntera Suma = new SumaEntera();
         double number;
-        bool A, B;
-        string Desagrupado;
 
-        ProcesosNew Proceso;
+        EProcesos Proceso = new EProcesos();
 
-        public Monomios(string Coeficiente, string ParteLiteral)
+        public Monomios() { }
+
+        public Monomios(string Coeficiente, string Literal)
         {
-            this.Coeficiente = Coeficiente;
-            this.ParteLiteral = ParteLiteral;
-            ObtenerGrado();
-            Producto = new ProductoEntero(Coeficiente, ParteLiteral);
-            Expresion = Producto.Result;
-            Nombre = $"Monomio {Producto.Result}";
+
         }
 
-        public Monomios(string Monomio)
+        public Monomios(string Expresion)
         {
-            Expresion = Monomio;
-            ObtenerElementos();
-            Producto = new ProductoEntero(Coeficiente, ParteLiteral);
-            Expresion = Producto.Result;
-            Nombre = $"Monomio {Producto.Result}";
+            if (Proceso.IsAgrupate(Expresion))
+                Expresion = Proceso.DescorcharA(Expresion);
+
+            ObtenerElementos(Expresion);
+
+            Operar();
+
         }
 
-        private void ObtenerElementos()
+        private void ObtenerElementos (string Expresion)
         {
-            if (!Expresion.Contains(Producto.Simbolo))
+            ParteLiteral = "";
+            GradoAbs = Producto.ModuloCancelativo;
+            Coeficiente = $"{Producto.Modulo}";
+            Producto = new ProductoEntero(Expresion);
+
+            Contenido = Producto.Result;
+
+            foreach (var elemento in Contenido.Split(Producto.Simbolo))
             {
-                //Puede ser Coeficiente o Parte literal
-                if (double.TryParse(Expresion, out number))
+                Potencia = new PotenciaEntera(elemento);
+
+                Elementos.Add(Potencia);
+
+                Organizar(Potencia);
+
+                if (Potencia.Result.Equals(Potencia.ModuloCancelativo))
                 {
-                    ParteLiteral = "1";
-                    Coeficiente = Expresion;
+                    Elementos.Clear();
+                    Coeficiente = $"{Potencia.ModuloCancelativo}";
+                    ParteLiteral = "";
+                    break;
                 }
-
-                else
-                {
-                    //Puede ser un coeficiente fraccionario o parte literal
-                    if (Expresion.Contains(Cociente.Simbolo))
-                    {
-                        ParteLiteral = "1";
-                        Coeficiente = Expresion;
-                    }
-
-                    else
-                    {
-                        Coeficiente = "1";
-                        ParteLiteral = Expresion;
-                    }
-                }
-            } //OK
-
-            else
-            {
-                string[] Elementos = Expresion.Split(Producto.Simbolo);
-
-                Coeficiente = ParteLiteral = Grado = "";
-                double grado = 0;
-
-                foreach (var item in Elementos)
-                {
-                    if (item.Equals(Producto.ModuloCancelativo.ToString()))
-                    {
-                        Coeficiente = "0";
-                        ParteLiteral = "0";
-                        Grado = "0";
-                        break;
-                    }
-                    else if (double.TryParse(item, out number))
-                    {
-                        Coeficiente += item;
-                    }
-                    else if (item.Contains(Cociente.Simbolo))
-                    {
-                        Coeficiente += item;
-                    }
-                    else
-                    {
-                        //Obtener Grado Absoluto
-                        if (item.Contains(Potencia.Simbolo))
-                        {
-                            Proceso = new ProcesosNew(Potencia.Op, Potencia.Cl);
-                            Desagrupado = Proceso.Descorchar(item);
-                            Potencia = new PotenciaEntera(Desagrupado);
-                            A = double.TryParse(Potencia.Exponente, out number);
-
-                            if (A)
-                            {
-                                grado += double.Parse(Potencia.Exponente);
-                            }
-                            else
-                            {
-                                if (Grado.Equals(""))
-                                    Grado += $"{Potencia.Exponente}";
-                                else
-                                    Grado += $"{Suma.Simbolo}{Potencia.Exponente}";
-                            }
-                        }
-                        else
-                        {
-                            grado += 1;
-                        }
-
-                        //Obtencion de parte Literal
-                        if (ParteLiteral.Equals(""))
-                            ParteLiteral += $"{item}";
-                        else
-                            ParteLiteral += $"{Producto.Simbolo}{item}";
-                    }
-                }
-
-                //Terminando de obtener grado Absoluto
-                if (!ParteLiteral.Equals("0"))
-                {
-                    if (Grado.Equals(""))
-                        Grado += $"{grado}";
-                    else
-                        Grado += $"{Suma.Simbolo}{grado}";
-                }
-
-
+                
             }
 
-
         }
 
-        private void ObtenerGrado()
+        private void Organizar(PotenciaEntera P)
         {
-            if (ParteLiteral.Equals("") || ParteLiteral == null || ParteLiteral.Equals("1") || Producto.Result.Equals(Producto.ModuloCancelativo))
+            bool A = double.TryParse(P.Result, out number);
+
+            if (A)
             {
-                Grado = "0";
-            }
-            else if (!ParteLiteral.Contains("^"))
-            {
-                Grado = "1";
+                Coeficiente = new ProductoEntero(Coeficiente, P.Result).Result;
             }
             else
             {
-                string[] Elementos = ParteLiteral.Split(Producto.Simbolo);
-                double grado = 0;
-                Grado = "";
-
-                foreach (var item in Elementos)
-                {
-                    A = double.TryParse(item, out number);
-                    B = item.Contains(Cociente.Simbolo);
-
-                    if (!A & !B)
-                    {
-                        A = item.Contains(Potencia.Simbolo);
-
-                        if (A)
-                        {
-                            Proceso = new ProcesosNew(Potencia.Op, Potencia.Cl);
-                            Desagrupado = Proceso.Descorchar(item);
-                            Potencia = new PotenciaEntera(Desagrupado);
-
-                            B = double.TryParse(Potencia.Exponente, out number);
-
-                            if (B)
-                            {
-                                grado += double.Parse(Potencia.Exponente);
-                            }
-                            else
-                            {
-                                if (Grado.Equals(""))
-                                    Grado = $"{Potencia.Exponente}";
-                                else
-                                    Grado = $"{Suma.Simbolo}{Potencia.Exponente}";
-                            }
-
-                        }
-                        else
-                        {
-                            grado += 1;
-                        }
-                    }
-                }
-
-                if (Grado.Equals(""))
-                    Grado = $"{grado}";
-                else
-                    Grado += $"{Suma.Simbolo}{grado}";
+                GradoAbs += double.Parse(P.Exponente);
+                ParteLiteral += Producto.Simbolo + P.Result;
+                ParteLiteral = ParteLiteral.Trim(Producto.Simbolo);
             }
         }
+
+        private void Operar()
+        {
+            bool A, B, C;
+
+            A = Coeficiente.Equals(Potencia.ModuloCancelativo.ToString());
+            B = ParteLiteral.Equals("");
+            C = Coeficiente.Equals(Potencia.Modulo.ToString());
+
+            Coeficiente = Proceso.ParentesisClear(Coeficiente);
+            ParteLiteral = Proceso.ParentesisClear(ParteLiteral);
+
+            if (A)
+                Result = $"{Potencia.ModuloCancelativo}";
+
+            else if (B)
+                Result = Coeficiente;
+
+            else if (C)
+                Result = ParteLiteral;
+
+            else
+            {
+                Result = $"{Coeficiente}{Producto.Simbolo}{ParteLiteral}";
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"MONOMIO {Contenido}; COEFICIENTE {Coeficiente}; LITERAL {ParteLiteral}";
+        }
+
     }
+
 }

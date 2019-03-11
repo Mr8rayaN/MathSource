@@ -9,57 +9,6 @@ namespace ALGEBRA
 {
     public class Polinomios
     {
-        public string Nombre { get; set; }
-        public string Expresion { get; private set;}
-        public List<Monomios> Polinomio { get; private set; }
-        private Monomios Monomio;
-        Sumas Suma = new Sumas();
-        Sustracciones Resta = new Sustracciones();
-
-        public Polinomios(List<Monomios> Polinomio)
-        {
-            this.Polinomio = Polinomio;
-            ObtenerExpresion();
-            Nombre = $"Polinomio {Expresion}";
-        }
-
-        public Polinomios(string Polinomio)
-        {
-
-        }
-
-        private void ObtenerExpresion()
-        {
-            Expresion = "";
-            foreach (var item in Polinomio)
-            {
-                Expresion += item;
-            }
-        }
-
-        private void ObtenerMonomios(string Expresion)
-        {
-            string index;
-            //Monomio = new Monomios(nul);
-            Polinomio = new List<Monomios>();
-
-            for(int i=0; i<Expresion.Length; i++)
-            {
-                index = Expresion.ElementAt(i).ToString();
-                if (index.Equals(Suma.Simbolo))
-                {
-                    
-                }
-                else if (index.Equals(Resta.Simbolo))
-                {
-
-                }
-            }
-        }
-    }
-
-    public class CopPolinomios
-    {
         public string Nombre => "POLINOMIO";
         public string Contenido { get; private set; }
         public string Result { get; private set; }
@@ -67,13 +16,12 @@ namespace ALGEBRA
         public List<Monomios> Elementos = new List<Monomios>();
         Monomios Monomio;
         SumaEntera Suma = new SumaEntera();
-        double number;
 
         EProcesos Proceso = new EProcesos();
 
-        public CopPolinomios() { }
+        public Polinomios() { }
 
-        public CopPolinomios(string Expresion)
+        public Polinomios(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);
