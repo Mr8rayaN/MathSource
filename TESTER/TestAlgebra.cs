@@ -33,6 +33,7 @@ namespace TESTER
         private static void TEST_Consola_Polinomio()
         {
             string Entrada = "x*2+(2)+(y^{2*4}*x*2*z*5)";
+            Entrada = "x^{2+1}+2*x+1";
             CopPolinomios POLI = new CopPolinomios(Entrada);
             Console.WriteLine(POLI.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");

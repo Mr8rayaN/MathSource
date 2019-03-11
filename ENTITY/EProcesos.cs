@@ -199,5 +199,12 @@ namespace ENTITY
             return false;
         }
 
+        public string ParentesisClear(string Expresion)
+        {
+            Expresion = Expresion.Replace("(","");
+            Expresion = Expresion.Replace(")", "");
+            return Expresion;
+        }
+
     }
 }

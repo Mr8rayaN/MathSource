@@ -67,6 +67,7 @@ namespace ALGEBRA
         public List<Monomios> Elementos = new List<Monomios>();
         Monomios Monomio;
         SumaEntera Suma = new SumaEntera();
+        double number;
 
         EProcesos Proceso = new EProcesos();
 
@@ -90,12 +91,14 @@ namespace ALGEBRA
             Suma = new SumaEntera(Expresion);
 
             Contenido = Suma.Result;
+            Contenido = Proceso.ParentesisClear(Contenido);
+
 
             foreach (var elemento in Contenido.Split(Suma.Simbolo))
             {
                 Monomio = new Monomios(elemento);
 
-                if (!Monomio.Result.Equals(Suma.Modulo))
+                if (!Monomio.Result.Equals($"{0}"))
                 {
                     Elementos.Add(Monomio);
                     GradoAbs += Monomio.GradoAbs;
@@ -122,12 +125,12 @@ namespace ALGEBRA
                 foreach (var M in Elementos)
                 {
                     Temporal = M.Result;
-                    A = Temporal.Length > 3;
+                    //A = Temporal.Length > 3;
 
-                    if (A)
+                    /*if (A)
                     {
                         Temporal = Proceso.EncorcharParentesis(Temporal);
-                    }
+                    }*/
 
                     Result += Suma.Simbolo + Temporal;
                 }

@@ -76,7 +76,6 @@ namespace ALGEBRA
 
             if (A)
             {
-                GradoAbs += double.Parse(P.Exponente);
                 Coeficiente = new ProductoEntero(Coeficiente, P.Result).Result;
             }
             else
@@ -91,9 +90,12 @@ namespace ALGEBRA
         {
             bool A, B, C;
 
-            A = Coeficiente.Equals(Potencia.ModuloCancelativo);
+            A = Coeficiente.Equals(Potencia.ModuloCancelativo.ToString());
             B = ParteLiteral.Equals("");
-            C = Coeficiente.Equals(Potencia.Modulo);
+            C = Coeficiente.Equals(Potencia.Modulo.ToString());
+
+            Coeficiente = Proceso.ParentesisClear(Coeficiente);
+            ParteLiteral = Proceso.ParentesisClear(ParteLiteral);
 
             if (A)
                 Result = $"{Potencia.ModuloCancelativo}";

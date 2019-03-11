@@ -696,13 +696,14 @@ namespace ENTITY
             else
             {
                 Res = "";
-                if (Acomulador != 1)
-                    Res = $"{Acomulador}";
 
                 foreach (var item in LElementos)
                 {
-                    Res += Simbolo + item;
+                    Res += item + Simbolo;
                 }
+
+                if (Acomulador != Modulo)
+                    Res += $"{Acomulador}";
 
                 Res = Res.Trim(Simbolo);
 
