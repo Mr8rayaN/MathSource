@@ -43,8 +43,8 @@ namespace ALGEBRA
 
         protected override void ObtenerCoeficiente()
         {
-            string Fun = SimboloExtendido + Argumento + Cl;
-            Coeficiente = Contenido.Replace(Fun, "1");
+            Foco = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Foco, "1");
             Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
             if (Coeficiente.Equals(""))
                 Coeficiente = "1";
@@ -52,16 +52,18 @@ namespace ALGEBRA
 
         protected override void ObtenerArgumento()
         {
-            Argumento = Proceso.DescorcharA(Potencia.Exponente);
+            int Inicial = Contenido.IndexOf(SimboloExtendido) + 3;
+            int Final = Contenido.LastIndexOf(Cl) - Inicial;
+            Argumento = Contenido.Substring(Inicial, Final);
         }
 
         protected override void Operar()
         {
-            Potencia = new PotenciaEntera(Contenido);
+            Potencia = new PotenciaEntera(Foco);
             if (double.TryParse(Argumento, out number))
                 Result = new PotenciaEntera(Valor, Argumento).Result;
             else
-                Result = Potencia.Result;
+                Result = new ProductoEntero(Coeficiente,Potencia.Result).Result;
         }
 
         public override string ToString()
@@ -101,8 +103,8 @@ namespace ALGEBRA
 
         protected override void ObtenerCoeficiente()
         {
-            string Fun = SimboloExtendido + Argumento + Cl;
-            Coeficiente = Contenido.Replace(Fun, "1");
+            Foco = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Foco, "1");
             Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
             if (Coeficiente.Equals(""))
                 Coeficiente = "1";
@@ -137,7 +139,7 @@ namespace ALGEBRA
             else if (B)
                 Result = $"{ModuloCancelativo}";
             else
-                Result = Contenido;
+                Result = new ProductoEntero(Coeficiente,Foco).Result;
         }
 
         public override string ToString()

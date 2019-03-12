@@ -12,6 +12,7 @@ namespace ALGEBRA
         public virtual string Nombre { get;}
         public virtual string Simbolo { get;}
         public virtual string Coeficiente { get; set; }
+        public virtual string Foco { get; set; }
         public virtual string SimboloExtendido { get; }
         public virtual string Contenido { get; protected set; }
         public virtual string Argumento { get; protected set; }
