@@ -326,7 +326,11 @@ namespace ENTITY
         {
 
             funcion = funcion.Replace(")", "");
+            funcion = funcion.Replace("}", "");
+            funcion = funcion.Replace("}", "");
             funcion = funcion.Replace("(", "");
+            funcion = funcion.Replace("{", "");
+            funcion = funcion.Replace("<", "");
             funcion = funcion.Replace("ln", "");
             funcion = funcion.Replace("sen", "");
             funcion = funcion.Replace("cos", "");

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAL;
 using ENTITY;
 using ALGEBRA;
+using DERIVADAS;
 using Oracle.ManagedDataAccess.Client;
 
 namespace BLL
@@ -20,15 +21,23 @@ namespace BLL
         string Salida { get; set; }
         string Funcion_id { get; set; }
         string Resultado_id { get; set; }
+        string Estado = "EST01";
         int Cantidad { get; set; }
+
+        AMathOps Op { get; set;  }
+        Derivadas Derivada { get; set; }
         Variables Var { get; set; }
         Pasos Paso { get; set; }
+        Funciones Funcion { get; set; }
+        Resultados Resultado { get; set; }
         Polinomios Polinomio { get; set; }
         List<Variables> LVariables { get; set; }
         List<Estados> LEstados { get; set; }
         List<Funciones> LFunciones { get; set; }
         List<Resultados> LResultados { get; set; }
         List<Pasos> LPasos;
+
+        EProcesos Proceso = new EProcesos();
 
         public Service()
         {
@@ -197,25 +206,76 @@ namespace BLL
 
         //FIN MANEJO DE DATOS
 
-        public string Procesar(string Expresion, string Operacion)
+        public string Procesar(string Expresion, Variables Var,string Operacion)
         {
             //IDENTIFICAR OPERACIONES A REALIZAR E IR ALMACENANDO PASOS (CUANDO AL INGRESAR POR UNA FUNCION RETORNE ALGO DIFERENTE AL INCICIAL
             Funcion_id = DAL.SiguienteFuncion();
+            Resultado_id = DAL.SiguienteResultado();
             LPasos = new List<Pasos>();
             Entrada = Expresion;
             Polinomio = new Polinomios(Entrada);
+            CrearFuncion(Funcion_id, Polinomio.Nombre, Expresion);
+
             RegistrarPaso(Entrada, Polinomio.Result, Polinomio.Nombre);
-            return null;
+
+            if (Operacion.Contains("Derivar"))
+            {
+                Derivada = new Derivadas(Polinomio, Var);
+
+                RegistrarPaso(Polinomio.Result, Derivada.Result, Derivada.Nombre);
+
+                Salida = Derivada.Result;
+                CrearResultado(Resultado_id, Derivada.Nombre, Derivada.Result, Estado);
+                //SE DEFINE EL RESULTADO
+            }
+            else if (Operacion.Contains("Simplificar"))
+            {
+                string Temp = "";
+                foreach (var mono in Polinomio.Elementos)
+                {
+                    Op = new ProductoEntero(mono.Result);
+                    if (!Op.Result.Equals(mono.Result))
+                    {
+                        CrearResultado(Resultado_id, Op.Nombre, Op.Result, Estado);
+
+                        RegistrarPaso(mono.Result, Op.Result, Op.Nombre);
+                    }
+                    Temp = Op.Result;
+
+                    Op = new PotenciaEntera(Op.Result);
+                    if (!Op.Equals(Temp))
+                    {
+                        CrearResultado(Resultado_id, Op.Nombre, Op.Result, Estado);
+
+                        RegistrarPaso(mono.Result, Op.Result, Op.Nombre);
+                    }
+                    Temp = Op.Result;
+
+                    Op = new CocienteEntero(Op.Result);
+                    if (!Op.Equals(Temp))
+                    {
+                        CrearResultado(Resultado_id, Op.Nombre, Op.Result, Estado);
+
+                        RegistrarPaso(mono.Result, Op.Result, Op.Nombre);
+                    }
+                    Temp = "";
+                }
+                //SE DEFINE EL RESULTADO
+            }
+
+            //LISTOS ELEMENTOS NECESARIOS PARA GUARDAR REGISTROS
+            return Resultado.Contenido;
         }
 
-        private void CrearFuncion(string Funcion_id)
+        private void CrearFuncion(string Funcion_id, string Nombre, string Contenido)
         {
-
+            Funcion = new Funciones(Funcion_id, Nombre, Contenido);
         }
 
-        private void CrearResultado(string Resultado_id)
+        private void CrearResultado(string Resultado_id, string Nombre, string Contenido, string Estado)
         {
-
+            Resultado = new Resultados(Resultado_id, Nombre, Contenido);
+            Resultado.SetEstado(Estado);
         }
 
         private void RegistrarPaso(string Pre, string Post, string Nombre)
@@ -225,20 +285,50 @@ namespace BLL
             {
                 //CREAR PASO Y AGREGARLO A LA LISTA
                 Paso = new Pasos(Pre, Post, Nombre);
-                Paso.Id = "ID GENERADO DE SIGUIENTE PASO";
-                Paso.Id_Funcion = "ID GENERADO DE LA FUNCION ACTUAL";
-                Paso.Id_Resultado = "ID GENERADO QUE RELACION ESTE PASO CON EL RESULTADO";
+                Paso.SetId( DAL.SiguientePaso() );
+                Paso.SetFuncion( Funcion_id );
+                Paso.SetId( Resultado_id );
+                LPasos.Add(Paso);
             }
         }
 
-        private void ObtenerVariable()
+        public List<Variables> ObtenerVariable(string Expresion)
         {
+            LVariables = new List<Variables>();
+            Expresion = Proceso.Limpiar(Expresion);
+            foreach (var elemento in Expresion)
+            {
+                Var = new Variables($"{elemento}");
+                LVariables.Add(Var);
+            }
 
+            return LVariables;
         }
 
         private string CoordenadasResultantes(Polinomios Polinomio, Variables Var)
         {
             return null;
+        }
+
+        public void SetEstado(string Estado)
+        {
+            this.Estado = Estado;
+            Resultado.SetEstado(Estado);
+        }
+
+        public string Guardar()
+        {
+            try
+            {
+                GuardarFuncion(Funcion);
+                GuardarResultado(Resultado);
+                GuardarPasos(LPasos);
+                return "Almacenado satisfactoriamente";
+            }
+            catch (Exception e)
+            {
+                return $"Hubo un error desconocido al Guardar \n{e.Message}";
+            }
         }
 
     }

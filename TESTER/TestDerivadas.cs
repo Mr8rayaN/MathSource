@@ -21,7 +21,7 @@ namespace TESTER
             string Entrada = "2*x";
             Cosenos COS = new Cosenos();
             COS.SetArgumento(Entrada);
-            CopDerivada DER = new CopDerivada(COS, new Variables("x"));
+            Derivadas DER = new Derivadas(COS, new Variables("x"));
             Console.WriteLine($"ENTRADA          {COS.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");
@@ -33,7 +33,7 @@ namespace TESTER
             string Entrada = "2*x";
             Senos SEN = new Senos();
             SEN.SetArgumento(Entrada);
-            CopDerivada DER = new CopDerivada(SEN, new Variables("x"));
+            Derivadas DER = new Derivadas(SEN, new Variables("x"));
             Console.WriteLine($"ENTRADA          {SEN.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");
@@ -45,7 +45,7 @@ namespace TESTER
             string Entrada = "2*x";
             Tangentes TAN = new Tangentes();
             TAN.SetArgumento(Entrada);
-            CopDerivada DER = new CopDerivada(TAN, new Variables("x"));
+            Derivadas DER = new Derivadas(TAN, new Variables("x"));
             Console.WriteLine($"ENTRADA          {TAN.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");
@@ -57,7 +57,7 @@ namespace TESTER
             string Entrada = "2*x";
             Eulers EUL = new Eulers();
             EUL.SetArgumento(Entrada);
-            CopDerivada DER = new CopDerivada(EUL, new Variables("x"));
+            Derivadas DER = new Derivadas(EUL, new Variables("x"));
             Console.WriteLine($"ENTRADA          {EUL.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");
@@ -69,7 +69,7 @@ namespace TESTER
             string Entrada = "2*x";
             LogNaturales LN = new LogNaturales();
             LN.SetArgumento(Entrada);
-            CopDerivada DER = new CopDerivada(LN, new Variables("x"));
+            Derivadas DER = new Derivadas(LN, new Variables("x"));
             Console.WriteLine($"ENTRADA          {LN.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");
@@ -80,7 +80,7 @@ namespace TESTER
         {
             string Entrada = "2*x+x^{3}";
             Polinomios POLI = new Polinomios(Entrada);
-            CopDerivada DER = new CopDerivada(POLI, new Variables("x"));
+            Derivadas DER = new Derivadas(POLI, new Variables("x"));
             Console.WriteLine($"ENTRADA          {POLI.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");

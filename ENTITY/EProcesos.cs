@@ -19,6 +19,29 @@ namespace ENTITY
             Close = '}';
         }
 
+        public string Limpiar(string Expresion)
+        {
+
+            Expresion = Expresion.Replace(")", "");
+            Expresion = Expresion.Replace("}", "");
+            Expresion = Expresion.Replace("}", "");
+            Expresion = Expresion.Replace("(", "");
+            Expresion = Expresion.Replace("{", "");
+            Expresion = Expresion.Replace("<", "");
+            Expresion = Expresion.Replace("ln", "");
+            Expresion = Expresion.Replace("sen", "");
+            Expresion = Expresion.Replace("cos", "");
+            Expresion = Expresion.Replace("tan", "");
+            Expresion = Expresion.Replace("e", "");
+            Expresion = Expresion.Replace("/", "");
+            Expresion = Expresion.Replace("^", "");
+            Expresion = Expresion.Replace("+", "");
+            Expresion = Expresion.Replace("-", "");
+            Expresion = Expresion.Replace("*", "");
+
+            return Expresion;
+        }
+
         public void CopyList(List<string> Copia, List<string> Original)
         {
             Copia.Clear();
