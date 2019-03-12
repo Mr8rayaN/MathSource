@@ -16,6 +16,7 @@ namespace ALGEBRA
         public string ParteLiteral { get; private set; }
         public double GradoAbs { get; private set; }
         public string Result { get; private set; }
+        public char Simbolo => ObteneSimbolo();
         public List<PotenciaEntera> Elementos = new List<PotenciaEntera>();
         ProductoEntero Producto = new ProductoEntero();
         PotenciaEntera Potencia = new PotenciaEntera();
@@ -115,6 +116,11 @@ namespace ALGEBRA
         public override string ToString()
         {
             return $"MONOMIO {Contenido}; COEFICIENTE {Coeficiente}; LITERAL {ParteLiteral}";
+        }
+
+        private char ObteneSimbolo()
+        {
+            return Producto.Simbolo;
         }
 
     }

@@ -988,7 +988,7 @@ namespace ENTITY
         {
             LVariables.Reverse();
             string Nomb = "", Conten = "", Acomulador;
-            int k, i, j; bool A = false, B = false, C = false;
+            int k, i, j; bool A = false, B = false, C = false, D=false;
 
             i = 0;
             variable = LVariables.ElementAt(i);
@@ -1003,9 +1003,22 @@ namespace ENTITY
                     Conten = (string)LVariables.ElementAt(i).Contenido;
                     //ENCORCHAR EL CONTENIDO SI ES NECESARIO;
 
+                    int AntIndex = 0;
+                    if (Acomulador.IndexOf(Nomb) > 0)
+                    {
+                        AntIndex = Acomulador.IndexOf(Nomb) - 1;
+                    }
+
                     A = (Conten.Length > 2);
                     B = Proceso.IsAgrupate(Conten);
-                    C = Conten.StartsWith("<");
+                    D = Acomulador.ElementAt(AntIndex).Equals('^');
+
+                    if (D)
+                    {
+                        Conten = Proceso.EncorcharFuncion(Conten);
+                    }
+
+                    C = Conten.StartsWith("<") || Conten.StartsWith("{");
 
                     //AGREGADO PARA PRUEBAS EXPERIMENTALES CON FUNCIONES
                     if (C)

@@ -45,7 +45,11 @@ namespace ALGEBRA
 
         protected override void ObtenerCoeficiente()
         {
-            Foco = SimboloExtendido + Argumento + Cl;
+            if (Contenido.Contains(SimboloExtendido + Argumento + Cl))
+                Foco = SimboloExtendido + Argumento + Cl;
+            else
+                Foco = Simbolo + Potencia.Simbolo + Argumento;
+
             Coeficiente = Contenido.Replace(Foco, "1");
             Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
             if (Coeficiente.Equals(""))

@@ -13,7 +13,7 @@ namespace TESTER
     {
         private static void Main(string[] args)
         {
-            TEST_Console_COS_Derivada();
+            TEST_Console_LN_Derivada();
         }
 
         private static void TEST_Console_COS_Derivada()
