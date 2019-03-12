@@ -832,6 +832,9 @@ namespace ENTITY
                 A = (Mdo.Length > 2);
                 B = (Mor.Length > 2);
 
+                //SOLUCIONA MOMENTANEAMENTE PROBLEMAS
+                A = false; B = false; //COLOCADO DE PRUEBA PARA VERIFICAR ERRORES. PROBANDO
+
                 if (A & B)
                 {
                     Result = $"{Op}{Op}{Multiplicando}{Cl}{Simbolo}{Op}{Multiplicador}{Cl}{Cl}";

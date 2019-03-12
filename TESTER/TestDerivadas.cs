@@ -18,7 +18,7 @@ namespace TESTER
 
         private static void TEST_Console_COS_Derivada()
         {
-            string Entrada = "x^{2}";
+            string Entrada = "2*x+x^{2}";
             Cosenos COS = new Cosenos();
             COS.SetArgumento(Entrada);
             Derivadas DER = new Derivadas(COS, new Variables("x"));
