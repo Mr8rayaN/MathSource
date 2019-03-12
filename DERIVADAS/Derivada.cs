@@ -260,45 +260,98 @@ namespace DERIVADAS
 
     }
 
-    public class CopDerivada
+    public class CopDerivada : Signos
     {
         public Variables Variable { get; private set; }
         public string Funcion { get; private set; }
         public string Result { get; private set; }
         public object DerivadaInterna { get; private set; }
+        public double Modulo => 0;
 
-        AFuns Interno;
+        
+        Polinomios Polinomio;
+        AFuns Interino;
+        AMathOps Operacion;
 
         public CopDerivada() { }
 
         public CopDerivada(Polinomios POL, Variables Var)
         {
-            
+            Result = $"g'({Var.Nombre})";
         }
 
         public CopDerivada(Senos SENO, Variables Var)
         {
-            Interno = new Cosenos(SENO.Argumento);
+            if (SENO.Argumento.Contains(Var.Nombre))
+            {
+                Interino = new Cosenos();
+                Interino.SetArgumento(SENO.Argumento);
+                Polinomio = new Polinomios(SENO.Argumento);
+                DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
+                Result = DerivadaInterna.ToString() + Interino.Result;
+            }
+            else
+            {
+                Result = $"{Modulo}";
+            }
         }
 
         public CopDerivada(Cosenos COS, Variables Var)
         {
-
+            if (COS.Argumento.Contains(Var.Nombre))
+            {
+                Interino = new Senos();
+                Interino.SetArgumento(COS.Argumento);
+                Polinomio = new Polinomios(COS.Argumento);
+                DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
+                Result = $"{Neg}" + DerivadaInterna.ToString() + Interino.Result;
+            }
+            else
+                Result = $"{Modulo}";
         }
 
         public CopDerivada(Tangentes TAN, Variables Var)
         {
-
+            string Res;
+            if (TAN.Argumento.Contains(Var.Nombre))
+            {
+                Polinomio = new Polinomios(TAN.Argumento);
+                DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
+                Operacion = new PotenciaEntera(TAN.Simbolo, "2");
+                //REVISAR SI TOCA DESCORCHAR CORCHETES DE LA BASE DE LA POTENCIA
+                Res = Operacion.Result + TAN.Op + TAN.Argumento + TAN.Cl;
+                Operacion = new CocienteEntero("1", Res);
+                Res = Operacion.Result;
+                Operacion = new ProductoEntero(DerivadaInterna.ToString(), Res);
+                Result = Operacion.Result;
+            }
+            else
+                Result = $"{Modulo}";
         }
 
         public CopDerivada(Eulers EUL, Variables Var)
         {
-
+            if (EUL.Argumento.Contains(Var.Nombre))
+            {
+                Polinomio = new Polinomios(EUL.Argumento);
+                DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
+                Result = DerivadaInterna.ToString() + EUL.Result;
+            }
+            else
+                Result = $"{Modulo}";
         }
 
         public CopDerivada(LogNaturales LN, Variables Var)
         {
-
+            if (LN.Argumento.Contains(Var.Nombre))
+            {
+                Polinomio = new Polinomios(LN.Argumento);
+                DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
+                Operacion = new CocienteEntero(DerivadaInterna.ToString(), LN.Argumento);
+                Result = Operacion.Result;
+            }
+            else
+                Result = $"{Modulo}";
         }
 
     }

@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TESTER.TestAlgebra</StartupObject>
+    <StartupObject>TESTER.TestDerivadas</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAlgebra.cs" />
     <Compile Include="TestBD.cs" />
+    <Compile Include="TestDerivadas.cs" />
     <Compile Include="TestOperacionesMaths.cs" />
     <Compile Include="TestOpsNumericas.cs" />
   </ItemGroup>

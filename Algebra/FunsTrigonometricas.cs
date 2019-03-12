@@ -14,7 +14,7 @@ namespace ALGEBRA
         public override string SimboloExtendido => "sen<";
         public override char Op => '<';
         public override char Cl => '>';
-        public string ArgDefecto => "0";
+        private string ArgDefecto => "0";
         public int Modulo => 0;
         double number;
 
@@ -72,7 +72,7 @@ namespace ALGEBRA
         public override string SimboloExtendido => "cos<";
         public override char Op => '<';
         public override char Cl => '>';
-        public string ArgDefecto => "90";
+        private string ArgDefecto => "90";
         public int Modulo => 0;
         double number;
 
@@ -130,7 +130,7 @@ namespace ALGEBRA
         public override string SimboloExtendido => "tan<";
         public override char Op => '<';
         public override char Cl => '>';
-        public string ArgDefecto => "0";
+        private string ArgDefecto => "0";
         public int Modulo => 0;
         double number;
 

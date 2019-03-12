@@ -69,7 +69,7 @@ namespace ALGEBRA
         public override string SimboloExtendido => "ln<";
         public override char Op => '<';
         public override char Cl => '>';
-        public string ArgDefecto => "1";
+        private string ArgDefecto => "1";
         public double ModuloCancelativo => 0;
         double number;
 

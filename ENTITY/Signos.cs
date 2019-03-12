@@ -8,8 +8,8 @@ namespace ENTITY
 {
     public abstract class Signos
     {
-        private char Pos => '+';
-        private char Neg => '-';
+        protected char Pos => '+';
+        protected char Neg => '-';
         public char SignoAbs { get { return ObtenerSignoAbs(); } }
         public string ListaSignos { get; private set; }
 
