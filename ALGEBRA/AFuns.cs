@@ -11,13 +11,24 @@ namespace ALGEBRA
     {
         public virtual string Nombre { get;}
         public virtual string Simbolo { get;}
+        public virtual string SimboloExtendido { get; }
         public virtual string Contenido { get; protected set; }
         public virtual string Argumento { get; protected set; }
         public virtual char Op { get; }
         public virtual char Cl { get; }
         public string Result { get; protected set; }
 
-        public EProcesos Proceso = new EProcesos();
+        protected EProcesos Proceso = new EProcesos();
+
+        public void SetArgumento(string Argumento)
+        {
+            if (Proceso.IsAgrupate(Argumento))
+                Argumento = Proceso.DescorcharA(Argumento);
+
+            this.Argumento = Argumento;
+            Contenido = SimboloExtendido + Argumento + Cl;
+            Operar();
+        }
 
         protected virtual void ObtenerArgumento() { }
 

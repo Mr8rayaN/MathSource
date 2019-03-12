@@ -11,7 +11,7 @@ namespace ALGEBRA
     {
         public override string Nombre => "EULER";
         public override string Simbolo => "e";
-        public string SimboloExtendido => "e^{";
+        public override string SimboloExtendido => "e^{";
         private string Valor => "2.71828";
         private string ArgDefecto => "1";
         public override char Op => '{';
@@ -39,6 +39,7 @@ namespace ALGEBRA
             Operar();
 
         }
+        
 
         protected override void ObtenerArgumento()
         {
@@ -61,24 +62,24 @@ namespace ALGEBRA
 
     }
 
-    public class LogNatural : AFuns
+    public class LogNaturales : AFuns
     {
         public override string Nombre => "LOG NATURAL";
         public override string Simbolo => "ln";
-        public string SimboloExtendido => "ln<";
+        public override string SimboloExtendido => "ln<";
         public override char Op => '<';
         public override char Cl => '>';
         public string ArgDefecto => "1";
         public double ModuloCancelativo => 0;
         double number;
 
-        public LogNatural()
+        public LogNaturales()
         {
             Argumento = ArgDefecto;
             Contenido = SimboloExtendido + Argumento + $"{Cl}";
         }
 
-        public LogNatural(string Expresion)
+        public LogNaturales(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);

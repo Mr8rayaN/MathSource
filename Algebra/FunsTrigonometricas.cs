@@ -7,24 +7,24 @@ using ENTITY;
 
 namespace ALGEBRA
 {
-    public class Seno : AFuns
+    public class Senos : AFuns
     {
         public override string Nombre => "SENO";
         public override string Simbolo => "sen";
-        public string SimboloExtendido => "sen<";
+        public override string SimboloExtendido => "sen<";
         public override char Op => '<';
         public override char Cl => '>';
         public string ArgDefecto => "0";
         public int Modulo => 0;
         double number;
 
-        public Seno()
+        public Senos()
         {
             Argumento = ArgDefecto;
             Contenido = SimboloExtendido + Argumento + $"{Cl}";
         }
 
-        public Seno(string Expresion)
+        public Senos(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);
@@ -65,24 +65,24 @@ namespace ALGEBRA
         }
     }
 
-    public class Coseno : AFuns
+    public class Cosenos : AFuns
     {
         public override string Nombre => "COSENO";
         public override string Simbolo => "cos";
-        public string SimboloExtendido => "cos<";
+        public override string SimboloExtendido => "cos<";
         public override char Op => '<';
         public override char Cl => '>';
         public string ArgDefecto => "90";
         public int Modulo => 0;
         double number;
 
-        public Coseno()
+        public Cosenos()
         {
             Argumento = ArgDefecto;
             Contenido = SimboloExtendido + Argumento + $"{Cl}";
         }
 
-        public Coseno(string Expresion)
+        public Cosenos(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);
@@ -123,24 +123,24 @@ namespace ALGEBRA
         }
     }
 
-    public class Tangente : AFuns
+    public class Tangentes : AFuns
     {
         public override string Nombre => "TANGENTE";
         public override string Simbolo => "tan";
-        public string SimboloExtendido => "tan<";
+        public override string SimboloExtendido => "tan<";
         public override char Op => '<';
         public override char Cl => '>';
         public string ArgDefecto => "0";
         public int Modulo => 0;
         double number;
 
-        public Tangente()
+        public Tangentes()
         {
             Argumento = ArgDefecto;
             Contenido = SimboloExtendido + Argumento + $"{Cl}";
         }
 
-        public Tangente(string Expresion)
+        public Tangentes(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);

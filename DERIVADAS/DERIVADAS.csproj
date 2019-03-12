@@ -42,10 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Derivada.cs" />
-    <Compile Include="DerivadaParcial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Algebra\ALGEBRA.csproj">
+      <Project>{0ea8ebbf-0f6c-4353-b302-b629882951eb}</Project>
+      <Name>ALGEBRA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ENTITY\ENTITY.csproj">
       <Project>{e1b0a794-e12d-47f6-8ae2-92440a51b1cb}</Project>
       <Name>ENTITY</Name>

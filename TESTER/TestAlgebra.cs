@@ -61,7 +61,7 @@ namespace TESTER
         {
             string Entrada = "ln<-2>";
             //Entrada = "ln<ln<2>>";
-            LogNatural LN = new LogNatural(Entrada);
+            LogNaturales LN = new LogNaturales(Entrada);
             Console.WriteLine($"{LN.Nombre}");
             Console.WriteLine($"CONTENIDO     {LN.Contenido}");
             Console.WriteLine($"ARGUMENTO     {LN.Argumento}");
@@ -75,7 +75,7 @@ namespace TESTER
         {
             string Entrada = "sen<-2>";
             //Entrada = "ln<ln<2>>";
-            Seno SENO = new Seno(Entrada);
+            Senos SENO = new Senos(Entrada);
             Console.WriteLine($"{SENO.Nombre}");
             Console.WriteLine($"CONTENIDO     {SENO.Contenido}");
             Console.WriteLine($"ARGUMENTO     {SENO.Argumento}");
@@ -88,7 +88,7 @@ namespace TESTER
         {
             string Entrada = "cos<-2>";
             Entrada = "cos<ln<2>>";
-            Coseno COS = new Coseno(Entrada);
+            Cosenos COS = new Cosenos(Entrada);
             Console.WriteLine($"{COS.Nombre}");
             Console.WriteLine($"CONTENIDO     {COS.Contenido}");
             Console.WriteLine($"ARGUMENTO     {COS.Argumento}");
@@ -101,7 +101,7 @@ namespace TESTER
         {
             string Entrada = "tan<-2>";
             Entrada = "tan<ln<2>>";
-            Tangente TAN = new Tangente(Entrada);
+            Tangentes TAN = new Tangentes(Entrada);
             Console.WriteLine($"{TAN.Nombre}");
             Console.WriteLine($"CONTENIDO     {TAN.Contenido}");
             Console.WriteLine($"ARGUMENTO     {TAN.Argumento}");

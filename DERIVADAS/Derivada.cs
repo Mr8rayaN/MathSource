@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ENTITY;
+using ALGEBRA;
 
 namespace DERIVADAS
 {
     public class Derivada
     {
 
-        public ProcesosOld proceso = new ProcesosOld();        
+        public ProcesosOld proceso = new ProcesosOld();
 
         public string Derivar(string funcion, string variable)
         {
@@ -24,7 +25,7 @@ namespace DERIVADAS
                     funcion = funcion.Substring(0, funcion.IndexOf("^")) + "^(" + funcion.Substring(funcion.IndexOf("^") + 1) + ")";
                 }
             }
-            
+
             funcion = proceso.IdentificarCoeficiente(funcion, variable);
             string coeficiente = proceso.Coeficiente(funcion, variable);
             funcion = proceso.RemoverCoeficiente(funcion, variable);
@@ -36,13 +37,13 @@ namespace DERIVADAS
 
             if (funcion.Contains("^"))
             {
-                
+
                 exponente = funcion.Substring(funcion.IndexOf("^") + 1);
                 if (exponente.StartsWith("("))
                 {
                     exponente = exponente.Substring(0, exponente.IndexOf(')'));
                 }
-                
+
             }
 
             if (funcion.Contains($"{variable}^0")) return "0";
@@ -138,7 +139,7 @@ namespace DERIVADAS
             }
         }
 
-        protected  string NLogaritmo(string funcion, string variable)
+        protected string NLogaritmo(string funcion, string variable)
         {
             string stringPostfijo;
             string stringPrefijo;
@@ -157,7 +158,7 @@ namespace DERIVADAS
             return $"{stringPrefijo}({derivada}/{stringPostfijo})";
         }
 
-        protected  string Seno(string funcion, string variable)
+        protected string Seno(string funcion, string variable)
         {
             string stringPostfijo;
             string stringPrefijo;
@@ -177,7 +178,7 @@ namespace DERIVADAS
             return $"{stringPrefijo}({derivada})(cos({stringPostfijo}))";
         }
 
-        protected  string Coseno(string funcion, string variable)
+        protected string Coseno(string funcion, string variable)
         {
             string stringPrefijo;
             string stringPostfijo;
@@ -198,7 +199,7 @@ namespace DERIVADAS
             return $"{stringPrefijo}({derivada})(-sen({stringPostfijo}))";
         }
 
-        protected  string Tangente(string funcion, string variable)
+        protected string Tangente(string funcion, string variable)
         {
             string stringPostfijo;
             string stringPrefijo;
@@ -220,7 +221,7 @@ namespace DERIVADAS
             return $"{stringPrefijo}({derivada})(sec^2({stringPostfijo}))";
         }
 
-        protected  string Exponencial(string funcion, string variable)
+        protected string Exponencial(string funcion, string variable)
         {
             string stringPrefijo;
             string stringPostfijo;
@@ -243,7 +244,7 @@ namespace DERIVADAS
             return $"{stringPrefijo}({derivada})(e^({stringPostfijo}))";
         }
 
-        protected  string FuncionPotencia(string funcion, string variable)
+        protected string FuncionPotencia(string funcion, string variable)
         {
             string stringPrefijo;
             string stringPostfijo;
@@ -255,6 +256,49 @@ namespace DERIVADAS
 
             if (derivada.Equals("1")) return $"({stringPrefijo}^{stringPostfijo})(ln({stringPrefijo}))";
             return $"({stringPrefijo}^{stringPostfijo})({derivada})(ln({stringPrefijo}))";
+        }
+
+    }
+
+    public class CopDerivada
+    {
+        public Variables Variable { get; private set; }
+        public string Funcion { get; private set; }
+        public string Result { get; private set; }
+        public object DerivadaInterna { get; private set; }
+
+        AFuns Interno;
+
+        public CopDerivada() { }
+
+        public CopDerivada(Polinomios POL, Variables Var)
+        {
+            
+        }
+
+        public CopDerivada(Senos SENO, Variables Var)
+        {
+            Interno = new Cosenos(SENO.Argumento);
+        }
+
+        public CopDerivada(Cosenos COS, Variables Var)
+        {
+
+        }
+
+        public CopDerivada(Tangentes TAN, Variables Var)
+        {
+
+        }
+
+        public CopDerivada(Eulers EUL, Variables Var)
+        {
+
+        }
+
+        public CopDerivada(LogNaturales LN, Variables Var)
+        {
+
         }
 
     }
