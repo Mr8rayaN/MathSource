@@ -34,6 +34,23 @@ namespace ALGEBRA
             Operar();
         }
 
+        public void SetCoeficiente(string Coeficiente)
+        {
+            if (Proceso.IsAgrupate(Coeficiente))
+                Coeficiente = Proceso.DescorcharA(Coeficiente);
+
+            if (Coeficiente.Equals("1"))
+            {
+                Contenido = new ProductoEntero(Coeficiente, Contenido).Result;
+            }
+            else
+                Contenido = Contenido.Replace(this.Coeficiente, Coeficiente);
+
+            this.Coeficiente = Coeficiente;
+            Foco = SimboloExtendido + Argumento + Cl;
+            Operar();
+        }
+
         protected virtual void ObtenerCoeficiente() { }
 
         protected virtual void ObtenerArgumento() { }

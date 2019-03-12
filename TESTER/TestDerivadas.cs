@@ -13,12 +13,12 @@ namespace TESTER
     {
         private static void Main(string[] args)
         {
-            TEST_Console_LN_Derivada();
+            TEST_Console_COS_Derivada();
         }
 
         private static void TEST_Console_COS_Derivada()
         {
-            string Entrada = "2*x";
+            string Entrada = "x^{2}";
             Cosenos COS = new Cosenos();
             COS.SetArgumento(Entrada);
             Derivadas DER = new Derivadas(COS, new Variables("x"));
@@ -30,7 +30,7 @@ namespace TESTER
 
         private static void TEST_Console_SEN_Derivada()
         {
-            string Entrada = "2*x";
+            string Entrada = "cos<2*x>";
             Senos SEN = new Senos();
             SEN.SetArgumento(Entrada);
             Derivadas DER = new Derivadas(SEN, new Variables("x"));
