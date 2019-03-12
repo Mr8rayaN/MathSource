@@ -12,7 +12,7 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Monomio();
+            TEST_Consola_Polinomio();
         }
 
         private static void TEST_Consola_Monomio()
@@ -33,7 +33,7 @@ namespace TESTER
 
         private static void TEST_Consola_Polinomio()
         {
-            string Entrada = "x*2+(2)+(y^{2*4}*x*2*z*5)";
+            string Entrada = "x^2+x*2+e^{1+x}+sen<1+w>";
             Polinomios POLI = new Polinomios(Entrada);
             Console.WriteLine(POLI.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");

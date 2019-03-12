@@ -206,9 +206,10 @@ namespace BLL
 
         //FIN MANEJO DE DATOS
 
-        public string Procesar(string Expresion, Variables Var,string Operacion)
+        public string Procesar(string Expresion, string NombreVariable,string Operacion)
         {
             //IDENTIFICAR OPERACIONES A REALIZAR E IR ALMACENANDO PASOS (CUANDO AL INGRESAR POR UNA FUNCION RETORNE ALGO DIFERENTE AL INCICIAL
+            Variables Var = new Variables(NombreVariable);
             Conexion.Open();
             Funcion_id = DAL.SiguienteFuncion();
             Resultado_id = DAL.SiguienteResultado();
@@ -221,7 +222,7 @@ namespace BLL
 
             RegistrarPaso(Entrada, Polinomio.Result, Polinomio.Nombre);
 
-            if (Operacion.Contains("Derivar"))
+            if (Operacion.Contains("Der"))
             {
                 Derivada = new Derivadas(Polinomio, Var);
 
@@ -231,7 +232,7 @@ namespace BLL
                 CrearResultado(Resultado_id, Derivada.Nombre, Derivada.Result, Estado);
                 //SE DEFINE EL RESULTADO
             }
-            else if (Operacion.Contains("Simplificar"))
+            else if (Operacion.Contains("Simp"))
             {
                 string Temp = "";
                 foreach (var mono in Polinomio.Elementos)

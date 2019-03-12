@@ -36,6 +36,10 @@ namespace ALGEBRA
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);
 
+            if(!Expresion.Contains("<"))
+                Expresion = new PotenciaEntera(Expresion).Result;
+
+            Contenido = Expresion;
             ObtenerElementos(Expresion);
 
             Operar();
@@ -50,23 +54,31 @@ namespace ALGEBRA
             Producto = new ProductoEntero(Expresion);
 
             Contenido = Producto.Result;
-
-            foreach (var elemento in Contenido.Split(Producto.Simbolo))
+            ParteLiteral = Contenido;
+            if (Contenido.Contains(Producto.Simbolo))
             {
-                Potencia = new PotenciaEntera(elemento);
-
-                Elementos.Add(Potencia);
-
-                Organizar(Potencia);
-
-                if (Potencia.Result.Equals(Potencia.ModuloCancelativo))
+                foreach (var elemento in Contenido.Split(Producto.Simbolo))
                 {
-                    Elementos.Clear();
-                    Coeficiente = $"{Potencia.ModuloCancelativo}";
-                    ParteLiteral = "";
-                    break;
+                    Potencia = new PotenciaEntera(elemento);
+
+                    Elementos.Add(Potencia);
+
+                    Organizar(Potencia);
+
+                    if (Potencia.Result.Equals(Potencia.ModuloCancelativo))
+                    {
+                        Elementos.Clear();
+                        Coeficiente = $"{Potencia.ModuloCancelativo}";
+                        ParteLiteral = "";
+                        break;
+                    }
+
                 }
-                
+            }
+            else
+            {
+                Elementos.Clear();
+                Elementos.Add(new PotenciaEntera(ParteLiteral, "1"));
             }
 
         }
@@ -81,7 +93,11 @@ namespace ALGEBRA
             }
             else
             {
-                GradoAbs += double.Parse(P.Exponente);
+                if (double.TryParse((new PotenciaEntera(P.Exponente).Result), out number))
+                    GradoAbs += double.Parse(new PotenciaEntera(P.Exponente).Result);
+                else
+                    GradoAbs += 1;
+
                 ParteLiteral += Producto.Simbolo + P.Result;
                 ParteLiteral = ParteLiteral.Trim(Producto.Simbolo);
             }

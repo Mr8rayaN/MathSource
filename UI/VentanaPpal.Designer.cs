@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VentanaPpal));
             this.PanelMenu = new System.Windows.Forms.Panel();
-            this.LabelPrueba = new System.Windows.Forms.Label();
             this.PanelOpcionDos = new System.Windows.Forms.Panel();
             this.PBoxSeleccionDos = new System.Windows.Forms.PictureBox();
             this.LblOpciopnDos = new System.Windows.Forms.Label();
@@ -85,7 +84,6 @@
             this.PanelMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PanelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.PanelMenu.Controls.Add(this.LabelPrueba);
             this.PanelMenu.Controls.Add(this.PanelOpcionDos);
             this.PanelMenu.Controls.Add(this.PBoxGeneral);
             this.PanelMenu.Controls.Add(this.PanelOpcionSeis);
@@ -96,17 +94,8 @@
             this.PanelMenu.Controls.Add(this.PanelOpcionUno);
             this.PanelMenu.Location = new System.Drawing.Point(-1, 25);
             this.PanelMenu.Name = "PanelMenu";
-            this.PanelMenu.Size = new System.Drawing.Size(303, 589);
+            this.PanelMenu.Size = new System.Drawing.Size(303, 576);
             this.PanelMenu.TabIndex = 0;
-            // 
-            // LabelPrueba
-            // 
-            this.LabelPrueba.AutoSize = true;
-            this.LabelPrueba.Location = new System.Drawing.Point(4, 7);
-            this.LabelPrueba.Name = "LabelPrueba";
-            this.LabelPrueba.Size = new System.Drawing.Size(35, 13);
-            this.LabelPrueba.TabIndex = 8;
-            this.LabelPrueba.Text = "label1";
             // 
             // PanelOpcionDos
             // 
@@ -116,7 +105,7 @@
             this.PanelOpcionDos.Controls.Add(this.LblOpciopnDos);
             this.PanelOpcionDos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PanelOpcionDos.ForeColor = System.Drawing.Color.White;
-            this.PanelOpcionDos.Location = new System.Drawing.Point(0, 295);
+            this.PanelOpcionDos.Location = new System.Drawing.Point(0, 289);
             this.PanelOpcionDos.Name = "PanelOpcionDos";
             this.PanelOpcionDos.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionDos.TabIndex = 1;
@@ -154,7 +143,7 @@
             this.PBoxGeneral.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PBoxGeneral.BackColor = System.Drawing.Color.Transparent;
             this.PBoxGeneral.Image = global::UI.Properties.Resources.Logotipo_350x200;
-            this.PBoxGeneral.Location = new System.Drawing.Point(16, 39);
+            this.PBoxGeneral.Location = new System.Drawing.Point(16, 33);
             this.PBoxGeneral.Name = "PBoxGeneral";
             this.PBoxGeneral.Size = new System.Drawing.Size(268, 150);
             this.PBoxGeneral.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -168,7 +157,7 @@
             this.PanelOpcionSeis.Controls.Add(this.LblOpciopnSeis);
             this.PanelOpcionSeis.Controls.Add(this.PBoxSeleccionSeis);
             this.PanelOpcionSeis.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PanelOpcionSeis.Location = new System.Drawing.Point(0, 515);
+            this.PanelOpcionSeis.Location = new System.Drawing.Point(0, 509);
             this.PanelOpcionSeis.Name = "PanelOpcionSeis";
             this.PanelOpcionSeis.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionSeis.TabIndex = 6;
@@ -209,7 +198,7 @@
             this.PanelOpcionCinco.Controls.Add(this.PBoxSeleccionCinco);
             this.PanelOpcionCinco.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PanelOpcionCinco.ForeColor = System.Drawing.Color.White;
-            this.PanelOpcionCinco.Location = new System.Drawing.Point(0, 460);
+            this.PanelOpcionCinco.Location = new System.Drawing.Point(0, 454);
             this.PanelOpcionCinco.Name = "PanelOpcionCinco";
             this.PanelOpcionCinco.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionCinco.TabIndex = 5;
@@ -249,7 +238,7 @@
             this.PanelOpcionCuatro.Controls.Add(this.PBoxSeleccionCuatro);
             this.PanelOpcionCuatro.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PanelOpcionCuatro.ForeColor = System.Drawing.Color.White;
-            this.PanelOpcionCuatro.Location = new System.Drawing.Point(0, 405);
+            this.PanelOpcionCuatro.Location = new System.Drawing.Point(0, 399);
             this.PanelOpcionCuatro.Name = "PanelOpcionCuatro";
             this.PanelOpcionCuatro.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionCuatro.TabIndex = 4;
@@ -284,7 +273,7 @@
             // panel4
             // 
             this.panel4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.panel4.Location = new System.Drawing.Point(16, 405);
+            this.panel4.Location = new System.Drawing.Point(16, 399);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(287, 45);
             this.panel4.TabIndex = 3;
@@ -297,7 +286,7 @@
             this.PanelOpcionTres.Controls.Add(this.PBoxSeleccionTres);
             this.PanelOpcionTres.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PanelOpcionTres.ForeColor = System.Drawing.Color.White;
-            this.PanelOpcionTres.Location = new System.Drawing.Point(0, 350);
+            this.PanelOpcionTres.Location = new System.Drawing.Point(0, 344);
             this.PanelOpcionTres.Name = "PanelOpcionTres";
             this.PanelOpcionTres.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionTres.TabIndex = 2;
@@ -336,7 +325,7 @@
             this.PanelOpcionUno.Controls.Add(this.LblOpciopnUno);
             this.PanelOpcionUno.Controls.Add(this.PBoxSeleccionUno);
             this.PanelOpcionUno.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PanelOpcionUno.Location = new System.Drawing.Point(0, 240);
+            this.PanelOpcionUno.Location = new System.Drawing.Point(0, 234);
             this.PanelOpcionUno.Name = "PanelOpcionUno";
             this.PanelOpcionUno.Size = new System.Drawing.Size(303, 45);
             this.PanelOpcionUno.TabIndex = 0;
@@ -462,7 +451,7 @@
             this.PanelGeneral.Cursor = System.Windows.Forms.Cursors.Default;
             this.PanelGeneral.Location = new System.Drawing.Point(300, 25);
             this.PanelGeneral.Name = "PanelGeneral";
-            this.PanelGeneral.Size = new System.Drawing.Size(955, 589);
+            this.PanelGeneral.Size = new System.Drawing.Size(955, 576);
             this.PanelGeneral.TabIndex = 5;
             // 
             // VentanaPpal
@@ -482,7 +471,6 @@
             this.Text = "VentanaPpal";
             this.Resize += new System.EventHandler(this.ResizePrincipal);
             this.PanelMenu.ResumeLayout(false);
-            this.PanelMenu.PerformLayout();
             this.PanelOpcionDos.ResumeLayout(false);
             this.PanelOpcionDos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionDos)).EndInit();
@@ -542,6 +530,5 @@
         private System.Windows.Forms.Panel PanelGeneral;
         private System.Windows.Forms.Label LblOpciopnUno;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label LabelPrueba;
     }
 }

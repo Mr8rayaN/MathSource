@@ -2322,6 +2322,7 @@ namespace ENTITY
             this.Base = Base;
             this.Exponente = Exponente;
             Contenido = Base + Simbolo + Exponente;
+            ObtenerElementos(Contenido);
             Operar();
         }
 

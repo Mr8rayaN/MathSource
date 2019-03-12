@@ -23,7 +23,7 @@ namespace TESTER
             Console.WriteLine($"Proceso Derivar");
             Polinomios POL = new Polinomios(Entrada);
             Service BLL = new Service();
-            BLL.Procesar(Entrada, BLL.ObtenerVariable(Entrada).ElementAt(0), "Derivar");
+            BLL.Procesar(Entrada, BLL.ObtenerVariable(Entrada).ElementAt(0).Nombre, "Derivar");
             Console.WriteLine(BLL.Resultado.Contenido);
             Console.WriteLine("------------------------------------------");
             Console.ReadKey();

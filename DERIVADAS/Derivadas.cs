@@ -39,17 +39,19 @@ namespace DERIVADAS
 
         public Derivadas(Monomios MONO, Variables Var)
         {
-            string Coeficiente = "", Literal = "";
+            string Coeficiente = "1", Literal = "1";
             if (MONO.Result.Contains(Var.Nombre))
             {
                 foreach (var elemento in MONO.Elementos)
                 {
-                    if (elemento.Base.Equals(Var.Nombre))
+                    //if (elemento.Base.Equals(Var.Nombre))
+                    if(elemento.Result.Contains(Var.Nombre))
                     {
                         Operacion = new ProductoEntero(MONO.Coeficiente, elemento.Exponente);
                         Coeficiente = Operacion.Result;
                         Operacion = new SumaEntera(elemento.Exponente, "-1");
-                        Literal += MONO.ParteLiteral.Replace(elemento.Result, new PotenciaEntera(elemento.Base, Operacion.Result).Result);
+                         
+                       Literal = MONO.ParteLiteral.Replace(elemento.Result, new PotenciaEntera(elemento.Result, Operacion.Result).Result);
                     }
                 }
                 Operacion = new ProductoEntero(Coeficiente, Literal);

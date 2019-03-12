@@ -14,16 +14,12 @@ namespace UI
 {
     public partial class OpcionUno : Form
     {
-        List<Pasos> LPasos = new List<Pasos>();
-        Funciones F = new Funciones();
-        Resultados R = new Resultados();
-        Pasos Paso = new Pasos();
-
         Service BLL;
 
         public OpcionUno()
         {
             InitializeComponent();
+            PnVariables.Hide();
             BLL = new Service();
             LlenarOperaciones();
             LlenarEstados();
@@ -32,6 +28,7 @@ namespace UI
         public OpcionUno(Form Padre, Panel Contenedor, Service BLL)
         {
             InitializeComponent();
+            PnVariables.Hide();
             this.BackColor = Contenedor.BackColor;
             this.Size = Contenedor.Size;
 
@@ -42,72 +39,41 @@ namespace UI
 
         private void LlenarOperaciones()
         {
-            comboBox1.Items.Add("Simplificar Cocientes");
-            comboBox1.Items.Add("Simplificar Potencias");
+            CBProcesos.Items.Add("Simplificar");
+            CBProcesos.Items.Add("Derivar");
         }
 
         private void LlenarEstados()
         {
             foreach (var estado in BLL.ConsultarEstados())
             {
-                comboBox2.Items.Add($"{estado.Id} {estado.Nombre}");
+                CBEstados.Items.Add($"{estado.Id} {estado.Nombre}");
             }
             
         }
 
         private void Operar_Click(object sender, EventArgs e)
         {
-            LPasos.Clear();
-
-            string entrada ="";
-            string Salida = "";
-            string nombre ="";
-
-            if (comboBox1.SelectedItem.ToString().Contains("Cociente"))
-            {
-                CocienteEntero C = new CocienteEntero(textBox1.Text);
-                nombre = C.Nombre;
-                entrada = C.Contenido;
-                Salida = C.Result;
-                F = new Funciones(BLL.ProximaFuncion(),C.Nombre,C.Contenido);
-                R = new Resultados(BLL.ProximoResultado(), C.Nombre, C.Result);
-                Paso = new Pasos(entrada, Salida, nombre);
-                Paso.SetFuncion(F.Id);
-                Paso.SetResultado(R.Id);
-                textBox2.Text = C.Result;
-
-            }
-            else if (comboBox1.SelectedItem.ToString().Contains("Potencia"))
-            {
-                PotenciaEntera P = new PotenciaEntera(textBox1.Text);
-                nombre = P.Nombre;
-                entrada = P.Contenido;
-                Salida = P.Result;
-                F = new Funciones(BLL.ProximaFuncion(), P.Nombre, P.Contenido);
-                R = new Resultados(BLL.ProximoResultado(), P.Nombre, P.Result);
-                Paso = new Pasos(entrada, Salida, nombre);
-                Paso.SetFuncion(F.Id);
-                Paso.SetResultado(R.Id);
-                textBox2.Text = P.Result;
-            }
-
-            LPasos.Add(Paso);
-
-            
-
+            TBResultado.Text = BLL.Procesar(TBExpresion.Text, CBVariables.SelectedItem.ToString(), CBProcesos.SelectedItem.ToString());
             MessageBox.Show("Procesado Correctamente");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void TBExpresion_Left(object sender, EventArgs e)
         {
-            string EST = "EST1";
-            BLL.GuardarFuncion(F);
-            EST = comboBox2.SelectedItem.ToString();
-            EST = EST.Substring(0, EST.IndexOf(" "));
-            R.SetEstado(EST);
-            BLL.GuardarResultado(R);
-            BLL.GuardarPasos(LPasos);
+            LlenarCBVariables(BLL.ObtenerVariable(TBExpresion.Text));
+            PnVariables.Show();
+        }
 
+        private void LlenarCBVariables(List<Variables> LVar)
+        {
+            foreach (var variable in LVar)
+            {
+                CBVariables.Items.Add(variable.Nombre);
+            }
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
             MessageBox.Show("Guardado Correctamente");
         }
     }
