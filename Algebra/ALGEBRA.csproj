@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CasosFactorizacion.cs" />
+    <Compile Include="AFuns.cs" />
     <Compile Include="FunsMatematicas.cs" />
     <Compile Include="FunsTrigonometricas.cs" />
     <Compile Include="IdensTrigonometricas.cs" />

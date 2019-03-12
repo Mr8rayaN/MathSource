@@ -52,7 +52,7 @@ namespace ENTITY
                 return 0;
         }
 
-        private int CierreParentesis(string Expresion, int startIndex)
+        public int CierreParentesis(string Expresion, int startIndex)
         {
             //retorna el indice de cierre;
 
@@ -87,7 +87,7 @@ namespace ENTITY
 
         }
 
-        private int CierreFunciones(string Expresion, int startIndex)
+        public int CierreFunciones(string Expresion, int startIndex)
         {
             //retorna el indice de cierre;
             

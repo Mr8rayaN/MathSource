@@ -12,7 +12,7 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Polinomio();
+            TEST_Consola_Tangente();
         }
 
         private static void TEST_Consola_Moniomio()
@@ -41,6 +41,72 @@ namespace TESTER
             Console.WriteLine("GRADO ABS   " + POLI.GradoAbs);
             Console.WriteLine(POLI.Result);
             Console.WriteLine("-----------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Consola_Euler()
+        {
+            string Entrada = "e^{e^{2}}";
+            Eulers EULER = new Eulers(Entrada);
+            Console.WriteLine($"{EULER.Nombre}");
+            Console.WriteLine($"CONTENIDO     {EULER.Contenido}");
+            Console.WriteLine($"ARGUMENTO     {EULER.Argumento}");
+            Console.WriteLine($"RESULTADO     {EULER.Result}");
+            Console.WriteLine("-------------------------------");
+            Console.ReadKey();
+
+        }
+
+        private static void TEST_Consola_NLogaritmo()
+        {
+            string Entrada = "ln<-2>";
+            //Entrada = "ln<ln<2>>";
+            LogNatural LN = new LogNatural(Entrada);
+            Console.WriteLine($"{LN.Nombre}");
+            Console.WriteLine($"CONTENIDO     {LN.Contenido}");
+            Console.WriteLine($"ARGUMENTO     {LN.Argumento}");
+            Console.WriteLine($"RESULTADO     {LN.Result}");
+            Console.WriteLine("-------------------------------");
+            Console.ReadKey();
+
+        }
+
+        private static void TEST_Consola_Seno()
+        {
+            string Entrada = "sen<-2>";
+            //Entrada = "ln<ln<2>>";
+            Seno SENO = new Seno(Entrada);
+            Console.WriteLine($"{SENO.Nombre}");
+            Console.WriteLine($"CONTENIDO     {SENO.Contenido}");
+            Console.WriteLine($"ARGUMENTO     {SENO.Argumento}");
+            Console.WriteLine($"RESULTADO     {SENO.Result}");
+            Console.WriteLine("-------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Consola_Coseno()
+        {
+            string Entrada = "cos<-2>";
+            Entrada = "cos<ln<2>>";
+            Coseno COS = new Coseno(Entrada);
+            Console.WriteLine($"{COS.Nombre}");
+            Console.WriteLine($"CONTENIDO     {COS.Contenido}");
+            Console.WriteLine($"ARGUMENTO     {COS.Argumento}");
+            Console.WriteLine($"RESULTADO     {COS.Result}");
+            Console.WriteLine("-------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Consola_Tangente()
+        {
+            string Entrada = "tan<-2>";
+            Entrada = "tan<ln<2>>";
+            Tangente TAN = new Tangente(Entrada);
+            Console.WriteLine($"{TAN.Nombre}");
+            Console.WriteLine($"CONTENIDO     {TAN.Contenido}");
+            Console.WriteLine($"ARGUMENTO     {TAN.Argumento}");
+            Console.WriteLine($"RESULTADO     {TAN.Result}");
+            Console.WriteLine("-------------------------------");
             Console.ReadKey();
         }
     }
