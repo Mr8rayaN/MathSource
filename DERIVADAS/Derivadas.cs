@@ -25,16 +25,38 @@ namespace DERIVADAS
         public Derivadas() { }
 
         //HACER QUE ESTA DERIVADA AUTO DETECTE DERIVADAS INTERNAS DIFERENETS DE POLINOMICAS Y LAS EJECUTE
-        public Derivadas(Polinomios POL, Variables Var)
+       public Derivadas(Polinomios POL, Variables Var)
         {
-            string Derivada = ""; char SumSymbol = new SumaEntera().Simbolo;
-            foreach (var monomio in POL.Elementos)
+            Result = "";
+
+            foreach (var MONO in POL.Elementos)
             {
-                Derivada += Enrutar(monomio, Var) + SumSymbol;
+                Result += Enruta(MONO, Var) + POL.Simbolo;
             }
 
-            Derivada = Derivada.Trim(SumSymbol);
-            Result = Derivada;
+            Result = Result.Trim(POL.Simbolo);
+       }
+
+        public Derivadas(Monomios MONO, Variables Var)
+        {
+            string Coeficiente = "", Literal = "";
+            if (MONO.Result.Contains(Var.Nombre))
+            {
+                foreach (var elemento in MONO.Elementos)
+                {
+                    if (elemento.Base.Equals(Var.Nombre))
+                    {
+                        Operacion = new ProductoEntero(MONO.Coeficiente, elemento.Exponente);
+                        Coeficiente = Operacion.Result;
+                        Operacion = new SumaEntera(elemento.Exponente, "-1");
+                        Literal += MONO.ParteLiteral.Replace(elemento.Result, new PotenciaEntera(elemento.Base, Operacion.Result).Result);
+                    }
+                }
+                Operacion = new ProductoEntero(Coeficiente, Literal);
+                Result = $"{Operacion.Result}";
+            }
+            else
+                Result = $"{Modulo}";
         }
 
         public Derivadas(Senos SENO, Variables Var)
@@ -45,7 +67,10 @@ namespace DERIVADAS
                 Interino.SetArgumento(SENO.Argumento);
                 Polinomio = new Polinomios(SENO.Argumento);
                 DerivadaInterna = new Derivadas(Polinomio, Var).Result;
-                Operacion = new ProductoEntero(DerivadaInterna.ToString(), Interino.Result);
+
+                Operacion = new ProductoEntero(SENO.Coeficiente, DerivadaInterna.ToString());
+                Operacion = new ProductoEntero(Operacion.Result, Interino.Result);
+
                 Result = Operacion.Result;
             }
             else
@@ -62,7 +87,10 @@ namespace DERIVADAS
                 Interino.SetArgumento(COS.Argumento);
                 Polinomio = new Polinomios(COS.Argumento);
                 DerivadaInterna = new Derivadas(Polinomio, Var).Result;
-                Operacion = new ProductoEntero(DerivadaInterna.ToString(), Interino.Result);
+
+                Operacion = new ProductoEntero(COS.Coeficiente, DerivadaInterna.ToString());
+                Operacion = new ProductoEntero(Operacion.Result, Interino.Result);
+
                 Result = $"{Neg}" + Operacion.Result;
             }
             else
@@ -82,9 +110,11 @@ namespace DERIVADAS
                 Res = Temporal + TAN.Op + TAN.Argumento + TAN.Cl;
                 Operacion = new CocienteEntero("1", Res);
                 Res = Operacion.Result;
-                //Operacion = new ProductoEntero(DerivadaInterna.ToString(), Res); PAUSADO MOMENTANEAMENTE DEBE ACTUALIZAR PRODUCTO PARA IDENTIFICAR <> COMO LLAVES
-                //Result = Operacion.Result;
-                Result = $"{DerivadaInterna.ToString()}{new ProductoEntero().Simbolo}{Res}";
+
+                Operacion = new ProductoEntero(TAN.Coeficiente, DerivadaInterna.ToString());
+                Operacion = new ProductoEntero(Operacion.Result, Res);
+                Result = Operacion.Result;
+                //Result = $"{DerivadaInterna.ToString()}{new ProductoEntero().Simbolo}{Res}"; PAUSADO PARA EXPERIMENTAR SI SE CORRIGIO EL BUG
             }
             else
                 Result = $"{Modulo}";
@@ -96,7 +126,9 @@ namespace DERIVADAS
             {
                 Polinomio = new Polinomios(EUL.Argumento);
                 DerivadaInterna = new Derivadas(Polinomio, Var).Result;
-                Operacion = new ProductoEntero(DerivadaInterna.ToString(), EUL.Result);
+
+                Operacion = new ProductoEntero(EUL.Coeficiente, DerivadaInterna.ToString());
+                Operacion = new ProductoEntero(Operacion.Result, EUL.Result);
                 Result = Operacion.Result;
             }
             else
@@ -109,7 +141,9 @@ namespace DERIVADAS
             {
                 Polinomio = new Polinomios(LN.Argumento);
                 DerivadaInterna = new Derivadas(Polinomio, Var).Result;
-                Operacion = new CocienteEntero(DerivadaInterna.ToString(), LN.Argumento);
+
+                Operacion = new ProductoEntero(LN.Coeficiente, DerivadaInterna.ToString());
+                Operacion = new CocienteEntero(Operacion.Result, LN.Argumento);
                 Result = Operacion.Result;
             }
             else
@@ -117,26 +151,44 @@ namespace DERIVADAS
         }
 
         //IMPLEMENTAR PROCESOD DE ENFOCAR FUNCION DONDE LA VARIABLE ESTÉ ENFOCADA
-        private string Enrutar(Monomios MONO, Variables Var)
+        private string Enruta(Monomios MONO, Variables Var)
         {
-            string Coeficiente = "", Literal = "";
-            if (MONO.Result.Contains(Var.Nombre))
+            Interino = new Senos();
+            if (Interino.ContainsThisFuntion(MONO))
             {
-                foreach (var elemento in MONO.Elementos)
-                {
-                    if (elemento.Base.Equals(Var.Nombre))
-                    {
-                        Operacion = new ProductoEntero(MONO.Coeficiente, elemento.Exponente);
-                        Coeficiente = Operacion.Result;
-                        Operacion = new SumaEntera(elemento.Exponente, "-1");
-                        Literal += MONO.ParteLiteral.Replace(elemento.Result, new PotenciaEntera(elemento.Base, Operacion.Result).Result);
-                    }
-                }
-                Operacion = new ProductoEntero(Coeficiente, Literal);
-                return $"{Operacion.Result}";
+                return new Derivadas(new Senos(MONO.Result), Var).Result;
             }
-            else
-                return $"{Modulo}";
+
+
+            Interino = new Cosenos();
+            if (Interino.ContainsThisFuntion(MONO))
+            {
+                return new Derivadas(new Cosenos(MONO.Result), Var).Result;
+            }
+
+
+            Interino = new Tangentes();
+            if (Interino.ContainsThisFuntion(MONO))
+            {
+                return new Derivadas(new Tangentes(MONO.Result), Var).Result;
+            }
+
+
+            Interino = new Eulers();
+            if (Interino.ContainsThisFuntion(MONO))
+            {
+                return new Derivadas(new Eulers(MONO.Result), Var).Result;
+            }
+
+
+            Interino = new LogNaturales();
+            if (Interino.ContainsThisFuntion(MONO))
+            {
+                return new Derivadas(new LogNaturales(MONO.Result), Var).Result;
+            }
+
+
+            return new Derivadas(MONO, Var).Result;
         }
 
     }

@@ -24,6 +24,8 @@ namespace ALGEBRA
             Argumento = ArgDefecto;
             Potencia = new PotenciaEntera(Simbolo, Argumento);
             Contenido = Simbolo + Potencia.Simbolo + Argumento;
+            Foco = SimboloExtendido + ArgDefecto + Cl;
+            Coeficiente = "1";
             Operar();
 
         }
@@ -87,7 +89,9 @@ namespace ALGEBRA
         public LogNaturales()
         {
             Argumento = ArgDefecto;
-            Contenido = SimboloExtendido + Argumento + $"{Cl}";
+            Foco = SimboloExtendido + ArgDefecto + Cl;
+            Coeficiente = "1";
+            Contenido = Foco;
         }
 
         public LogNaturales(string Expresion)

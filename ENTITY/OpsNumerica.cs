@@ -725,6 +725,7 @@ namespace ENTITY
         private string Multiplicador = "";
         public List<Variables> ListaVariables = new List<Variables>();
         private Variables variable = new Variables();
+        private char EspSimbolo => '~';
         double number;
 
         public ProductoEntero() { }
@@ -987,7 +988,7 @@ namespace ENTITY
         {
             LVariables.Reverse();
             string Nomb = "", Conten = "", Acomulador;
-            int k, i, j; bool A = false, B = false;
+            int k, i, j; bool A = false, B = false, C = false;
 
             i = 0;
             variable = LVariables.ElementAt(i);
@@ -1004,8 +1005,15 @@ namespace ENTITY
 
                     A = (Conten.Length > 2);
                     B = Proceso.IsAgrupate(Conten);
+                    C = Conten.StartsWith("<");
 
-                    if (A & !B)
+                    //AGREGADO PARA PRUEBAS EXPERIMENTALES CON FUNCIONES
+                    if (C)
+                    {
+                        Conten = Conten.Replace(Simbolo, EspSimbolo);
+                    }
+                    //FIN PRUEBA
+                    else if (A & !B) //AÑADIR !C SI SE ELIMINA LOD E ARRIBA
                     {
                         Conten = Proceso.EncorcharParentesis(Conten);
                     }
@@ -1023,44 +1031,59 @@ namespace ENTITY
             Niveles = ObtenerNiveles(Contenido);
             Orden = ObtenerOrden(Niveles);
 
-            foreach (var orden in Orden)
-            {
-                k = 0; A = false;
-                foreach (var nivel in Niveles)
-                {
-                    ++k;
-                    if (nivel.Equals(orden))
-                    {
-                        i = j = 0;
-                        if (Orden.EndsWith($"{orden}"))
-                        {
-                            Acomulador = Proceso.DescorcharA(Contenido);
+            if (Contenido.Contains(EspSimbolo))
+                Contenido = Contenido.Replace(EspSimbolo, Simbolo);
 
-                            foreach (var elemento in Acomulador)
+            if (Niveles.Equals(""))
+            {
+                Multiplicando = Contenido;
+                Multiplicador = $"{Modulo}";
+            }
+            else
+            {
+                foreach (var orden in Orden)
+                {
+                    k = 0; A = false;
+                    foreach (var nivel in Niveles)
+                    {
+                        ++k;
+                        if (nivel.Equals(orden))
+                        {
+                            i = j = 0;
+                            if (Orden.EndsWith($"{orden}"))
                             {
-                                if (elemento.Equals(Simbolo))
+                                Acomulador = Proceso.DescorcharA(Contenido);
+
+                                foreach (var elemento in Acomulador)
                                 {
-                                    ++j;
+                                    if (elemento.Equals(Simbolo))
+                                    {
+                                        ++j;
+                                    }
+                                    if (j == k)
+                                        break;
+                                    ++i;
                                 }
-                                if (j == k)
-                                    break;
-                                ++i;
+                                Multiplicando = Proceso.DescorcharA(Acomulador.Substring(0, i));
+                                Multiplicador = Proceso.DescorcharA(Acomulador.Substring(i + 1));
+                                A = true;
+                                break;
                             }
-                            Multiplicando = Proceso.DescorcharA(Acomulador.Substring(0, i));
-                            Multiplicador = Proceso.DescorcharA(Acomulador.Substring(i + 1));
-                            A = true;
-                            break;
                         }
                     }
-                }
 
-                if (A)
-                    break;
+                    if (A)
+                        break;
+                }
             }
+            
         }
 
         private string AplicarPropiedadPorSectores(string Expresion)
         {
+            if (!Expresion.Contains(Simbolo))
+                return Expresion;
+
             string Temporal = Expresion;
 
             string Niveles = ObtenerNiveles(Temporal);

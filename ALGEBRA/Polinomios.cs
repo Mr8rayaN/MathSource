@@ -13,6 +13,7 @@ namespace ALGEBRA
         public string Contenido { get; private set; }
         public string Result { get; private set; }
         public double GradoAbs { get; private set; }
+        public char Simbolo => ObteneSimbolo();
         public List<Monomios> Elementos = new List<Monomios>();
         Monomios Monomio;
         SumaEntera Suma = new SumaEntera();
@@ -85,6 +86,11 @@ namespace ALGEBRA
 
                 Result = Result.Trim(Suma.Simbolo);
             }
+        }
+
+        private char ObteneSimbolo()
+        {
+            return Suma.Simbolo;
         }
 
     }

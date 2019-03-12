@@ -22,7 +22,9 @@ namespace ALGEBRA
         {
             Coeficiente = "1";
             Argumento = ArgDefecto;
-            Contenido = SimboloExtendido + Argumento + $"{Cl}";
+            Foco = SimboloExtendido + ArgDefecto + Cl;
+            Coeficiente = "1";
+            Contenido = Foco;
         }
 
         public Senos(string Expresion)
@@ -90,7 +92,9 @@ namespace ALGEBRA
         public Cosenos()
         {
             Argumento = ArgDefecto;
-            Contenido = SimboloExtendido + Argumento + $"{Cl}";
+            Foco = SimboloExtendido + ArgDefecto + Cl;
+            Coeficiente = "1";
+            Contenido = Foco;
         }
 
         public Cosenos(string Expresion)
@@ -158,7 +162,9 @@ namespace ALGEBRA
         public Tangentes()
         {
             Argumento = ArgDefecto;
-            Contenido = SimboloExtendido + Argumento + $"{Cl}";
+            Foco = SimboloExtendido + ArgDefecto + Cl;
+            Coeficiente = "1";
+            Contenido = Foco;
         }
 
         public Tangentes(string Expresion)

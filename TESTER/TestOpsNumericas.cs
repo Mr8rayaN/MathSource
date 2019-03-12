@@ -11,7 +11,7 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Potencia();
+            TEST_Consola_Producto();
         }
 
         private static void TEST_Consola_Suma()

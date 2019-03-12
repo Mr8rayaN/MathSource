@@ -27,8 +27,10 @@ namespace ALGEBRA
             if (Proceso.IsAgrupate(Argumento))
                 Argumento = Proceso.DescorcharA(Argumento);
 
+            Contenido = Contenido.Replace(this.Argumento, Argumento);
             this.Argumento = Argumento;
-            Contenido = SimboloExtendido + Argumento + Cl;
+            Foco = SimboloExtendido + Argumento + Cl;
+            ObtenerCoeficiente();
             Operar();
         }
 
@@ -37,6 +39,18 @@ namespace ALGEBRA
         protected virtual void ObtenerArgumento() { }
 
         protected virtual void Operar() { }
+
+        public virtual bool ContainsThisFuntion(Monomios Monomio)
+        {
+            foreach (var elemento in Monomio.Elementos)
+            {
+                if (elemento.Result.Contains(SimboloExtendido))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 }
