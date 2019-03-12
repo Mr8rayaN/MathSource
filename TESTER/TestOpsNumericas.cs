@@ -109,20 +109,11 @@ namespace TESTER
             Console.WriteLine(SUMA.Result);
         }//OK
 
-        
-
         private static void TEST_ENTITY_Producto(string Uno, string Dos)
         {
             ProductoEntero Producto = new ProductoEntero(Uno + "*" + Dos + "*" + Dos + "*" + Dos);
             Console.WriteLine(Producto.Nombre);
             Console.WriteLine(Producto.Result);
-        }
-
-        private static void TEST_ENTITY_Potencia(string Uno, string Dos)
-        {
-            Potencias POTENCIA = new Potencias(Uno + "^" + Dos);
-            Console.WriteLine(POTENCIA.Nombre);
-            Console.WriteLine(POTENCIA.Result);
         }
     }
 }

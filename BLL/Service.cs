@@ -29,7 +29,7 @@ namespace BLL
         Variables Var { get; set; }
         Pasos Paso { get; set; }
         Funciones Funcion { get; set; }
-        Resultados Resultado { get; set; }
+        public Resultados Resultado { get; set; }
         Polinomios Polinomio { get; set; }
         List<Variables> LVariables { get; set; }
         List<Estados> LEstados { get; set; }
@@ -209,8 +209,11 @@ namespace BLL
         public string Procesar(string Expresion, Variables Var,string Operacion)
         {
             //IDENTIFICAR OPERACIONES A REALIZAR E IR ALMACENANDO PASOS (CUANDO AL INGRESAR POR UNA FUNCION RETORNE ALGO DIFERENTE AL INCICIAL
+            Conexion.Open();
             Funcion_id = DAL.SiguienteFuncion();
             Resultado_id = DAL.SiguienteResultado();
+            Conexion.Close();
+
             LPasos = new List<Pasos>();
             Entrada = Expresion;
             Polinomio = new Polinomios(Entrada);
@@ -285,7 +288,11 @@ namespace BLL
             {
                 //CREAR PASO Y AGREGARLO A LA LISTA
                 Paso = new Pasos(Pre, Post, Nombre);
+                
+                Conexion.Open();
                 Paso.SetId( DAL.SiguientePaso() );
+                Conexion.Close();
+
                 Paso.SetFuncion( Funcion_id );
                 Paso.SetId( Resultado_id );
                 LPasos.Add(Paso);
@@ -295,7 +302,7 @@ namespace BLL
         public List<Variables> ObtenerVariable(string Expresion)
         {
             LVariables = new List<Variables>();
-            Expresion = Proceso.Limpiar(Expresion);
+            Expresion = Proceso.ExtraerVariables(Expresion);
             foreach (var elemento in Expresion)
             {
                 Var = new Variables($"{elemento}");

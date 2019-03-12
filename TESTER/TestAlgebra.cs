@@ -12,12 +12,13 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Tangente();
+            TEST_Consola_Monomio();
         }
 
-        private static void TEST_Consola_Moniomio()
+        private static void TEST_Consola_Monomio()
         {
             string Entrada = "y^{2*4}*x*2*z*5";
+            Entrada = "x*sen<x>";
             Monomios MONO = new Monomios(Entrada);
             Console.WriteLine(MONO.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");
@@ -33,7 +34,6 @@ namespace TESTER
         private static void TEST_Consola_Polinomio()
         {
             string Entrada = "x*2+(2)+(y^{2*4}*x*2*z*5)";
-            Entrada = "x^{2+1}+2*x+1";
             Polinomios POLI = new Polinomios(Entrada);
             Console.WriteLine(POLI.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");

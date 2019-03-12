@@ -46,7 +46,6 @@
     <Compile Include="EProcesos.cs" />
     <Compile Include="Estados.cs" />
     <Compile Include="Funciones.cs" />
-    <Compile Include="OpsMatematicasOld.cs" />
     <Compile Include="IOpsMetodos.cs" />
     <Compile Include="OpsNumerica.cs" />
     <Compile Include="Pasos.cs" />

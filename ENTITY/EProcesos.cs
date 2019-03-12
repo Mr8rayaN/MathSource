@@ -42,6 +42,31 @@ namespace ENTITY
             return Expresion;
         }
 
+        public string ExtraerVariables(string funcion)
+        {
+            string Variables = "";
+            if (funcion == null || funcion.Equals("")) return null;
+
+            funcion = Limpiar(funcion);
+
+            int i = 0;
+            char[] caracter = funcion.ToCharArray();
+
+            while (i < caracter.LongLength)
+            {
+                if (double.TryParse(caracter[i].ToString(), out double number))
+                    funcion = funcion.Replace(caracter[i].ToString(), "");
+                else
+                {
+                    if (!Variables.Contains(caracter[i].ToString()))
+                        Variables += caracter[i].ToString();
+                }
+                i++;
+            }
+
+            return Variables;
+        }
+
         public void CopyList(List<string> Copia, List<string> Original)
         {
             Copia.Clear();

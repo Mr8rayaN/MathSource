@@ -36,10 +36,19 @@ namespace ALGEBRA
 
             Contenido = Expresion;
             ObtenerArgumento();
+            ObtenerCoeficiente();
             Operar();
 
         }
-        
+
+        protected override void ObtenerCoeficiente()
+        {
+            string Fun = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Fun, "1");
+            Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
+            if (Coeficiente.Equals(""))
+                Coeficiente = "1";
+        }
 
         protected override void ObtenerArgumento()
         {
@@ -86,7 +95,17 @@ namespace ALGEBRA
 
             Contenido = Expresion;
             ObtenerArgumento();
+            ObtenerCoeficiente();
             Operar();
+        }
+
+        protected override void ObtenerCoeficiente()
+        {
+            string Fun = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Fun, "1");
+            Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
+            if (Coeficiente.Equals(""))
+                Coeficiente = "1";
         }
 
         protected override void ObtenerArgumento()

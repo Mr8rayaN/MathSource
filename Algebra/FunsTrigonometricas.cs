@@ -20,6 +20,7 @@ namespace ALGEBRA
 
         public Senos()
         {
+            Coeficiente = "1";
             Argumento = ArgDefecto;
             Contenido = SimboloExtendido + Argumento + $"{Cl}";
         }
@@ -31,6 +32,7 @@ namespace ALGEBRA
 
             Contenido = Expresion;
             ObtenerArgumento();
+            ObtenerCoeficiente();
             Operar();
         }
 
@@ -39,6 +41,15 @@ namespace ALGEBRA
             int Inicial = Contenido.IndexOf(SimboloExtendido) + 4;
             int Final = Contenido.LastIndexOf(Cl) - Inicial;
             Argumento = Contenido.Substring(Inicial, Final);
+        }
+
+        protected override void ObtenerCoeficiente()
+        {
+            string Fun = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Fun, "1");
+            Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
+            if (Coeficiente.Equals(""))
+                Coeficiente = "1";
         }
 
         protected override void Operar()
@@ -89,7 +100,17 @@ namespace ALGEBRA
 
             Contenido = Expresion;
             ObtenerArgumento();
+            ObtenerCoeficiente();
             Operar();
+        }
+
+        protected override void ObtenerCoeficiente()
+        {
+            string Fun = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Fun, "1");
+            Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
+            if (Coeficiente.Equals(""))
+                Coeficiente = "1";
         }
 
         protected override void ObtenerArgumento()
@@ -147,7 +168,17 @@ namespace ALGEBRA
 
             Contenido = Expresion;
             ObtenerArgumento();
+            ObtenerCoeficiente();
             Operar();
+        }
+
+        protected override void ObtenerCoeficiente()
+        {
+            string Fun = SimboloExtendido + Argumento + Cl;
+            Coeficiente = Contenido.Replace(Fun, "1");
+            Coeficiente = Proceso.ParentesisClear(new ProductoEntero(Coeficiente).Result);
+            if (Coeficiente.Equals(""))
+                Coeficiente = "1";
         }
 
         protected override void ObtenerArgumento()
