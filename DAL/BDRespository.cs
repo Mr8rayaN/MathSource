@@ -238,6 +238,21 @@ namespace DAL
             return LEstados;
         }
 
+        public string SiguienteFuncion()
+        {
+            return $"F{CantidadFunciones() + 1}";
+        }
+
+        public string SiguienteResultado()
+        {
+            return $"R{CantidadResultados() + 1}";
+        }
+
+        public string SiguientePaso()
+        {
+            return $"P{CantidadPasos() + 1}";
+        }
+
         //HACER BUSQUEDAS ESPECIFICAS EN FUNCIONES Y EMPELADOS Y ELIMINACIONES
     }
 }

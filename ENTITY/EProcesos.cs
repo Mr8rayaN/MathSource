@@ -44,9 +44,9 @@ namespace ENTITY
 
         public int IsLlave(char elemento)
         {
-            if (elemento == '(' || elemento == '{')
+            if (elemento == '(' || elemento == '{' || elemento == '<')
                 return 1;
-            else if (elemento == ')' || elemento == '}')
+            else if (elemento == ')' || elemento == '}' || elemento == '>')
                 return -1;
             else
                 return 0;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using ENTITY;
+using ALGEBRA;
 using Oracle.ManagedDataAccess.Client;
 
 namespace BLL
@@ -15,10 +16,18 @@ namespace BLL
         private OracleConnection Conexion;
         private BDRespository DAL;
         public string Respuesta { get; set; }
-        int Cantidad;
-        List<Estados> LEstados;
-        List<Funciones> LFunciones;
-        List<Resultados> LResultados;
+        string Entrada { get; set; }
+        string Salida { get; set; }
+        string Funcion_id { get; set; }
+        string Resultado_id { get; set; }
+        int Cantidad { get; set; }
+        Variables Var { get; set; }
+        Pasos Paso { get; set; }
+        Polinomios Polinomio { get; set; }
+        List<Variables> LVariables { get; set; }
+        List<Estados> LEstados { get; set; }
+        List<Funciones> LFunciones { get; set; }
+        List<Resultados> LResultados { get; set; }
         List<Pasos> LPasos;
 
         public Service()
@@ -27,6 +36,8 @@ namespace BLL
             Conexion = new OracleConnection(CadenaConexion);
             DAL = new BDRespository(Conexion);
         }
+
+        //METODOS DE MANEJO DE BASE DE DATOS
 
         public string GuardarFuncion(Funciones F)
         {
@@ -182,6 +193,52 @@ namespace BLL
             Conexion.Close();
 
             return LPasos;
+        }
+
+        //FIN MANEJO DE DATOS
+
+        public string Procesar(string Expresion, string Operacion)
+        {
+            //IDENTIFICAR OPERACIONES A REALIZAR E IR ALMACENANDO PASOS (CUANDO AL INGRESAR POR UNA FUNCION RETORNE ALGO DIFERENTE AL INCICIAL
+            Funcion_id = DAL.SiguienteFuncion();
+            LPasos = new List<Pasos>();
+            Entrada = Expresion;
+            Polinomio = new Polinomios(Entrada);
+            RegistrarPaso(Entrada, Polinomio.Result, Polinomio.Nombre);
+            return null;
+        }
+
+        private void CrearFuncion(string Funcion_id)
+        {
+
+        }
+
+        private void CrearResultado(string Resultado_id)
+        {
+
+        }
+
+        private void RegistrarPaso(string Pre, string Post, string Nombre)
+        {
+            //OPTIMIZAR ESTE FILTRO, SEDE DEMASIADO ANTE CUALQUIER CAMBIO PEQUEÑO
+            if (!Pre.Equals(Post))
+            {
+                //CREAR PASO Y AGREGARLO A LA LISTA
+                Paso = new Pasos(Pre, Post, Nombre);
+                Paso.Id = "ID GENERADO DE SIGUIENTE PASO";
+                Paso.Id_Funcion = "ID GENERADO DE LA FUNCION ACTUAL";
+                Paso.Id_Resultado = "ID GENERADO QUE RELACION ESTE PASO CON EL RESULTADO";
+            }
+        }
+
+        private void ObtenerVariable()
+        {
+
+        }
+
+        private string CoordenadasResultantes(Polinomios Polinomio, Variables Var)
+        {
+            return null;
         }
 
     }
