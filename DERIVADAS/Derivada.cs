@@ -268,16 +268,24 @@ namespace DERIVADAS
         public object DerivadaInterna { get; private set; }
         public double Modulo => 0;
 
-        
+        EProcesos Proceso = new EProcesos();
         Polinomios Polinomio;
         AFuns Interino;
         AMathOps Operacion;
 
         public CopDerivada() { }
 
+        //HACER QUE ESTA DERIVADA AUTO DETECTE DERIVADAS INTERNAS DIFERENETS DE POLINOMICAS Y LAS EJECUTE
         public CopDerivada(Polinomios POL, Variables Var)
         {
-            Result = $"g'({Var.Nombre})";
+            string Derivada = ""; char SumSymbol = new SumaEntera().Simbolo;
+            foreach (var monomio in POL.Elementos)
+            {
+                Derivada += Enrutar(monomio, Var) + SumSymbol;
+            }
+
+            Derivada = Derivada.Trim(SumSymbol);
+            Result = Derivada;
         }
 
         public CopDerivada(Senos SENO, Variables Var)
@@ -288,7 +296,8 @@ namespace DERIVADAS
                 Interino.SetArgumento(SENO.Argumento);
                 Polinomio = new Polinomios(SENO.Argumento);
                 DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
-                Result = DerivadaInterna.ToString() + Interino.Result;
+                Operacion = new ProductoEntero(DerivadaInterna.ToString(), Interino.Result);
+                Result = Operacion.Result;
             }
             else
             {
@@ -304,7 +313,8 @@ namespace DERIVADAS
                 Interino.SetArgumento(COS.Argumento);
                 Polinomio = new Polinomios(COS.Argumento);
                 DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
-                Result = $"{Neg}" + DerivadaInterna.ToString() + Interino.Result;
+                Operacion = new ProductoEntero(DerivadaInterna.ToString(), Interino.Result);
+                Result = $"{Neg}" + Operacion.Result;
             }
             else
                 Result = $"{Modulo}";
@@ -319,11 +329,13 @@ namespace DERIVADAS
                 DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
                 Operacion = new PotenciaEntera(TAN.Simbolo, "2");
                 //REVISAR SI TOCA DESCORCHAR CORCHETES DE LA BASE DE LA POTENCIA
-                Res = Operacion.Result + TAN.Op + TAN.Argumento + TAN.Cl;
+                string Temporal = Proceso.CorchetesClear(Operacion.Result);
+                Res = Temporal + TAN.Op + TAN.Argumento + TAN.Cl;
                 Operacion = new CocienteEntero("1", Res);
                 Res = Operacion.Result;
-                Operacion = new ProductoEntero(DerivadaInterna.ToString(), Res);
-                Result = Operacion.Result;
+                //Operacion = new ProductoEntero(DerivadaInterna.ToString(), Res); PAUSADO MOMENTANEAMENTE DEBE ACTUALIZAR PRODUCTO PARA IDENTIFICAR <> COMO LLAVES
+                //Result = Operacion.Result;
+                Result = $"{DerivadaInterna.ToString()}{new ProductoEntero().Simbolo}{Res}";
             }
             else
                 Result = $"{Modulo}";
@@ -335,7 +347,8 @@ namespace DERIVADAS
             {
                 Polinomio = new Polinomios(EUL.Argumento);
                 DerivadaInterna = new CopDerivada(Polinomio, Var).Result;
-                Result = DerivadaInterna.ToString() + EUL.Result;
+                Operacion = new ProductoEntero(DerivadaInterna.ToString(), EUL.Result);
+                Result = Operacion.Result;
             }
             else
                 Result = $"{Modulo}";
@@ -352,6 +365,29 @@ namespace DERIVADAS
             }
             else
                 Result = $"{Modulo}";
+        }
+
+        //IMPLEMENTAR PROCESOD DE ENFOCAR FUNCION DONDE LA VARIABLE ESTÉ ENFOCADA
+        private string Enrutar(Monomios MONO, Variables Var)
+        {
+            string Coeficiente = "", Literal = "";
+            if (MONO.Result.Contains(Var.Nombre))
+            {
+                foreach (var elemento in MONO.Elementos)
+                {
+                    if (elemento.Base.Equals(Var.Nombre))
+                    {
+                        Operacion = new ProductoEntero(MONO.Coeficiente, elemento.Exponente);
+                        Coeficiente = Operacion.Result;
+                        Operacion = new SumaEntera(elemento.Exponente, "-1");
+                        Literal += MONO.ParteLiteral.Replace(elemento.Result, new PotenciaEntera(elemento.Base, Operacion.Result).Result);
+                    }
+                }
+                Operacion = new ProductoEntero(Coeficiente, Literal);
+                return $"{Operacion.Result}";
+            }
+            else
+                return $"{Modulo}";
         }
 
     }

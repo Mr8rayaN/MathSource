@@ -43,12 +43,12 @@ namespace ALGEBRA
 
         protected override void ObtenerArgumento()
         {
-            Potencia = new PotenciaEntera(Contenido);
             Argumento = Proceso.DescorcharA(Potencia.Exponente);
         }
 
         protected override void Operar()
         {
+            Potencia = new PotenciaEntera(Contenido);
             if (double.TryParse(Argumento, out number))
                 Result = new PotenciaEntera(Valor, Argumento).Result;
             else

@@ -101,7 +101,7 @@ namespace ALGEBRA
 
         protected override void Operar()
         {
-            bool A, B, C;
+            bool A, B;
             A = double.TryParse(Argumento, out number);
             B = Argumento.Equals(ArgDefecto);
 
@@ -159,7 +159,7 @@ namespace ALGEBRA
 
         protected override void Operar()
         {
-            bool A, B, C;
+            bool A, B;
             A = double.TryParse(Argumento, out number);
             B = Argumento.Equals(ArgDefecto);
 

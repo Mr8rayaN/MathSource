@@ -13,16 +13,75 @@ namespace TESTER
     {
         private static void Main(string[] args)
         {
-            TEST_Console_Derivada();
+            TEST_Console_POLINOMIO_Derivada();
         }
 
-        private static void TEST_Console_Derivada()
+        private static void TEST_Console_COS_Derivada()
         {
             string Entrada = "2*x";
             Cosenos COS = new Cosenos();
             COS.SetArgumento(Entrada);
             CopDerivada DER = new CopDerivada(COS, new Variables("x"));
             Console.WriteLine($"ENTRADA          {COS.Result}");
+            Console.WriteLine($"DERIVADA         {DER.Result}");
+            Console.WriteLine("--------------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Console_SEN_Derivada()
+        {
+            string Entrada = "2*x";
+            Senos SEN = new Senos();
+            SEN.SetArgumento(Entrada);
+            CopDerivada DER = new CopDerivada(SEN, new Variables("x"));
+            Console.WriteLine($"ENTRADA          {SEN.Result}");
+            Console.WriteLine($"DERIVADA         {DER.Result}");
+            Console.WriteLine("--------------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Console_TAN_Derivada()
+        {
+            string Entrada = "2*x";
+            Tangentes TAN = new Tangentes();
+            TAN.SetArgumento(Entrada);
+            CopDerivada DER = new CopDerivada(TAN, new Variables("x"));
+            Console.WriteLine($"ENTRADA          {TAN.Result}");
+            Console.WriteLine($"DERIVADA         {DER.Result}");
+            Console.WriteLine("--------------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Console_EULER_Derivada()
+        {
+            string Entrada = "2*x";
+            Eulers EUL = new Eulers();
+            EUL.SetArgumento(Entrada);
+            CopDerivada DER = new CopDerivada(EUL, new Variables("x"));
+            Console.WriteLine($"ENTRADA          {EUL.Result}");
+            Console.WriteLine($"DERIVADA         {DER.Result}");
+            Console.WriteLine("--------------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Console_LN_Derivada()
+        {
+            string Entrada = "2*x";
+            LogNaturales LN = new LogNaturales();
+            LN.SetArgumento(Entrada);
+            CopDerivada DER = new CopDerivada(LN, new Variables("x"));
+            Console.WriteLine($"ENTRADA          {LN.Result}");
+            Console.WriteLine($"DERIVADA         {DER.Result}");
+            Console.WriteLine("--------------------------------------");
+            Console.ReadKey();
+        }
+
+        private static void TEST_Console_POLINOMIO_Derivada()
+        {
+            string Entrada = "2*x+x^{3}";
+            Polinomios POLI = new Polinomios(Entrada);
+            CopDerivada DER = new CopDerivada(POLI, new Variables("x"));
+            Console.WriteLine($"ENTRADA          {POLI.Result}");
             Console.WriteLine($"DERIVADA         {DER.Result}");
             Console.WriteLine("--------------------------------------");
             Console.ReadKey();

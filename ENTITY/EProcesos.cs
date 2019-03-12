@@ -206,5 +206,11 @@ namespace ENTITY
             return Expresion;
         }
 
+        public string CorchetesClear(string Expresion)
+        {
+            Expresion = Expresion.Replace("{", "");
+            Expresion = Expresion.Replace("}", "");
+            return Expresion;
+        }
     }
 }
