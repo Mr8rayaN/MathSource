@@ -49,6 +49,7 @@
     <Compile Include="TestAlgebra.cs" />
     <Compile Include="TestBD.cs" />
     <Compile Include="TestDerivadas.cs" />
+    <Compile Include="TestEProcesos.cs" />
     <Compile Include="TestOpsNumericas.cs" />
     <Compile Include="TestService.cs" />
   </ItemGroup>

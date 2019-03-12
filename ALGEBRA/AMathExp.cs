@@ -2,30 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ENTITY;
 using System.Threading.Tasks;
 
-namespace ENTITY
+namespace ALGEBRA
 {
-    public abstract class AMathOps : Signos , IOpsMetodos
+    public abstract class AMathExp
     {
-        public virtual int Modulo { get;}
         public virtual string Nombre { get; }
-        public virtual char Simbolo { get; }
-        public virtual char Op { get; }
-        public virtual char Cl { get; }
         public string Contenido { get; protected set; }
         public string Result { get; protected set; }
-        public List<string> Elementos = new List<string>();
+        public double GradoAbs { get; protected set; }
+        public char Simbolo => ObteneSimbolo();
+
+        protected AMathOps Operacion { get; set; }
         protected EProcesos Proceso = new EProcesos();
-        protected NumerosEnteros NumEntero = new NumerosEnteros();
 
-        //Sobreescribir en el hijo
-        public virtual void Operar() { }
+        protected virtual void ObtenerElementos() { }
 
-        //Sobreescribir en el hijo
-        public virtual void ObtenerElementos(string LElementos) { }
-
-        public string ObtenerNiveles(string Expresion)
+        protected string ObtenerNiveles(string Expresion)
         {
             string Nivel = "";
             int Acomulador, i, j, k, Izq, Der;
@@ -77,7 +72,7 @@ namespace ENTITY
             return Nivel;
         }
 
-        public string ObtenerOrden(string Niveles)
+        protected string ObtenerOrden(string Niveles)
         {
             int i = 0, Acomulador = 0; bool A = false; string NivelOrden = "";
             foreach (var nivel in Niveles)
@@ -117,23 +112,13 @@ namespace ENTITY
             return NivelOrden;
         }
 
-        //Sobreescribir en el hijo
-        public virtual void ResolverNiveles() { }
-
-        //Sobreescribir en el hijo
-        public virtual void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden) { }
-
-        public bool IsRecursiva(string Expresion)
-        {
-            if (Expresion.Contains(Simbolo))
-                return true;
-
-            return false;
+        protected virtual char ObteneSimbolo() {
+            return Operacion.Simbolo;
         }
 
         public override string ToString()
         {
-            return $"{Nombre} ({Contenido})";
+            return $"{Nombre} {Contenido}";
         }
     }
 }
