@@ -142,10 +142,6 @@ namespace ALGEBRA
                 Result = new ProductoEntero(Coeficiente, Foco).Result;
         }
 
-        public override string ToString()
-        {
-            return $"{Nombre} {Contenido}";
-        }
     }
 
     public class Tangentes : AFuns
@@ -212,9 +208,5 @@ namespace ALGEBRA
                 Result = new ProductoEntero(Coeficiente, Foco).Result;
         }
 
-        public override string ToString()
-        {
-            return $"{Nombre} {Contenido}";
-        }
     }
 }

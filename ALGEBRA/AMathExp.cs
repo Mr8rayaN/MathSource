@@ -11,8 +11,10 @@ namespace ALGEBRA
     {
         public virtual string Nombre { get; }
         public string Contenido { get; protected set; }
-        public string Result { get; protected set; }
         public double GradoAbs { get; protected set; }
+        public string Result { get; protected set; }
+        protected string Niveles { get; set; }
+        protected string Orden { get; set; }
         public char Simbolo => ObteneSimbolo();
 
         protected AMathOps Operacion { get; set; }
@@ -120,5 +122,6 @@ namespace ALGEBRA
         {
             return $"{Nombre} {Contenido}";
         }
+
     }
 }

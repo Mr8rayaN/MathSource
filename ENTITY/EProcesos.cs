@@ -66,8 +66,17 @@ namespace ENTITY
 
             return Variables;
         }
-
+        
         public void CopyList(List<string> Copia, List<string> Original)
+        {
+            Copia.Clear();
+            foreach (var item in Original)
+            {
+                Copia.Add(item);
+            }
+        }
+
+        public void CopyList(List<PotenciaEntera> Copia, List<PotenciaEntera> Original)
         {
             Copia.Clear();
             foreach (var item in Original)

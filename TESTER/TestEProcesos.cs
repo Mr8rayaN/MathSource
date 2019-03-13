@@ -12,7 +12,5 @@ namespace TESTER
         {
 
         }
-
-        private static void TEST_EProceso_
     }
 }

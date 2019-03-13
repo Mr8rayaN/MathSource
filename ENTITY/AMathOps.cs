@@ -133,7 +133,9 @@ namespace ENTITY
 
         public override string ToString()
         {
-            return $"{Nombre} ({Contenido})";
+            return $" {Nombre} {Contenido} ";
+
         }
+
     }
 }

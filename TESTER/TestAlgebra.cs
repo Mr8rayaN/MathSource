@@ -12,21 +12,20 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Polinomio();
+            TEST_Consola_Monomio();
         }
 
         private static void TEST_Consola_Monomio()
         {
-            string Entrada = "y^{2*4}*x*2*z*5";
-            Entrada = "x^{2}*cos<ln<2>>*2";
+            string Entrada = "x^{2*1}*x*2*ln<x*3>";
+            //Entrada = "x^{2}*cos<ln<2>>*2";
             Monomios MONO = new Monomios(Entrada);
             Console.WriteLine(MONO.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");
             Console.WriteLine("CONTENIDO   " + MONO.Contenido);
             Console.WriteLine("COEFICIENTE " + MONO.Coeficiente);
             Console.WriteLine("LITERAL     " + MONO.ParteLiteral);
-            Console.WriteLine("GRADO ABS   " + MONO.GradoAbs);
-            Console.WriteLine(MONO.Result);
+            Console.WriteLine($"RESULTADO  {MONO.Result}");
             Console.WriteLine("-----------------------------------");
             Console.ReadKey();
         }

@@ -72,10 +72,7 @@ namespace ALGEBRA
                 Result = new ProductoEntero(Coeficiente,Potencia.Result).Result;
         }
 
-        public override string ToString()
-        {
-            return $"{Nombre} {Contenido}";
-        }
+        
 
     }
 
@@ -150,9 +147,6 @@ namespace ALGEBRA
                 Result = new ProductoEntero(Coeficiente,Foco).Result;
         }
 
-        public override string ToString()
-        {
-            return $"{Nombre} {Contenido}";
-        }
+        
     }
 }
