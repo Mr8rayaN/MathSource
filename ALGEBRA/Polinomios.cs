@@ -37,47 +37,55 @@ namespace ALGEBRA
         protected override void ObtenerElementos(string Expresion)
         {
             Elementos.Clear();
-            char FirstNivel = Orden.ElementAt(Orden.Length - 1);
-            string Foco;
-            int Inicio, i, j, k;
-            i = 0; Inicio = 0;
-            bool Seguir;
 
-            foreach (var nivel in Niveles)
+            //TENER EN CUENTA CUANDO NIVELES ES VACIO, ESTA SENTENCIA IF PARECE SOLUCIONARLO
+            if (!Niveles.Contains("0"))
+                Result = Contenido;
+            else
             {
-                ++i;
-                Seguir = true;
-                if (nivel.Equals(FirstNivel))
+                Elementos.Clear();
+                char FirstNivel = Orden.ElementAt(Orden.Length - 1);
+                string Foco;
+                int Inicio, i, j, k;
+                i = 0; Inicio = 0;
+                bool Seguir;
+
+                foreach (var nivel in Niveles)
                 {
-                    j = 0; k = 0;
-                    while (Seguir)
+                    ++i;
+                    Seguir = true;
+                    if (nivel.Equals(FirstNivel))
                     {
-                        if (Contenido.ElementAt(k).Equals(Simbolo))
-                            ++j;
+                        j = 0; k = 0;
+                        while (Seguir)
+                        {
+                            if (Contenido.ElementAt(k).Equals(Simbolo))
+                                ++j;
 
-                        if (j == i)
-                            Seguir = false;
-                        else
-                            ++k;
+                            if (j == i)
+                                Seguir = false;
+                            else
+                                ++k;
+                        }
+
+                        Foco = Contenido.Substring(Inicio, (k - Inicio));
+                        Inicio = k + 1;
+
+                        Monomio = new Monomios(Foco);
+                        Elementos.Add(Monomio);
+
                     }
-
-                    Foco = Contenido.Substring(Inicio, (k - Inicio));
-                    Inicio = k + 1;
-
-                    Monomio = new Monomios(Foco);
-                    Elementos.Add(Monomio);
 
                 }
 
+                //TOMA EL ULTIMO ELEMENTO
+                Foco = Contenido.Substring(Inicio);
+                Monomio = new Monomios(Foco);
+                Elementos.Add(Monomio);
+                //FIN DE TOMA
+
+                ObtenerResultado();
             }
-
-            //TOMA EL ULTIMO ELEMENTO
-            Foco = Contenido.Substring(Inicio);
-            Monomio = new Monomios(Foco);
-            Elementos.Add(Monomio);
-            //FIN DE TOMA
-
-            ObtenerResultado();
         }
 
         private void ObtenerResultado()

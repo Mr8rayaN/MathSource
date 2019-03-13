@@ -56,8 +56,8 @@ namespace ALGEBRA
         {
             Elementos.Clear();
 
-            //REVISAR PROCESO SI 
-            if (!Expresion.Contains(Simbolo))
+            //TENER EN CUENTA CUANDO NIVELES ES VACIO, ESTA SENTENCIA IF PARECE SOLUCIONARLO
+            if (!Niveles.Contains("0"))
                 Result = Contenido;
             else
             {

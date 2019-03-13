@@ -18,7 +18,7 @@ namespace TESTER
         private static void TEST_Consola_Monomio()
         {
             string Entrada = "x^{2*1}*x*2*ln<x*3>";
-            //Entrada = "x^{2}*cos<ln<2>>*2";
+            Entrada = "e^{2*x}";
             Monomios MONO = new Monomios(Entrada);
             Console.WriteLine(MONO.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");
@@ -33,6 +33,7 @@ namespace TESTER
         private static void TEST_Consola_Polinomio()
         {
             string Entrada = "e^{2*x}+x^2+x*2+e^{1+x}+sen<1+w>";
+            Entrada = "e^{2*x}";
             Polinomios POLI = new Polinomios(Entrada);
             Console.WriteLine(POLI.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");
