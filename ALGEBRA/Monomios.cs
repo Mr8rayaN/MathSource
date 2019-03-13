@@ -26,7 +26,16 @@ namespace ALGEBRA
 
         public Monomios(string Coeficiente, string Literal)
         {
+            if (Proceso.IsAgrupate(Coeficiente))
+                Coeficiente = Proceso.DescorcharA(Coeficiente);
+
+            if (Proceso.IsAgrupate(Literal))
+                Literal = Proceso.DescorcharA(Literal);
+
             Operacion = new ProductoEntero();
+            Contenido = new ProductoEntero(Coeficiente, Literal).Result;
+
+            ObtenerElementos(Contenido);
         }
 
         public Monomios(string Expresion)
@@ -119,6 +128,6 @@ namespace ALGEBRA
             ParteLiteral = new ProductoEntero(ParteLiteral.Trim(Simbolo)).Result;
         }
 
-    }
+    } //FUNCIONANDO 100%
 
 }
