@@ -47,11 +47,9 @@ namespace ENTITY
         public SumaEntera(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
-            {
-                Contenido = Proceso.DescorcharA(Expresion);
-            }
-            else
-                Contenido = Expresion;
+                Contenido = Proceso.DescorcharParentesis(Expresion);
+
+            Contenido = Expresion;
 
             Contenido = Reconstruir(Contenido);
 
@@ -98,6 +96,8 @@ namespace ENTITY
 
                 A = (SUno.Length > 2);
                 B = (SDos.Length > 2);
+
+                A = B = false; //PUESTO PARA EXPERIMENTAR SALIDAS Y CONCORDAR CON PROCESOS DE DERIVACION POLINOMIAL
 
                 if (A & B)
                 {
@@ -250,10 +250,10 @@ namespace ENTITY
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
-                        Etiqueta = Proceso.DescorcharA(Etiqueta);
+                        Etiqueta = Proceso.DescorcharParentesis(Etiqueta);
 
                         SumaEntera Interino = new SumaEntera(Etiqueta);
-                        string Res = Proceso.DescorcharA(Interino.Result);
+                        string Res = Proceso.DescorcharParentesis(Interino.Result);
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
@@ -336,7 +336,7 @@ namespace ENTITY
                         i = j = 0;
                         if (Orden.EndsWith($"{orden}"))
                         {
-                            Acomulador = Proceso.DescorcharA(Contenido);
+                            Acomulador = Proceso.DescorcharParentesis(Contenido);
 
                             foreach (var elemento in Acomulador)
                             {
@@ -348,8 +348,8 @@ namespace ENTITY
                                     break;
                                 ++i;
                             }
-                            SumandoUno = Proceso.DescorcharA(Acomulador.Substring(0, i));
-                            SumandoDos = Proceso.DescorcharA(Acomulador.Substring(i + 1));
+                            SumandoUno = Proceso.DescorcharParentesis(Acomulador.Substring(0, i));
+                            SumandoDos = Proceso.DescorcharParentesis(Acomulador.Substring(i + 1));
                             A = true;
                             break;
                         }
@@ -436,9 +436,13 @@ namespace ENTITY
                         //VALIDO SI PUEDO APLICARLE PROPIEDAD
                         if (IsDistribuible(OpInterna, Temporal))
                         {
+                            string ANT = Temporal;
                             //PROGRAMANDO DISTRIBUIR
                             Temporal = Distribuir(OpInterna, Temporal);
-                            Distribuyo = true;
+                            if (!Temporal.Equals(ANT))
+                                Distribuyo = true;
+                            else
+                                Distribuyo = false;
                         }
 
                         //SI SE DISTRIBUYE ALGO INDISTRIBUIBLE SE PRODUCE UN BUCLE INFINITO
@@ -664,7 +668,7 @@ namespace ENTITY
 
                 //Resuelto = PropiedadDistributiva(dividendo, divisor).Result;
                 Resuelto = PropiedadDistributiva(FactorUno, FactorDos);
-                Resuelto = Proceso.DescorcharA(Resuelto);//ACABADO DE COLOCAR PARA INICIAR PRUEBAS
+                Resuelto = Proceso.DescorcharParentesis(Resuelto);//ACABADO DE COLOCAR PARA INICIAR PRUEBAS
                 return Contenedor.Replace(Operacion, Resuelto);
             }
         }
@@ -1173,9 +1177,13 @@ namespace ENTITY
                         //VALIDO SI PUEDO APLICARLE PROPIEDAD
                         if (IsDistribuible(OpInterna, Temporal))
                         {
+                            string ANT = Temporal;
                             //PROGRAMANDO DISTRIBUIR
                             Temporal = Distribuir(OpInterna, Temporal);
-                            Distribuyo = true;
+                            if (!Temporal.Equals(ANT))
+                                Distribuyo = true;
+                            else
+                                Distribuyo = false;
                         }
 
 
@@ -2076,9 +2084,13 @@ namespace ENTITY
                         //VALIDO SI PUEDO APLICARLE PROPIEDAD
                         if (IsDistribuible(OpInterna, Temporal))
                         {
+                            string ANT = Temporal;
                             //PROGRAMANDO DISTRIBUIR
                             Temporal = Distribuir(OpInterna, Temporal);
-                            Distribuyo = true;
+                            if (!Temporal.Equals(ANT))
+                                Distribuyo = true;
+                            else
+                                Distribuyo = false;
                         }
 
 
@@ -2689,9 +2701,13 @@ namespace ENTITY
                         //VALIDO SI PUEDO APLICARLE PROPIEDAD
                         if (IsDistribuible(OpInterna, Temporal))
                         {
+                            string ANT = Temporal;
                             //PROGRAMANDO DISTRIBUIR
                             Temporal = Distribuir(OpInterna, Temporal);
-                            Distribuyo = true;
+                            if (!Temporal.Equals(ANT))
+                                Distribuyo = true;
+                            else
+                                Distribuyo = false;
                         }
 
 

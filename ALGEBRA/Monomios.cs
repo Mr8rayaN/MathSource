@@ -22,6 +22,8 @@ namespace ALGEBRA
         public Monomios()
         {
             Operacion = new ProductoEntero();
+            Coeficiente = "1";
+            ParteLiteral = "1";
         }
 
         public Monomios(string Coeficiente, string Literal)
@@ -58,7 +60,10 @@ namespace ALGEBRA
 
             //TENER EN CUENTA CUANDO NIVELES ES VACIO, ESTA SENTENCIA IF PARECE SOLUCIONARLO
             if (!Niveles.Contains("0"))
+            {
+                Elementos.Add(new PotenciaEntera(Contenido));
                 Result = Contenido;
+            }
             else
             {
                 char FirstNivel = Orden.ElementAt(Orden.Length - 1);

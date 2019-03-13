@@ -11,12 +11,12 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Producto();
+            TEST_Consola_Suma();
         }
 
         private static void TEST_Consola_Suma()
         {
-            string Entrada = "((x+2)+{x^2}+2)";
+            string Entrada = "((x+2)+2+{x^2})";
             //Entrada = "((x*2)*4)*y";
             //Entrada = "x*2*2*y";
             Console.WriteLine($"ENTRADA = {Entrada}");

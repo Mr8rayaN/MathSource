@@ -14,7 +14,7 @@ namespace DERIVADAS
         public Variables Variable { get; private set; }
         public string Funcion { get; private set; }
         public string Result { get; private set; }
-        public object DerivadaInterna { get; private set; }
+        public string DerivadaInterna { get; private set; }
         public double Modulo => 0;
 
         EProcesos Proceso = new EProcesos();
@@ -25,40 +25,56 @@ namespace DERIVADAS
         public Derivadas() { }
 
         //HACER QUE ESTA DERIVADA AUTO DETECTE DERIVADAS INTERNAS DIFERENETS DE POLINOMICAS Y LAS EJECUTE
-       public Derivadas(Polinomios POL, Variables Var)
+        public Derivadas(Polinomios POL, Variables Var)
         {
-            Result = "";
+            Result = "0";
 
             foreach (var MONO in POL.Elementos)
             {
-                Result += Enruta(MONO, Var) + POL.Simbolo;
+                DerivadaInterna = Enruta(MONO, Var);
+                
+                //PULIR BIEN CLASE SUMAS PARA QUE DEVUELVA LO REQUERIDO POR ESTA CLASE
+                if(!DerivadaInterna.Equals("0"))
+                    Result =  new SumaEntera(Result, DerivadaInterna).Result;
             }
 
             Result = Result.Trim(POL.Simbolo);
-       }
+            Result = OperarSignos(Result);
+        }
 
         public Derivadas(Monomios MONO, Variables Var)
         {
-            string Coeficiente = "1", Literal = "1";
-            if (MONO.Result.Contains(Var.Nombre))
+            if (!MONO.Result.Contains(Var.Nombre))
+                Result = "0";
+            else
             {
-                foreach (var elemento in MONO.Elementos)
+                List<string> DerivadasIndividuales = new List<string>();
+
+                foreach (var item in MONO.Elementos)
                 {
-                    //if (elemento.Base.Equals(Var.Nombre))
-                    if(elemento.Result.Contains(Var.Nombre))
+                    if (!item.Result.Contains(Var.Nombre))
+                        DerivadasIndividuales.Add(item.Result);
+                    else
                     {
-                        Operacion = new ProductoEntero(MONO.Coeficiente, elemento.Exponente);
-                        Coeficiente = Operacion.Result;
-                        Operacion = new SumaEntera(elemento.Exponente, "-1");
-                         
-                       Literal = MONO.ParteLiteral.Replace(elemento.Result, new PotenciaEntera(elemento.Result, Operacion.Result).Result);
+                        //PULIR BIEN SUMAS PARA QUE RETORNE LO NECESARIO POR ESTA CLASE
+                        string NewExponente = new SumaEntera(item.Exponente, "-1").Result;
+                        string NewCoeficiente = item.Exponente;
+                        string NewPotencia = new PotenciaEntera(item.Base, NewExponente).Result;
+                        
+                        DerivadaInterna =  new ProductoEntero(NewCoeficiente, NewPotencia).Result;
+                        DerivadasIndividuales.Add(DerivadaInterna);
                     }
                 }
-                Operacion = new ProductoEntero(Coeficiente, Literal);
-                Result = $"{Operacion.Result}";
+
+                Result = "1";
+                foreach (var item in DerivadasIndividuales)
+                {
+                    Result = new ProductoEntero(Result, item).Result;
+                }
+
+                //Result = OperarSignos(Result);
             }
-            else
-                Result = $"{Modulo}";
+            
         }
 
         public Derivadas(Senos SENO, Variables Var)
@@ -147,6 +163,9 @@ namespace DERIVADAS
                 Operacion = new ProductoEntero(LN.Coeficiente, DerivadaInterna.ToString());
                 Operacion = new CocienteEntero(Operacion.Result, LN.Argumento);
                 Result = Operacion.Result;
+
+                if (!Proceso.IsAgrupate(Result))
+                    Result = Proceso.EncorcharFuncion(Result);
             }
             else
                 Result = $"{Modulo}";
@@ -191,6 +210,11 @@ namespace DERIVADAS
 
 
             return new Derivadas(MONO, Var).Result;
+        }
+
+        public override string ToString()
+        {
+            return $" {Nombre} {Result} ";
         }
 
     }

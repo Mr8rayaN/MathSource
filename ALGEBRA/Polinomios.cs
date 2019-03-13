@@ -40,7 +40,10 @@ namespace ALGEBRA
 
             //TENER EN CUENTA CUANDO NIVELES ES VACIO, ESTA SENTENCIA IF PARECE SOLUCIONARLO
             if (!Niveles.Contains("0"))
+            {
+                Elementos.Add(new Monomios(Contenido));
                 Result = Contenido;
+            }
             else
             {
                 Elementos.Clear();

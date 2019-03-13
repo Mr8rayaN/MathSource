@@ -13,7 +13,7 @@ namespace TESTER
     {
         private static void Main(string[] args)
         {
-            TEST_Console_COS_Derivada();
+            TEST_Console_POLINOMIO_Derivada();
         }
 
         private static void TEST_Console_COS_Derivada()
@@ -78,7 +78,7 @@ namespace TESTER
 
         private static void TEST_Console_POLINOMIO_Derivada()
         {
-            string Entrada = "2*x+x^{3}";
+            string Entrada = "x^2+2*x+e^{3*6}+ln<1+x>+cos<3*x>";
             Polinomios POLI = new Polinomios(Entrada);
             Derivadas DER = new Derivadas(POLI, new Variables("x"));
             Console.WriteLine($"ENTRADA          {POLI.Result}");
