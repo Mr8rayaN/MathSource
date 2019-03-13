@@ -20,7 +20,7 @@ namespace ALGEBRA
         protected AMathOps Operacion { get; set; }
         protected EProcesos Proceso = new EProcesos();
 
-        protected virtual void ObtenerElementos() { }
+        protected virtual void ObtenerElementos(string Expresion) { }
 
         protected string ObtenerNiveles(string Expresion)
         {
@@ -120,7 +120,7 @@ namespace ALGEBRA
 
         public override string ToString()
         {
-            return $"{Nombre} {Contenido}";
+            return $" {Nombre} {Contenido} ";
         }
 
     }

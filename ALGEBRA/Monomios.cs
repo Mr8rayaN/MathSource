@@ -52,53 +52,60 @@ namespace ALGEBRA
             ObtenerElementos(Contenido);
         }
 
-        private void ObtenerElementos (string Expresion)
+        protected override void ObtenerElementos (string Expresion)
         {
             Elementos.Clear();
-            char FirstNivel = Orden.ElementAt(Orden.Length - 1);
-            string Foco;
-            int Inicio, i, j, k;
-            i = 0; Inicio = 0;
-            bool Seguir;
 
-            foreach (var nivel in Niveles)
+            //REVISAR PROCESO SI 
+            if (!Expresion.Contains(Simbolo))
+                Result = Contenido;
+            else
             {
-                ++i;
-                Seguir = true;
-                if (nivel.Equals(FirstNivel))
+                char FirstNivel = Orden.ElementAt(Orden.Length - 1);
+                string Foco;
+                int Inicio, i, j, k;
+                i = 0; Inicio = 0;
+                bool Seguir;
+
+                foreach (var nivel in Niveles)
                 {
-                    j = 0; k = 0;
-                    while(Seguir)
+                    ++i;
+                    Seguir = true;
+                    if (nivel.Equals(FirstNivel))
                     {
-                        if (Contenido.ElementAt(k).Equals(Simbolo))
-                            ++j;
+                        j = 0; k = 0;
+                        while (Seguir)
+                        {
+                            if (Contenido.ElementAt(k).Equals(Simbolo))
+                                ++j;
 
-                        if (j == i)
-                            Seguir = false;
-                        else
-                            ++k;
+                            if (j == i)
+                                Seguir = false;
+                            else
+                                ++k;
+                        }
+
+                        Foco = Contenido.Substring(Inicio, (k - Inicio));
+                        Inicio = k + 1;
+
+                        Potencia = new PotenciaEntera(Foco);
+                        Elementos.Add(Potencia);
+
                     }
-
-                    Foco = Contenido.Substring(Inicio, (k - Inicio));
-                    Inicio = k + 1;
-                    
-                    Potencia = new PotenciaEntera(Foco);
-                    Elementos.Add(Potencia);
 
                 }
 
+                //TOMA EL ULTIMO ELEMENTO
+                Foco = Contenido.Substring(Inicio);
+                Potencia = new PotenciaEntera(Foco);
+                Elementos.Add(Potencia);
+                //FIN DE TOMA
+
+                ObtenerPartes();
+                //PULIR PRODUCTO PARA RESPONDER CORRECTAMENTE A ESTE PROBLEMA
+                Operacion = new ProductoEntero(Coeficiente, ParteLiteral);
+                Result = Operacion.Result;
             }
-
-            //TOMA EL ULTIMO ELEMENTO
-            Foco = Contenido.Substring(Inicio);
-            Potencia = new PotenciaEntera(Foco);
-            Elementos.Add(Potencia);
-            //FIN DE TOMA
-
-            ObtenerPartes();
-            //PULIR PRODUCTO PARA RESPONDER CORRECTAMENTE A ESTE PROBLEMA
-            Operacion = new ProductoEntero(Coeficiente, ParteLiteral);
-            Result = Operacion.Result;
         }
 
         private void ObtenerPartes()
