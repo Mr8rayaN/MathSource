@@ -19,7 +19,7 @@ namespace UI
         public OpcionUno()
         {
             InitializeComponent();
-            PnVariables.Hide();
+            PnSalida.Hide();
             BLL = new Service();
             LlenarOperaciones();
             LlenarEstados();
@@ -28,7 +28,7 @@ namespace UI
         public OpcionUno(Form Padre, Panel Contenedor, Service BLL)
         {
             InitializeComponent();
-            PnVariables.Hide();
+            PnSalida.Hide();
             this.BackColor = Contenedor.BackColor;
             this.Size = Contenedor.Size;
 
@@ -54,14 +54,33 @@ namespace UI
 
         private void Operar_Click(object sender, EventArgs e)
         {
-            TBResultado.Text = BLL.Procesar(TBExpresion.Text, CBVariables.SelectedItem.ToString(), CBProcesos.SelectedItem.ToString());
-            MessageBox.Show("Procesado Correctamente");
+            if (ValidarExpresion())
+            {
+                if (!ValidarVariables())
+                {
+                    CBVariables.Items.Add(BLL.VariablePorDefecto);
+                    CBVariables.SelectedItem = BLL.VariablePorDefecto;
+                }
+            }
+
+            if (ValidarOperar())
+            {
+                TBResultado.Text = BLL.Procesar(TBExpresion.Text, CBVariables.SelectedItem.ToString(), CBProcesos.SelectedItem.ToString());
+                PnSalida.Show();
+            }
+            else
+                MostrarCompletar();
         }
 
         private void TBExpresion_Left(object sender, EventArgs e)
         {
-            LlenarCBVariables(BLL.ObtenerVariable(TBExpresion.Text));
-            PnVariables.Show();
+            CBVariables.Items.Clear();
+            CBVariables.SelectedItem = null;
+            CBVariables.Text = "Variables";
+
+            if(ValidarExpresion())
+                LlenarCBVariables(BLL.ObtenerVariable(TBExpresion.Text));
+            
         }
 
         private void LlenarCBVariables(List<Variables> LVar)
@@ -74,7 +93,77 @@ namespace UI
 
         private void Save_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Guardado Correctamente");
+            if (ValidarSave())
+            {
+
+            }
+            else
+                MostrarCompletar();
+        }
+
+        private bool ValidarExpresion()
+        {
+            if (TBExpresion == null)
+                return false;
+
+            if (TBExpresion.Text.Equals(""))
+                return false;
+
+            return
+                true;
+        }
+
+        private bool ValidarVariables()
+        {
+            if (CBVariables == null)
+                return false;
+
+            if (CBVariables.SelectedItem == null)
+                return false;
+
+            return
+                true;
+        }
+
+        private void MostrarCompletar()
+        {
+            MessageBox.Show("Complete todos los campos\nTodos son Obligatorios");
+        }
+
+        private bool ValidarOperar()
+        {
+            bool A = true;
+
+            if (TBExpresion.Text.Equals("") || TBExpresion == null)
+                A = false;
+
+            if (CBVariables.SelectedItem == null)
+                A = false;
+                
+
+            if (CBProcesos.SelectedItem == null)
+                A = false;
+
+            if (A)
+                return true;
+
+            return false;
+        }
+
+        private bool ValidarSave()
+        {
+            bool A = true;
+
+            if (TBResultado.Text.Equals("") || TBResultado == null)
+                A = false;
+
+            if (CBEstados == null)
+                A = false;
+
+            if (A)
+                return true;
+
+            return false;
         }
     }
 }

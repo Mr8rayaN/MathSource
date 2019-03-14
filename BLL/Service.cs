@@ -23,6 +23,7 @@ namespace BLL
         string Resultado_id { get; set; }
         string Estado = "EST01";
         int Cantidad { get; set; }
+        public string VariablePorDefecto => "x";
 
         AMathOps Op { get; set;  }
         Derivadas Derivada { get; set; }

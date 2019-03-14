@@ -132,9 +132,9 @@
             this.LblOpciopnDos.AutoSize = true;
             this.LblOpciopnDos.Location = new System.Drawing.Point(106, 16);
             this.LblOpciopnDos.Name = "LblOpciopnDos";
-            this.LblOpciopnDos.Size = new System.Drawing.Size(63, 13);
+            this.LblOpciopnDos.Size = new System.Drawing.Size(36, 13);
             this.LblOpciopnDos.TabIndex = 10;
-            this.LblOpciopnDos.Text = "Opcion Dos";
+            this.LblOpciopnDos.Text = "Pasos";
             this.LblOpciopnDos.Click += new System.EventHandler(this.ControlOpcionesClick);
             this.LblOpciopnDos.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
             // 
@@ -299,9 +299,9 @@
             this.LblOpciopnTres.AutoSize = true;
             this.LblOpciopnTres.Location = new System.Drawing.Point(106, 16);
             this.LblOpciopnTres.Name = "LblOpciopnTres";
-            this.LblOpciopnTres.Size = new System.Drawing.Size(65, 13);
+            this.LblOpciopnTres.Size = new System.Drawing.Size(51, 13);
             this.LblOpciopnTres.TabIndex = 11;
-            this.LblOpciopnTres.Text = "Opcion Tres";
+            this.LblOpciopnTres.Text = "Registros";
             this.LblOpciopnTres.Click += new System.EventHandler(this.ControlOpcionesClick);
             this.LblOpciopnTres.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
             // 
@@ -342,9 +342,9 @@
             this.LblOpciopnUno.Location = new System.Drawing.Point(106, 15);
             this.LblOpciopnUno.Name = "LblOpciopnUno";
             this.LblOpciopnUno.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.LblOpciopnUno.Size = new System.Drawing.Size(64, 13);
+            this.LblOpciopnUno.Size = new System.Drawing.Size(44, 13);
             this.LblOpciopnUno.TabIndex = 9;
-            this.LblOpciopnUno.Text = "Opcion Uno";
+            this.LblOpciopnUno.Text = "Entrada";
             this.LblOpciopnUno.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.LblOpciopnUno.Click += new System.EventHandler(this.ControlOpcionesClick);
             this.LblOpciopnUno.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);

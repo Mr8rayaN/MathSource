@@ -20,7 +20,7 @@ namespace TESTER
             //Entrada = "((x*2)*4)*y";
             //Entrada = "x*2*2*y";
             //Entrada = "sen<x+2>";
-            //Entrada = "sen<x+2+2>";
+            Entrada = "x+sen<x+2+2>";
             Console.WriteLine($"ENTRADA = {Entrada}");
             SumaEntera SUMA = new SumaEntera(Entrada);
             Console.WriteLine(SUMA.Nombre);
