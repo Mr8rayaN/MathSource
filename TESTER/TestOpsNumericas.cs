@@ -54,7 +54,8 @@ namespace TESTER
         private static void TEST_Consola_Potencia()
         {
             string Entrada = "{{{{x}^{2x}}^{2}}^{3x}}";
-            Entrada = "sen<e^{x}>";
+            Entrada = "sen<e^{x+2}>";
+            Entrada = "2^{sen<e^{x+2}>}";
             Console.WriteLine($"ENTRADA = {Entrada}");
             PotenciaEntera POTENCIA = new PotenciaEntera(Entrada);
             Console.WriteLine(POTENCIA.Nombre);

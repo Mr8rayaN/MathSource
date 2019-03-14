@@ -2382,8 +2382,13 @@ namespace ENTITY
                 string Bas = Base.Replace($"{variable.Simbolo}", "");
                 string Exp = Exponente.Replace($"{variable.Simbolo}", "");
 
-                A = (Bas.Length > 2);
-                B = (Exp.Length > 2);
+                //A = (Bas.Length > 2);
+                //B = (Exp.Length > 2);
+
+                A = (Base.Length > 2);
+                B = (Exponente.Length > 2);
+
+                //A = B = false; //POSIBLE FALLO A FALTA DE JERARQUIA
 
                 if (A & B)
                 {
@@ -2400,7 +2405,8 @@ namespace ENTITY
                     Result = $"{Base}{Simbolo}{Op}{Exponente}{Cl}";
                 }
                 else
-                    Result = $"{Base}{Simbolo}{Exponente}";
+                    Result = $"{Base}{Simbolo}{Exponente}";// POSIBLE FALLO A FALTA DE JERARQUIA
+                    //Result = $"{Op}{Base}{Simbolo}{Exponente}{Cl}";
             }
         }
 
@@ -2518,11 +2524,13 @@ namespace ENTITY
                         //DEBE SER UN DERIVADO DE LA FUNCION A RESOLVER
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
+                        Etiqueta = Proceso.DescorcharA(Etiqueta); //PUESTO POR NOTAR ERRORES A LA HORA DE VER POTENCIAS COMO ATGUMENTOS SEN<X^2>
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
-                        Etiqueta = Proceso.DescorcharA(Etiqueta);
+                        //Etiqueta = Proceso.DescorcharA(Etiqueta);
 
                         PotenciaEntera Interino = new PotenciaEntera(Etiqueta);
-                        string Res = Proceso.DescorcharA(Interino.Result);
+                        //string Res = Proceso.DescorcharA(Interino.Result); POSIBLE PROBLEMA DE FALTA DE JERARQUIA
+                        string Res = Interino.Result;
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
@@ -2536,7 +2544,15 @@ namespace ENTITY
 
                             //MANDABA ERROR AL INGRESARLE Sen<e^{X}>
                             //PONER CONDICION PARA CUANDO NIVELES SEA VACIO TOME LO QUE RESTA DE LA EXPRESION Y LA AÑADA A LA LISTA DE VARIABLES
-                            if (Niveles.Equals(""))
+                            bool Encontrado = false;
+
+                            foreach (var item in ListaVariables)
+                            {
+                                if (item.Etiqueta.Equals(Proceso.DescorcharA(Temporal)))
+                                    Encontrado = true;
+                            }
+
+                            if (Niveles.Equals("") & !Encontrado)
                             {
                                 ++q;
                                 Nom = $"U{q}";
@@ -2544,9 +2560,10 @@ namespace ENTITY
                                 Res = Etiqueta;
 
                                 Var = new Variables(Nom, Etiqueta, Res, true);
+
                                 ListaVariables.Add(Var);
                             }
-                            //FIN CONDICION PARA TOMAR EL ULTIMO ELEMENTO
+                            //FIN CONDICION PARA TOMAR EL ULTIMO ELEMENTO AL USAR FUNCIONES
 
                             break;
                         }
@@ -2573,7 +2590,7 @@ namespace ENTITY
         {
             LVariables.Reverse();
             string Nomb = "", Conten = "", Acomulador;
-            int k, i, j; bool A = false, B = false;
+            int k, i, j; bool A = false;
 
             i = 0;
             variable = LVariables.ElementAt(i);
@@ -2586,21 +2603,31 @@ namespace ENTITY
 
                     Nomb = $"{variable.Simbolo}{LVariables.ElementAt(i).Nombre}";
                     Conten = (string)LVariables.ElementAt(i).Contenido;
-                    //ENCORCHAR EL CONTENIDO SI ES NECESARIO;
+                    //PEDAZO DE CODIGO OMITIDO POR EL HECHO DE QUE TODO QUEDA ENCORCHADO COMO AL INICIO ESTABA;
+                    //PROBANDO ENCORCHAMIENTO ORIGEN
 
-                    A = (Conten.Length > 2);
+                    /*A = (Conten.Length > 2);
                     B = Proceso.IsAgrupate(Conten);
+                    //PUESTA POR ERRORES AL ESTAR UNA POTENCIA COMO ARGUMENTO SEN<X^2>
+                    if (Acomulador.IndexOf(variable.Simbolo) > 0)
+                    {
+                        C = (Proceso.IsLlave(Acomulador.ElementAt(Acomulador.IndexOf(variable.Simbolo) - 1)) == 0);
+                    }
+                    else
+                        C = true;
+                    
 
-                    if (A & !B)
+                    if (A & !B & C)
                     {
                         Conten = Proceso.EncorcharFuncion(Conten);
-                    }
+                    }*/
 
                     Acomulador = Acomulador.Replace(Nomb, Conten);
                     ++i;
                 }
             }
 
+            Acomulador = Proceso.DescorcharA(Acomulador); //PUESTO POR ERROR RELACIONADO A METER POTENCIAS COMO ARGUMENTOS DE FUNCIONES
             //APLICA PRODUCTO ENTRE EXONENTES ANIDADOS
             Acomulador = AplicarPropiedadPorSectores(Acomulador);
             Contenido = Acomulador;
@@ -2608,40 +2635,49 @@ namespace ENTITY
             Niveles = ObtenerNiveles(Contenido);
             Orden = ObtenerOrden(Niveles);
 
-            foreach (var orden in Orden)
+            if (!Niveles.Contains("0"))
             {
-                k = 0; A = false;
-                foreach (var nivel in Niveles)
+                Acomulador = Proceso.DescorcharA(Contenido);
+                Base = Acomulador;
+                Exponente = $"{Modulo}";
+            }
+            else
+            {
+                foreach (var orden in Orden)
                 {
-                    ++k;
-                    if (nivel.Equals(orden))
+                    k = 0; A = false;
+                    foreach (var nivel in Niveles)
                     {
-                        i = j = 0;
-                        if (Orden.EndsWith($"{orden}"))
+                        ++k;
+                        if (nivel.Equals(orden))
                         {
-                            Acomulador = Proceso.DescorcharA(Contenido);
-
-                            foreach (var elemento in Acomulador)
+                            i = j = 0;
+                            if (Orden.EndsWith($"{orden}"))
                             {
-                                if (elemento.Equals(Simbolo))
+                                Acomulador = Proceso.DescorcharA(Contenido);
+
+                                foreach (var elemento in Acomulador)
                                 {
-                                    ++j;
+                                    if (elemento.Equals(Simbolo))
+                                    {
+                                        ++j;
+                                    }
+                                    if (j == k)
+                                        break;
+                                    ++i;
                                 }
-                                if (j == k)
-                                    break;
-                                ++i;
+                                Base = Proceso.DescorcharA(Acomulador.Substring(0, i));
+                                Exponente = Proceso.DescorcharA(Acomulador.Substring(i + 1));
+                                A = true;
+                                break;
                             }
-                            Base = Proceso.DescorcharA(Acomulador.Substring(0, i));
-                            Exponente = Proceso.DescorcharA(Acomulador.Substring(i + 1));
-                            A = true;
-                            break;
                         }
                     }
-                }
 
-                if (A)
-                    break;
-            }
+                    if (A)
+                        break;
+                }
+            }            
         }
 
         private string AplicarPropiedadPorSectores(string Expresion)
