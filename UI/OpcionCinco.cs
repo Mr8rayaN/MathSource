@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BLL;
 
 namespace UI
 {
     public partial class OpcionCinco : Form
     {
+        Service BLL = new Service();
+
         public OpcionCinco()
         {
             InitializeComponent();
+            LlenarTabla();
         }
 
         public OpcionCinco(Form Padre, Panel Contenedor)
@@ -22,6 +26,12 @@ namespace UI
             InitializeComponent();
             this.BackColor = Contenedor.BackColor;
             this.Size = Contenedor.Size;
+            LlenarTabla();
+        }
+
+        private void LlenarTabla()
+        {
+            dataGridView1.DataSource = BLL.ConsultarPasos();
         }
     }
 }

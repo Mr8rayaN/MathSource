@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BLL;
 
 namespace UI
 {
     public partial class OpcionSeis : Form
     {
+        Service BLL = new Service();
+
         public OpcionSeis()
         {
             InitializeComponent();
+            LlenarTabla();
         }
 
         public OpcionSeis(Form Padre, Panel Contenedor)
@@ -22,6 +26,12 @@ namespace UI
             InitializeComponent();
             this.BackColor = Contenedor.BackColor;
             this.Size = Contenedor.Size;
+            LlenarTabla();
+        }
+
+        private void LlenarTabla()
+        {
+            dataGridView1.DataSource = BLL.ConsultarResultados();
         }
     }
 }
