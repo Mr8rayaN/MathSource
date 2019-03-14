@@ -12,13 +12,13 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Polinomio();
+            TEST_Consola_Monomio();
         }
 
         private static void TEST_Consola_Monomio()
         {
             string Entrada = "x^{2*1}*x*2*ln<x*3>";
-            Entrada = "e^{2*x}";
+            //Entrada = "e^{2*x}";
             Monomios MONO = new Monomios(Entrada);
             Console.WriteLine(MONO.Nombre);
             Console.WriteLine($"ENTRADA = {Entrada}");
