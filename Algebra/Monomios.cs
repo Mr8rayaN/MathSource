@@ -62,6 +62,7 @@ namespace ALGEBRA
             if (!Niveles.Contains("0"))
             {
                 Elementos.Add(new PotenciaEntera(Contenido));
+                ObtenerPartes();
                 Result = Contenido;
             }
             else
