@@ -27,6 +27,7 @@ namespace UI
         public VentanaPpal()
         {
             InitializeComponent();
+            PnSubRegistros.Hide();
             PMenu = new Panel();
         }
 
@@ -204,36 +205,38 @@ namespace UI
             
             if (!Cambiar)
             {
-                if (Pnl.Name.Contains("Uno"))
-                {
-                    Ventana = new OpcionUno(this, PanelGeneral, BLL);
-                    Abrir(Ventana);
-                }
-                else if (Pnl.Name.Contains("Dos"))
-                {
-                    Ventana = new OpcionDos(this, PanelGeneral, BLL);
-                    Abrir(Ventana);
-                }
-                else if (Pnl.Name.Contains("Tres"))
-                {
-                    Ventana = new OpcionTres(this, PanelGeneral, BLL);
-                    Abrir(Ventana);
-                }
-                else if (Pnl.Name.Contains("Cuatro"))
+                if (Pnl.Name.Contains("SubEntrada"))
                 {
                     Ventana = new OpcionCuatro(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
-                else if (Pnl.Name.Contains("Cinco"))
+                else if (Pnl.Name.Contains("SubPaso"))
                 {
                     Ventana = new OpcionCinco(this, PanelGeneral);
                     Abrir(Ventana);
                 }
-                else if (Pnl.Name.Contains("Seis"))
+                else if (Pnl.Name.Contains("SubSalida"))
                 {
                     Ventana = new OpcionSeis(this, PanelGeneral);
                     Abrir(Ventana);
                 }
+                else if (Pnl.Name.Contains("Entrada"))
+                {
+                    PnSubRegistros.Hide();
+                    Ventana = new OpcionUno(this, PanelGeneral, BLL);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Paso"))
+                {
+                    PnSubRegistros.Hide();
+                    Ventana = new OpcionDos(this, PanelGeneral, BLL);
+                    Abrir(Ventana);
+                }
+                else if (Pnl.Name.Contains("Registro"))
+                {
+                    PnSubRegistros.Show();
+                }                
+
             }
 
             
@@ -281,6 +284,31 @@ namespace UI
         }
 
         private void PanelOpcionDos_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PnSubRegistros_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PanelMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PanelOpcionCuatro_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PanelOpcionCinco_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PanelOpcionSeis_Paint(object sender, PaintEventArgs e)
         {
 
         }
