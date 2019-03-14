@@ -17,7 +17,8 @@ namespace DERIVADAS
         public string DerivadaInterna { get; private set; }
         public double Modulo => 0;
 
-        EProcesos Proceso = new EProcesos();
+        DProcesos DProceso = new DProcesos();
+        EProcesos EProceso = new EProcesos();
         Polinomios Polinomio;
         AFuns Interino;
         AMathOps Operacion;
@@ -124,7 +125,7 @@ namespace DERIVADAS
                 DerivadaInterna = new Derivadas(Polinomio, Var).Result;
                 Operacion = new PotenciaEntera(TAN.Simbolo, "2");
                 //REVISAR SI TOCA DESCORCHAR CORCHETES DE LA BASE DE LA POTENCIA
-                string Temporal = Proceso.CorchetesClear(Operacion.Result);
+                string Temporal = EProceso.CorchetesClear(Operacion.Result);
                 Res = Temporal + TAN.Op + TAN.Argumento + TAN.Cl;
                 Operacion = new CocienteEntero("1", Res);
                 Res = Operacion.Result;
@@ -164,8 +165,8 @@ namespace DERIVADAS
                 Operacion = new CocienteEntero(Operacion.Result, LN.Argumento);
                 Result = Operacion.Result;
 
-                if (!Proceso.IsAgrupate(Result))
-                    Result = Proceso.EncorcharFuncion(Result);
+                if (!EProceso.IsAgrupate(Result))
+                    Result = EProceso.EncorcharFuncion(Result);
             }
             else
                 Result = $"{Modulo}";
@@ -174,36 +175,39 @@ namespace DERIVADAS
         //IMPLEMENTAR PROCESOD DE ENFOCAR FUNCION DONDE LA VARIABLE ESTÉ ENFOCADA
         private string Enruta(Monomios MONO, Variables Var)
         {
+            //TENGO QUE SABER CUAL FUNCION ES LA MAS EXTERIOR Y PREGUNTAR POR ESA
+            //SI ANIDO CS<SEN<X>> POR ORDEN LO TOMA COMO SI LA FUNCION FUERA UN SENO CUANDO EN REALIZAD ES UN COSENO
+
             Interino = new Senos();
-            if (Interino.ContainsThisFuntion(MONO))
+            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
             {
                 return new Derivadas(new Senos(MONO.Result), Var).Result;
             }
 
 
             Interino = new Cosenos();
-            if (Interino.ContainsThisFuntion(MONO))
+            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
             {
                 return new Derivadas(new Cosenos(MONO.Result), Var).Result;
             }
 
 
             Interino = new Tangentes();
-            if (Interino.ContainsThisFuntion(MONO))
+            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
             {
                 return new Derivadas(new Tangentes(MONO.Result), Var).Result;
             }
 
 
             Interino = new Eulers();
-            if (Interino.ContainsThisFuntion(MONO))
+            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
             {
                 return new Derivadas(new Eulers(MONO.Result), Var).Result;
             }
 
 
             Interino = new LogNaturales();
-            if (Interino.ContainsThisFuntion(MONO))
+            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
             {
                 return new Derivadas(new LogNaturales(MONO.Result), Var).Result;
             }

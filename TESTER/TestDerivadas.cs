@@ -79,6 +79,8 @@ namespace TESTER
         private static void TEST_Console_POLINOMIO_Derivada()
         {
             string Entrada = "x^2+2*x+e^{3*6}+ln<1+x>+cos<3*x>";
+            Entrada = "cos<sen<2*x>>";
+            Entrada = "sen<e^{x}>";
             Polinomios POLI = new Polinomios(Entrada);
             Derivadas DER = new Derivadas(POLI, new Variables("x"));
             Console.WriteLine($"ENTRADA          {POLI.Result}");

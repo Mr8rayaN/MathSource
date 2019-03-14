@@ -11,7 +11,7 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Suma();
+            TEST_Consola_Potencia();
         }
 
         private static void TEST_Consola_Suma()
@@ -54,7 +54,7 @@ namespace TESTER
         private static void TEST_Consola_Potencia()
         {
             string Entrada = "{{{{x}^{2x}}^{2}}^{3x}}";
-            //Entrada = "{{{{x}^{2*x}}^{2}}^{3*x}}";
+            Entrada = "sen<e^{x}>";
             Console.WriteLine($"ENTRADA = {Entrada}");
             PotenciaEntera POTENCIA = new PotenciaEntera(Entrada);
             Console.WriteLine(POTENCIA.Nombre);

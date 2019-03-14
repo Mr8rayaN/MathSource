@@ -2407,6 +2407,7 @@ namespace ENTITY
         public override void ObtenerElementos(string LElementos)
         {
             int i = 0, NumeroImplicitoDeOps = 0;
+            string Niveles = ObtenerNiveles(LElementos);
 
             foreach (var elemento in LElementos)
             {
@@ -2414,12 +2415,14 @@ namespace ENTITY
                     ++NumeroImplicitoDeOps;
             }
 
-            if (NumeroImplicitoDeOps == 0)
+            if (NumeroImplicitoDeOps == 0 )
             {
                 Base = LElementos;
                 Exponente = $"{Modulo}";
             }
-            else if (NumeroImplicitoDeOps == 1)
+            //ERRROR ENCONTRADO CUANDO LA ENTRADA POSEE EL SIMBOLO EN UN ARGUMENTO Y NO COMO POTENCIA PRINCIPAL
+            //EJEMPLO SEN<X^2>
+            else if (NumeroImplicitoDeOps == 1 & Niveles.Equals($"{ModuloCancelativo}"))
             {
                 i = 0;
                 foreach (var elemento in LElementos.Split(Simbolo))
@@ -2530,6 +2533,21 @@ namespace ENTITY
                             Niveles = ObtenerNiveles(Temporal);
                             Orden = ObtenerOrden(Niveles);
                             Uno = -1;
+
+                            //MANDABA ERROR AL INGRESARLE Sen<e^{X}>
+                            //PONER CONDICION PARA CUANDO NIVELES SEA VACIO TOME LO QUE RESTA DE LA EXPRESION Y LA AÑADA A LA LISTA DE VARIABLES
+                            if (Niveles.Equals(""))
+                            {
+                                ++q;
+                                Nom = $"U{q}";
+                                Etiqueta = Temporal;
+                                Res = Etiqueta;
+
+                                Var = new Variables(Nom, Etiqueta, Res, true);
+                                ListaVariables.Add(Var);
+                            }
+                            //FIN CONDICION PARA TOMAR EL ULTIMO ELEMENTO
+
                             break;
                         }
 

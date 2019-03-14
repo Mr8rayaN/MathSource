@@ -144,6 +144,41 @@ namespace ENTITY
 
         }
 
+        public int CierreArgumentos(string Expresion, int startIndex)
+        {
+            //retorna el indice de cierre;
+
+            string E = Expresion;
+
+            if (startIndex < 0)
+            {
+                return E.Length;
+            }
+
+            int abierto, i;
+
+            abierto = i = 0;
+
+            E = E.Substring(startIndex);
+
+            foreach (var elemento in E)
+            {
+                if (elemento.Equals('<'))
+                    ++abierto;
+
+                if (elemento.Equals('>'))
+                    --abierto;
+
+                if (abierto == 0)
+                    break;
+
+                ++i;
+            }
+
+            return i;
+
+        }
+
         public int CierreFunciones(string Expresion, int startIndex)
         {
             //retorna el indice de cierre;
@@ -213,6 +248,22 @@ namespace ENTITY
             return E;
         }
 
+        public string DescorcharArgumentos(string Expresion)
+        {
+            string E = Expresion;
+            bool A, B, C;
+            A = E.StartsWith("<");
+            B = E.LastIndexOf(">").Equals(CierreArgumentos(E, E.IndexOf("<")));
+            C = E.EndsWith(">");
+
+            if (A & B & C)
+            {
+                return E.Substring(1, E.LastIndexOf(">") - 1);
+            }
+
+            return E;
+        }
+
         public string EncorcharFuncion (string Expresion)
         {
             return $"{Open}{Expresion}{Close}";
@@ -226,6 +277,7 @@ namespace ENTITY
         public string DescorcharA(string Expresion)
         {
             Expresion = DescorcharFunciones(Expresion);
+            Expresion = DescorcharArgumentos(Expresion);
             return DescorcharParentesis(Expresion);
         }
 
