@@ -917,7 +917,7 @@ namespace ENTITY
                                 Izq += Proceso.IsLlave(Temporal.ElementAt(i));
                                 //NUEVA CONDICION EN MARCHA
 
-                                if (i > 0)
+                                if (i > 0 & Proceso.IsLlave(Temporal.ElementAt(i)) == 0)
                                 {
                                     if (Temporal.ElementAt(i - 1).Equals(Simbolo))
                                     {
@@ -941,7 +941,7 @@ namespace ENTITY
                                 //NUEVA CONDICION EN MARCHA
                                 //if(j < (Temporal.Length - 1)) MOD POR LA ESTIMACION DE NO PODER SER EL ULTIMO ELEMENTO UN SIMBOLO
 
-                                if (j < (Temporal.Length - 2))
+                                if (j < (Temporal.Length - 2) & Proceso.IsLlave(Temporal.ElementAt(j)) == 0)
                                 {
                                     if (Temporal.ElementAt(j + 1).Equals(Simbolo))
                                     {
@@ -962,9 +962,9 @@ namespace ENTITY
                         }
 
                         //OPERA SI SE ENCONTRO COSAS COMO 2*X*4 VALIDAS PERO SIN JERARQUIAS EN PARENTESIS
-                        if (SimboloDos == true)
+                        if (SimboloDos == true & i!= 0)
                             ++i;
-                        if (SimboloUno == true)
+                        if (SimboloUno == true & j !=Temporal.Length - 1)
                             --j;
                         //FIN OPS
 
@@ -1205,7 +1205,7 @@ namespace ENTITY
                                     //FINCUERPO
 
                                     //NUEVO ELEMENTO CUERPO
-                                    if (i > 0)
+                                    if (i > 0 & Proceso.IsLlave(Temporal.ElementAt(i)) == 0)
                                     {
                                         if (Temporal.ElementAt(i - 1).Equals(Simbolo))
                                         {
@@ -1225,7 +1225,7 @@ namespace ENTITY
                                     //CUERPO
                                     Der += Proceso.IsLlave(Temporal.ElementAt(j));
                                     //FINCUERPO
-                                    if (j < (Temporal.Length - 2))
+                                    if (j < (Temporal.Length - 2) & Proceso.IsLlave(Temporal.ElementAt(j)) == 0)
                                     {
                                         if (Temporal.ElementAt(j + 1).Equals(Simbolo))
                                         {
@@ -1245,9 +1245,9 @@ namespace ENTITY
                             }
 
                             //OPERA SI SE ENCONTRO COSAS COMO 2*X*4 VALIDAS PERO SIN JERARQUIAS EN PARENTESIS
-                            if (SimboloDos == true)
+                            if (SimboloDos == true & i!= 0)
                                 ++i;
-                            if (SimboloUno == true)
+                            if (SimboloUno == true & j!= Temporal.Length - 1)
                                 --j;
                             //FIN OPS
 

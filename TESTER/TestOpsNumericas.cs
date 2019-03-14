@@ -32,7 +32,7 @@ namespace TESTER
             string Entrada = "(((x*2)*2)*({x}^{2}))";
             //Entrada = "((x*2)*4)*y";
             //Entrada = "x*2*2*y";
-            Entrada = "sen<x*2*4>";
+            //Entrada = "sen<x*2*4>";
             Console.WriteLine($"ENTRADA = {Entrada}");
             ProductoEntero PRODUCTO = new ProductoEntero(Entrada);
             Console.WriteLine(PRODUCTO.Nombre);
