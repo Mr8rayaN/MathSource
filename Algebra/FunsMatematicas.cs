@@ -16,7 +16,7 @@ namespace ALGEBRA
         private string ArgDefecto => "1";
         public override char Op => '{';
         public override char Cl => '}';
-        PotenciaEntera Potencia;
+        PotenciaEntera Potencia = new PotenciaEntera();
         double number;
 
         public Eulers() {
@@ -58,8 +58,21 @@ namespace ALGEBRA
 
         protected override void ObtenerArgumento()
         {
-            int Inicial = Contenido.IndexOf(SimboloExtendido) + 3;
-            int Final = Contenido.LastIndexOf(Cl) - Inicial;
+            int Inicial = 0;
+            int Final = 0;
+
+            if (Contenido.Contains(SimboloExtendido))
+            {
+                Inicial = Contenido.IndexOf(SimboloExtendido) + 3;
+                Final = Contenido.LastIndexOf(Cl) - Inicial;
+            }
+            else
+            {
+                //HACER INTELIGENTE LA TOMA DEL ARGUMENTO (HASTA QUE SE FINAL O ENCUENTRE OTRA FUNCION O TAL VEZ OTRO OPERADOR)
+                Inicial = Contenido.IndexOf(Simbolo) + 2;
+                Final = Contenido.Length - Inicial;
+            }
+            
             Argumento = Contenido.Substring(Inicial, Final);
         }
 

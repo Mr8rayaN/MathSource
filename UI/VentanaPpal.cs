@@ -30,7 +30,6 @@ namespace UI
             PMenu = new Panel();
         }
 
-        
         private void PBoxDimensionSize (object sender, EventArgs e)
         {
             PBox = (PictureBox)sender;

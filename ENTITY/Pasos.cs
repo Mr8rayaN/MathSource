@@ -8,9 +8,9 @@ namespace ENTITY
 {
     public class Pasos
     {
-        public string Id { get; set; }
-        public string Id_Funcion { get; set; }
-        public string Id_Resultado { get; set; }
+        private string Id { get; set; }
+        private string Id_Funcion { get; set; }
+        private string Id_Resultado { get; set; }
         public string Entrada { get; set; }
         public string Salida { get; set; }
         public string Nombre { get; set; }
@@ -37,6 +37,21 @@ namespace ENTITY
         public void SetResultado (string Resultado_id)
         {
             Id_Resultado = Resultado_id;
+        }
+
+        public string GetId()
+        {
+            return Id;
+        }
+
+        public string GetFuncion()
+        {
+            return Id_Funcion;
+        }
+
+        public string GetResultado()
+        {
+            return Id_Resultado;
         }
     }
 }

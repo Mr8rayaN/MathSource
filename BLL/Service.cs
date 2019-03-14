@@ -36,7 +36,7 @@ namespace BLL
         List<Estados> LEstados { get; set; }
         List<Funciones> LFunciones { get; set; }
         List<Resultados> LResultados { get; set; }
-        List<Pasos> LPasos;
+        public List<Pasos> LPasos = new List<Pasos>();
 
         EProcesos Proceso = new EProcesos();
 
@@ -90,7 +90,7 @@ namespace BLL
                 foreach (var paso in LPasos)
                 {
                     //AQUI SE GENERAN LOS PASO_ID
-                    paso.Id = ProximoPaso();
+                    paso.SetId(ProximoPaso());
                     Respuesta += DAL.GuardarPaso(paso);
                 }
                 

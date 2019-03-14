@@ -32,7 +32,7 @@ namespace UI
 
         private void LlenarDataView()
         {
-            dataGridView1.DataSource = BLL.ConsultarFunciones();
+            dataGridView1.DataSource = BLL.LPasos;
         }
     }
 }

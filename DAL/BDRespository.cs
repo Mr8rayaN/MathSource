@@ -60,9 +60,9 @@ namespace DAL
             using (var Comando = new OracleCommand(Sentencia, Conexion))
             {
                 Comando.CommandType = System.Data.CommandType.StoredProcedure;
-                Comando.Parameters.Add("PASO_ID", OracleDbType.Char).Value = P.Id;
-                Comando.Parameters.Add("FUNCION_ID", OracleDbType.Char).Value = P.Id_Funcion;
-                Comando.Parameters.Add("RESULTADO_ID", OracleDbType.Char).Value = P.Id_Resultado;
+                Comando.Parameters.Add("PASO_ID", OracleDbType.Char).Value = P.GetId();
+                Comando.Parameters.Add("FUNCION_ID", OracleDbType.Char).Value = P.GetFuncion();
+                Comando.Parameters.Add("RESULTADO_ID", OracleDbType.Char).Value = P.GetResultado();
                 Comando.Parameters.Add("NOMBRE", OracleDbType.NVarchar2).Value = P.Nombre;
                 Comando.Parameters.Add("ENTRADA", OracleDbType.NVarchar2).Value = P.Entrada;
                 Comando.Parameters.Add("SALIDA", OracleDbType.NVarchar2).Value = P.Salida;
