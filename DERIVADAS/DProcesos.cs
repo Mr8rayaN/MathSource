@@ -15,7 +15,7 @@ namespace DERIVADAS
         {
             foreach (var item in MONO.Elementos)
             {
-                if (item.Base.Contains($"{FuncionIndagada.Simbolo}"))
+                if (item.Base.StartsWith($"{FuncionIndagada.Simbolo}"))
                     return true;
             }
 
