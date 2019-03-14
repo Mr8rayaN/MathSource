@@ -8,121 +8,138 @@ using GRAMATICA;
 
 namespace ALGEBRA
 {
-    public class Monomios
+    public class Monomios : AMathExp
     {
-        public string Nombre => "MONOMIO";
-        public string Contenido { get; private set; }
+        public override string Nombre => "MONOMIO";
         public string Coeficiente { get; private set; }
         public string ParteLiteral { get; private set; }
-        public double GradoAbs { get; private set; }
-        public string Result { get; private set; }
-        public char Simbolo => ObteneSimbolo();
+
         public List<PotenciaEntera> Elementos = new List<PotenciaEntera>();
-        ProductoEntero Producto = new ProductoEntero();
-        PotenciaEntera Potencia = new PotenciaEntera();
+        PotenciaEntera Potencia;
         double number;
 
-        EProcesos Proceso = new EProcesos();
 
-        public Monomios() { }
+        public Monomios()
+        {
+            Operacion = new ProductoEntero();
+            Coeficiente = "1";
+            ParteLiteral = "1";
+        }
 
         public Monomios(string Coeficiente, string Literal)
         {
+            if (Proceso.IsAgrupate(Coeficiente))
+                Coeficiente = Proceso.DescorcharA(Coeficiente);
 
+            if (Proceso.IsAgrupate(Literal))
+                Literal = Proceso.DescorcharA(Literal);
+
+            Operacion = new ProductoEntero();
+            Contenido = new ProductoEntero(Coeficiente, Literal).Result;
+
+            ObtenerElementos(Contenido);
         }
 
         public Monomios(string Expresion)
         {
+            Operacion = new ProductoEntero();
+
             if (Proceso.IsAgrupate(Expresion))
                 Expresion = Proceso.DescorcharA(Expresion);
 
-            ObtenerElementos(Expresion);
+            Contenido = Expresion;
 
-            Operar();
-
+            Niveles = ObtenerNiveles(Contenido);
+            Orden = ObtenerOrden(Niveles);
+            ObtenerElementos(Contenido);
         }
 
-        private void ObtenerElementos (string Expresion)
+        protected override void ObtenerElementos (string Expresion)
         {
-            ParteLiteral = "";
-            GradoAbs = Producto.ModuloCancelativo;
-            Coeficiente = $"{Producto.Modulo}";
-            Producto = new ProductoEntero(Expresion);
+            Elementos.Clear();
 
-            Contenido = Producto.Result;
-
-            foreach (var elemento in Contenido.Split(Producto.Simbolo))
+            //TENER EN CUENTA CUANDO NIVELES ES VACIO, ESTA SENTENCIA IF PARECE SOLUCIONARLO
+            if (!Niveles.Contains("0"))
             {
-                Potencia = new PotenciaEntera(elemento);
+                Elementos.Add(new PotenciaEntera(Contenido));
+                Result = Contenido;
+            }
+            else
+            {
+                char FirstNivel = Orden.ElementAt(Orden.Length - 1);
+                string Foco;
+                int Inicio, i, j, k;
+                i = 0; Inicio = 0;
+                bool Seguir;
 
-                Elementos.Add(Potencia);
-
-                Organizar(Potencia);
-
-                if (Potencia.Result.Equals(Potencia.ModuloCancelativo))
+                foreach (var nivel in Niveles)
                 {
-                    Elementos.Clear();
-                    Coeficiente = $"{Potencia.ModuloCancelativo}";
-                    ParteLiteral = "";
-                    break;
+                    ++i;
+                    Seguir = true;
+                    if (nivel.Equals(FirstNivel))
+                    {
+                        j = 0; k = 0;
+                        while (Seguir)
+                        {
+                            if (Contenido.ElementAt(k).Equals(Simbolo))
+                                ++j;
+
+                            if (j == i)
+                                Seguir = false;
+                            else
+                                ++k;
+                        }
+
+                        Foco = Contenido.Substring(Inicio, (k - Inicio));
+                        Inicio = k + 1;
+
+                        Potencia = new PotenciaEntera(Foco);
+                        Elementos.Add(Potencia);
+
+                    }
+
                 }
-                
-            }
 
+                //TOMA EL ULTIMO ELEMENTO
+                Foco = Contenido.Substring(Inicio);
+                Potencia = new PotenciaEntera(Foco);
+                Elementos.Add(Potencia);
+                //FIN DE TOMA
+
+                ObtenerPartes();
+                //PULIR PRODUCTO PARA RESPONDER CORRECTAMENTE A ESTE PROBLEMA
+                Operacion = new ProductoEntero(Coeficiente, ParteLiteral);
+                Result = Operacion.Result;
+            }
         }
 
-        private void Organizar(PotenciaEntera P)
+        private void ObtenerPartes()
         {
-            bool A = double.TryParse(P.Result, out number);
+            bool A; Coeficiente = $"{Operacion.Modulo}"; ParteLiteral = "";
+            List<PotenciaEntera> Temporal = new List<PotenciaEntera>();
+            Proceso.CopyList(Temporal, Elementos);
 
-            if (A)
+            foreach (var elemento in Temporal)
             {
-                Coeficiente = new ProductoEntero(Coeficiente, P.Result).Result;
+                A = double.TryParse(elemento.Result, out number);
+
+                //PULIR BIEN PRODUCTO PARAR RESPONDER CORRECTAMENTE
+                if (A)
+                {
+                    Coeficiente = new ProductoEntero(Coeficiente, elemento.Result).Result;
+                    Elementos.Remove(elemento);
+                }
+                else
+                {
+                    ParteLiteral += $"{elemento.Result}{Simbolo}";
+                }
+
             }
-            else
-            {
-                GradoAbs += double.Parse(P.Exponente);
-                ParteLiteral += Producto.Simbolo + P.Result;
-                ParteLiteral = ParteLiteral.Trim(Producto.Simbolo);
-            }
+
+            Elementos.Add(new PotenciaEntera(Coeficiente));
+            ParteLiteral = new ProductoEntero(ParteLiteral.Trim(Simbolo)).Result;
         }
 
-        private void Operar()
-        {
-            bool A, B, C;
-
-            A = Coeficiente.Equals(Potencia.ModuloCancelativo.ToString());
-            B = ParteLiteral.Equals("");
-            C = Coeficiente.Equals(Potencia.Modulo.ToString());
-
-            Coeficiente = Proceso.ParentesisClear(Coeficiente);
-            ParteLiteral = Proceso.ParentesisClear(ParteLiteral);
-
-            if (A)
-                Result = $"{Potencia.ModuloCancelativo}";
-
-            else if (B)
-                Result = Coeficiente;
-
-            else if (C)
-                Result = ParteLiteral;
-
-            else
-            {
-                Result = $"{Coeficiente}{Producto.Simbolo}{ParteLiteral}";
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"MONOMIO {Contenido}; COEFICIENTE {Coeficiente}; LITERAL {ParteLiteral}";
-        }
-
-        private char ObteneSimbolo()
-        {
-            return Producto.Simbolo;
-        }
-
-    }
+    } //FUNCIONANDO 100%
 
 }

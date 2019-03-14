@@ -47,7 +47,7 @@ namespace ENTITY
         public SumaEntera(string Expresion)
         {
             if (Proceso.IsAgrupate(Expresion))
-                Contenido = Proceso.DescorcharParentesis(Expresion);
+                Expresion = Proceso.DescorcharParentesis(Expresion);
 
             Contenido = Expresion;
 
