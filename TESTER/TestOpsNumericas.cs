@@ -11,7 +11,7 @@ namespace TESTER
     {
         public static void Main(string[] args)
         {
-            TEST_Consola_Potencia();
+            TEST_Consola_Producto();
         }
 
         private static void TEST_Consola_Suma()
@@ -32,6 +32,7 @@ namespace TESTER
             string Entrada = "(((x*2)*2)*({x}^{2}))";
             //Entrada = "((x*2)*4)*y";
             //Entrada = "x*2*2*y";
+            Entrada = "sen<x*2*4>";
             Console.WriteLine($"ENTRADA = {Entrada}");
             ProductoEntero PRODUCTO = new ProductoEntero(Entrada);
             Console.WriteLine(PRODUCTO.Nombre);

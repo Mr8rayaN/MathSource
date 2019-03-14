@@ -729,7 +729,6 @@ namespace ENTITY
         private string Multiplicador = "";
         public List<Variables> ListaVariables = new List<Variables>();
         private Variables variable = new Variables();
-        private char EspSimbolo => '~';
         double number;
 
         public ProductoEntero() { }
@@ -769,9 +768,11 @@ namespace ENTITY
             Operar();
         }
 
+        //ACTUALIZADO
         public override void ObtenerElementos(string LElementos)
         {
             int i = 0, NumeroImplicitoDeOps = 0;
+            string Niveles = ObtenerNiveles(LElementos);
 
             foreach (var elemento in LElementos)
             {
@@ -784,7 +785,7 @@ namespace ENTITY
                 Multiplicando = LElementos;
                 Multiplicador = $"{Modulo}";
             }
-            else if (NumeroImplicitoDeOps == 1)
+            else if (NumeroImplicitoDeOps == 1 & Niveles.Equals($"{ModuloCancelativo}"))
             {
                 i = 0;
                 foreach (var elemento in LElementos.Split(Simbolo))
@@ -858,6 +859,7 @@ namespace ENTITY
             }
         }
 
+        //ACTUALIZADO
         public override void ResolverNiveles()
         {
             string Temporal = Contenido;
@@ -905,6 +907,7 @@ namespace ENTITY
                         j = i;
                         Izq = Der = 0;
                         A = B = true;
+                        bool SimboloUno = false, SimboloDos = false;
 
                         while (A || B)
                         {
@@ -913,11 +916,16 @@ namespace ENTITY
                                 //CUERPO
                                 Izq += Proceso.IsLlave(Temporal.ElementAt(i));
                                 //NUEVA CONDICION EN MARCHA
+
                                 if (i > 0)
                                 {
                                     if (Temporal.ElementAt(i - 1).Equals(Simbolo))
+                                    {
                                         Izq += 1;
+                                        SimboloUno = true;
+                                    }
                                 }
+
                                 //FIN NUEVA CONDICION
                                 //FINCUERPO
                                 //if (Izq == 1 || i <= 0)
@@ -932,11 +940,17 @@ namespace ENTITY
                                 Der += Proceso.IsLlave(Temporal.ElementAt(j));
                                 //NUEVA CONDICION EN MARCHA
                                 //if(j < (Temporal.Length - 1)) MOD POR LA ESTIMACION DE NO PODER SER EL ULTIMO ELEMENTO UN SIMBOLO
+
                                 if (j < (Temporal.Length - 2))
                                 {
                                     if (Temporal.ElementAt(j + 1).Equals(Simbolo))
+                                    {
                                         Der += -1;
+                                        SimboloDos = true;
+                                    }
+                                        
                                 }
+
                                 //FIN NUEVA CONDICION
                                 //FINCUERPO
                                 //if (Der == -1 || j >= Temporal.Length - 1)
@@ -947,6 +961,13 @@ namespace ENTITY
                             }
                         }
 
+                        //OPERA SI SE ENCONTRO COSAS COMO 2*X*4 VALIDAS PERO SIN JERARQUIAS EN PARENTESIS
+                        if (SimboloDos == true)
+                            ++i;
+                        if (SimboloUno == true)
+                            --j;
+                        //FIN OPS
+
 
                         ++q;
                         //OBTENIDOS LOS INDICES DE INICIO (i) Y FIN (j) DE LA OP INTERNA
@@ -955,11 +976,13 @@ namespace ENTITY
                         //DEBE SER UN DERIVADO DE LA FUNCION A RESOLVER
                         //HACER QUE LA ETIQUETA QUEDE LIBRE DE AGRUPACIONES INNECESARIAS
                         string Etiqueta = $"{Temporal.Substring(i, (j - i) + 1)}";
+                        Etiqueta = Proceso.DescorcharA(Etiqueta); //PUESTO POR NOTAR ERRORES A LA HORA DE VER POTENCIAS COMO ATGUMENTOS SEN<X^2>
                         Temporal = Temporal.Replace(Etiqueta, $"{variable.Simbolo}{Nom}");
-                        Etiqueta = Proceso.DescorcharA(Etiqueta);
+                        //Etiqueta = Proceso.DescorcharA(Etiqueta);
 
                         ProductoEntero Interino = new ProductoEntero(Etiqueta);
-                        string Res = Proceso.DescorcharA(Interino.Result);
+                        //string Res = Proceso.DescorcharA(Interino.Result);
+                        string Res = Interino.Result;
                         //OBTENER RESULTADO SEGUN LOS TIPOS
                         Variables Var = new Variables(Nom, Etiqueta, Res, true);
 
@@ -970,6 +993,29 @@ namespace ENTITY
                             Niveles = ObtenerNiveles(Temporal);
                             Orden = ObtenerOrden(Niveles);
                             Uno = -1;
+                            //MANDABA ERROR AL INGRESARLE Sen<2*x>
+                            //PONER CONDICION PARA CUANDO NIVELES SEA VACIO TOME LO QUE RESTA DE LA EXPRESION Y LA AÑADA A LA LISTA DE VARIABLES
+                            bool Encontrado = false;
+
+                            foreach (var item in ListaVariables)
+                            {
+                                if (item.Etiqueta.Equals(Proceso.DescorcharA(Temporal)))
+                                    Encontrado = true;
+                            }
+
+                            if (Niveles.Equals("") & !Encontrado)
+                            {
+                                ++q;
+                                Nom = $"U{q}";
+                                Etiqueta = Temporal;
+                                Res = Etiqueta;
+
+                                Var = new Variables(Nom, Etiqueta, Res, true);
+
+                                ListaVariables.Add(Var);
+                            }
+                            //FIN CONDICION PARA TOMAR EL ULTIMO ELEMENTO AL USAR FUNCIONES
+
                             break;
                         }
 
@@ -991,6 +1037,7 @@ namespace ENTITY
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
         }
         
+        //ACTUALIZADO
         public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
             LVariables.Reverse();
@@ -1008,9 +1055,10 @@ namespace ENTITY
 
                     Nomb = $"{variable.Simbolo}{LVariables.ElementAt(i).Nombre}";
                     Conten = (string)LVariables.ElementAt(i).Contenido;
-                    //ENCORCHAR EL CONTENIDO SI ES NECESARIO;
 
-                    int AntIndex = 0;
+                    //PEDAZO DE CODIGO OMITIDO POR EL HECHO DE QUE TODO QUEDA ENCORCHADO COMO AL INICIO ESTABA;
+                    //PROBANDO ENCORCHAMIENTO ORIGEN
+                    /*int AntIndex = 0;
                     if (Acomulador.IndexOf(Nomb) > 0)
                     {
                         AntIndex = Acomulador.IndexOf(Nomb) - 1;
@@ -1036,13 +1084,14 @@ namespace ENTITY
                     else if (A & !B) //AÑADIR !C SI SE ELIMINA LOD E ARRIBA
                     {
                         Conten = Proceso.EncorcharParentesis(Conten);
-                    }
+                    }*/
 
                     Acomulador = Acomulador.Replace(Nomb, Conten);
                     ++i;
                 }
             }
 
+            Acomulador = Proceso.DescorcharA(Acomulador); //PUESTO POR ERROR RELACIONADO A METER POTENCIAS COMO ARGUMENTOS DE FUNCIONES
             //APLICA PROPIEDADES INTERNAS
             Acomulador = AplicarPropiedadPorSectores(Acomulador);
             //FIN APLICACION DE PROPS
@@ -1051,12 +1100,10 @@ namespace ENTITY
             Niveles = ObtenerNiveles(Contenido);
             Orden = ObtenerOrden(Niveles);
 
-            if (Contenido.Contains(EspSimbolo))
-                Contenido = Contenido.Replace(EspSimbolo, Simbolo);
-
-            if (Niveles.Equals(""))
+            if (!Niveles.Contains($"{ModuloCancelativo}"))
             {
-                Multiplicando = Contenido;
+                Acomulador = Proceso.DescorcharA(Contenido);
+                Multiplicando = Acomulador;
                 Multiplicador = $"{Modulo}";
             }
             else
@@ -1099,120 +1146,152 @@ namespace ENTITY
             
         }
 
+        //ACTUALIZADO
         private string AplicarPropiedadPorSectores(string Expresion)
         {
-            if (!Expresion.Contains(Simbolo))
-                return Expresion;
-
             string Temporal = Expresion;
 
-            string Niveles = ObtenerNiveles(Temporal);
-            string NivelesCop = Niveles;
-
-            string Orden = ObtenerOrden(Niveles);
-            string OrdenCop = Orden;
-
-            int i, j, k, Izq, Der, Uno, Dos;
-            bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
-
-            Uno = 0;
-            while (WUno)
+            if (Expresion.Contains(Simbolo))
             {
-                var orden = Orden.ElementAt(Uno);
-                k = 0; Dos = 0;
+                string Niveles = ObtenerNiveles(Temporal);
+                string NivelesCop = Niveles;
 
-                while (WDos)
+                string Orden = ObtenerOrden(Niveles);
+                string OrdenCop = Orden;
+
+                int i, j, k, Izq, Der, Uno, Dos;
+                bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
+
+                Uno = 0;
+                while (WUno)
                 {
-                    Distribuyo = false;
-                    var nivel = Niveles.ElementAt(Dos);
-                    ++k;
+                    var orden = Orden.ElementAt(Uno);
+                    k = 0; Dos = 0;
 
-                    if (nivel.Equals(orden))
+                    while (WDos)
                     {
-                        i = j = 0; B = false;
-                        while (i < Temporal.Length)
+                        Distribuyo = false;
+                        var nivel = Niveles.ElementAt(Dos);
+                        ++k;
+
+                        if (nivel.Equals(orden))
                         {
-                            A = Temporal.ElementAt(i).Equals(Simbolo);
-
-                            if (A)
+                            i = j = 0; B = false;
+                            while (i < Temporal.Length)
                             {
-                                ++j;
-                            }
+                                A = Temporal.ElementAt(i).Equals(Simbolo);
 
-                            if (j == k || i == Temporal.Length - 1)
-                                break;
-                            ++i;
-                        }
-
-                        j = i;
-                        Izq = Der = 0;
-                        A = B = true;
-
-                        while (A || B)
-                        {
-                            if (A)
-                            {
-                                //CUERPO
-                                Izq += Proceso.IsLlave(Temporal.ElementAt(i));
-                                //FINCUERPO
-                                if (Izq == 1 || i <= 0)
-                                    A = false;
-                                else
-                                    --i;
-                            }
-                            if (B)
-                            {
-                                //CUERPO
-                                Der += Proceso.IsLlave(Temporal.ElementAt(j));
-                                //FINCUERPO
-                                if (Der == -1 || j >= Temporal.Length - 1)
-                                    B = false;
-                                else
+                                if (A)
+                                {
                                     ++j;
+                                }
+
+                                if (j == k || i == Temporal.Length - 1)
+                                    break;
+                                ++i;
                             }
+
+                            j = i;
+                            Izq = Der = 0;
+                            A = B = true;
+                            bool SimboloUno = false, SimboloDos = false;
+
+                            while (A || B)
+                            {
+                                if (A)
+                                {
+                                    //CUERPO
+                                    Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                    //FINCUERPO
+
+                                    //NUEVO ELEMENTO CUERPO
+                                    if (i > 0)
+                                    {
+                                        if (Temporal.ElementAt(i - 1).Equals(Simbolo))
+                                        {
+                                            Izq += 1;
+                                            SimboloUno = true;
+                                        }
+                                    }
+                                    //FIN NUEVO ELEMENTO
+
+                                    if (Izq == 1 || i <= 0)
+                                        A = false;
+                                    else
+                                        --i;
+                                }
+                                if (B)
+                                {
+                                    //CUERPO
+                                    Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                    //FINCUERPO
+                                    if (j < (Temporal.Length - 2))
+                                    {
+                                        if (Temporal.ElementAt(j + 1).Equals(Simbolo))
+                                        {
+                                            Der += -1;
+                                            SimboloDos = true;
+                                        }
+
+                                    }
+                                    //NUEVO ELEMENTO CUERPO
+                                    //FIN NUEVO ELEMENTO
+
+                                    if (Der == -1 || j >= Temporal.Length - 1)
+                                        B = false;
+                                    else
+                                        ++j;
+                                }
+                            }
+
+                            //OPERA SI SE ENCONTRO COSAS COMO 2*X*4 VALIDAS PERO SIN JERARQUIAS EN PARENTESIS
+                            if (SimboloDos == true)
+                                ++i;
+                            if (SimboloUno == true)
+                                --j;
+                            //FIN OPS
+
+                            //OBTENGO LA OPERACION INTERNA Y VEO SI PUEDO APLICARLE LA PROPIEDAD
+                            string OpInterna = $"{Temporal.Substring(i, (j - i) + 1)}";
+                            //VALIDO SI PUEDO APLICARLE PROPIEDAD
+                            if (IsDistribuible(OpInterna, Temporal))
+                            {
+                                string ANT = Temporal;
+                                //PROGRAMANDO DISTRIBUIR
+                                Temporal = Distribuir(OpInterna, Temporal);
+                                if (!Temporal.Equals(ANT))
+                                    Distribuyo = true;
+                                else
+                                    Distribuyo = false;
+                            }
+
+
+                            //FIN VALIDACION
+
+                            if (!Temporal.Equals(Expresion) & Distribuyo)
+                            {
+                                Niveles = ObtenerNiveles(Temporal);
+                                Orden = ObtenerOrden(Niveles);
+                                Uno = -1;
+                                break;
+                            }
+
                         }
 
-                        //OBTENGO LA OPERACION INTERNA Y VEO SI PUEDO APLICARLE LA PROPIEDAD
-                        string OpInterna = $"{Temporal.Substring(i, (j - i) + 1)}";
-                        //VALIDO SI PUEDO APLICARLE PROPIEDAD
-                        if (IsDistribuible(OpInterna, Temporal))
-                        {
-                            string ANT = Temporal;
-                            //PROGRAMANDO DISTRIBUIR
-                            Temporal = Distribuir(OpInterna, Temporal);
-                            if (!Temporal.Equals(ANT))
-                                Distribuyo = true;
-                            else
-                                Distribuyo = false;
-                        }
+                        ++Dos;
 
-
-                        //FIN VALIDACION
-
-                        if (!Temporal.Equals(Expresion) & Distribuyo)
-                        {
-                            Niveles = ObtenerNiveles(Temporal);
-                            Orden = ObtenerOrden(Niveles);
-                            Uno = -1;
-                            break;
-                        }
+                        if (Dos == Niveles.Length)
+                            WDos = false;
 
                     }
 
-                    ++Dos;
+                    ++Uno;
 
-                    if (Dos == Niveles.Length)
-                        WDos = false;
-
+                    if (Uno == Orden.Length)
+                        WUno = false;
                 }
-
-                ++Uno;
-
-                if (Uno == Orden.Length)
-                    WUno = false;
             }
 
-            //RETORNAR EL OBJETO
             return Temporal;
         }
 
@@ -1419,13 +1498,14 @@ namespace ENTITY
                     if (Proceso.IsLlave(Contenedor.ElementAt(inicio)) == 0 & !seguir)
                         --j;
 
-                    //Operador = Contenedor.Substring(inicio, (j - inicio)); ANTIGUA SENTENCIA TAL VEZ PODRIA OCASIONAR DESBORDAMIENTOS
+                    Operador = Contenedor.Substring(inicio, (j - inicio)); //ANTIGUA SENTENCIA TAL VEZ PUEDE OCASIONAR DESBORDAMIENTOS
 
                     //COLOCADO PARA EVITAR EL DESBORDAMIENTO
-                    if ((inicio + (j - inicio)) < Contenedor.Length)
+                    /*if ((inicio + (j - inicio)) < Contenedor.Length)
                         Operador = Contenedor.Substring(inicio, (j - inicio) + 1); //HABILITADO POR EL ERROR DE ABAJO
                     else
                         Operador = Contenedor.Substring(inicio, (j - inicio)); //OMITIA EL ULTIMO PARENTESIS SI HA DE LLEVARLO
+                    */
 
                     Operacion = Contenido + Simbolo + Operador;
                     //divisor = new CocienteEntero(Operador);
@@ -2351,6 +2431,7 @@ namespace ENTITY
             Operar();
         }
 
+        //CAMBIO
         public override void Operar()
         {
             bool A, B, C, D, E, F;
@@ -2410,6 +2491,7 @@ namespace ENTITY
             }
         }
 
+        //CAMBIO
         public override void ObtenerElementos(string LElementos)
         {
             int i = 0, NumeroImplicitoDeOps = 0;
@@ -2446,6 +2528,7 @@ namespace ENTITY
             }
         }
 
+        //CAMBIO
         public override void ResolverNiveles()
         {
             string Temporal = Contenido;
@@ -2586,6 +2669,7 @@ namespace ENTITY
             ResolverVariables(ListaVariables, NivelesCop, OrdenCop);
         }
 
+        //CAMBIO
         public override void ResolverVariables(List<Variables> LVariables, string Niveles, string Orden)
         {
             LVariables.Reverse();
@@ -2680,6 +2764,7 @@ namespace ENTITY
             }            
         }
 
+        //CAMBIO
         private string AplicarPropiedadPorSectores(string Expresion)
         {
             string Temporal = Expresion;
