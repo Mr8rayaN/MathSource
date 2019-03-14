@@ -2684,110 +2684,113 @@ namespace ENTITY
         {
             string Temporal = Expresion;
 
-            string Niveles = ObtenerNiveles(Temporal);
-            string NivelesCop = Niveles;
-
-            string Orden = ObtenerOrden(Niveles);
-            string OrdenCop = Orden;
-
-            int i, j, k, Izq, Der, Uno, Dos;
-            bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
-
-            Uno = 0;
-            while (WUno)
+            if (Expresion.Contains(Simbolo))
             {
-                var orden = Orden.ElementAt(Uno);
-                k = 0; Dos = 0;
+                string Niveles = ObtenerNiveles(Temporal);
+                string NivelesCop = Niveles;
 
-                while (WDos)
+                string Orden = ObtenerOrden(Niveles);
+                string OrdenCop = Orden;
+
+                int i, j, k, Izq, Der, Uno, Dos;
+                bool A = true, B = true, WUno = true, WDos = true, Distribuyo = false;
+
+                Uno = 0;
+                while (WUno)
                 {
-                    Distribuyo = false;
-                    var nivel = Niveles.ElementAt(Dos);
-                    ++k;
+                    var orden = Orden.ElementAt(Uno);
+                    k = 0; Dos = 0;
 
-                    if (nivel.Equals(orden))
+                    while (WDos)
                     {
-                        i = j = 0; B = false;
-                        while (i < Temporal.Length)
+                        Distribuyo = false;
+                        var nivel = Niveles.ElementAt(Dos);
+                        ++k;
+
+                        if (nivel.Equals(orden))
                         {
-                            A = Temporal.ElementAt(i).Equals(Simbolo);
-
-                            if (A)
+                            i = j = 0; B = false;
+                            while (i < Temporal.Length)
                             {
-                                ++j;
-                            }
+                                A = Temporal.ElementAt(i).Equals(Simbolo);
 
-                            if (j == k || i == Temporal.Length - 1)
-                                break;
-                            ++i;
-                        }
-
-                        j = i;
-                        Izq = Der = 0;
-                        A = B = true;
-
-                        while (A || B)
-                        {
-                            if (A)
-                            {
-                                //CUERPO
-                                Izq += Proceso.IsLlave(Temporal.ElementAt(i));
-                                //FINCUERPO
-                                if (Izq == 1 || i <= 0)
-                                    A = false;
-                                else
-                                    --i;
-                            }
-                            if (B)
-                            {
-                                //CUERPO
-                                Der += Proceso.IsLlave(Temporal.ElementAt(j));
-                                //FINCUERPO
-                                if (Der == -1 || j >= Temporal.Length - 1)
-                                    B = false;
-                                else
+                                if (A)
+                                {
                                     ++j;
+                                }
+
+                                if (j == k || i == Temporal.Length - 1)
+                                    break;
+                                ++i;
                             }
+
+                            j = i;
+                            Izq = Der = 0;
+                            A = B = true;
+
+                            while (A || B)
+                            {
+                                if (A)
+                                {
+                                    //CUERPO
+                                    Izq += Proceso.IsLlave(Temporal.ElementAt(i));
+                                    //FINCUERPO
+                                    if (Izq == 1 || i <= 0)
+                                        A = false;
+                                    else
+                                        --i;
+                                }
+                                if (B)
+                                {
+                                    //CUERPO
+                                    Der += Proceso.IsLlave(Temporal.ElementAt(j));
+                                    //FINCUERPO
+                                    if (Der == -1 || j >= Temporal.Length - 1)
+                                        B = false;
+                                    else
+                                        ++j;
+                                }
+                            }
+
+                            //OBTENGO LA OPERACION INTERNA Y VEO SI PUEDO APLICARLE LA PROPIEDAD
+                            string OpInterna = $"{Temporal.Substring(i, (j - i) + 1)}";
+                            //VALIDO SI PUEDO APLICARLE PROPIEDAD
+                            if (IsDistribuible(OpInterna, Temporal))
+                            {
+                                string ANT = Temporal;
+                                //PROGRAMANDO DISTRIBUIR
+                                Temporal = Distribuir(OpInterna, Temporal);
+                                if (!Temporal.Equals(ANT))
+                                    Distribuyo = true;
+                                else
+                                    Distribuyo = false;
+                            }
+
+
+                            //FIN VALIDACION
+
+                            if (!Temporal.Equals(Expresion) & Distribuyo)
+                            {
+                                Niveles = ObtenerNiveles(Temporal);
+                                Orden = ObtenerOrden(Niveles);
+                                Uno = -1;
+                                break;
+                            }
+
                         }
 
-                        //OBTENGO LA OPERACION INTERNA Y VEO SI PUEDO APLICARLE LA PROPIEDAD
-                        string OpInterna = $"{Temporal.Substring(i, (j - i) + 1)}";
-                        //VALIDO SI PUEDO APLICARLE PROPIEDAD
-                        if (IsDistribuible(OpInterna, Temporal))
-                        {
-                            string ANT = Temporal;
-                            //PROGRAMANDO DISTRIBUIR
-                            Temporal = Distribuir(OpInterna, Temporal);
-                            if (!Temporal.Equals(ANT))
-                                Distribuyo = true;
-                            else
-                                Distribuyo = false;
-                        }
+                        ++Dos;
 
-
-                        //FIN VALIDACION
-
-                        if (!Temporal.Equals(Expresion) & Distribuyo)
-                        {
-                            Niveles = ObtenerNiveles(Temporal);
-                            Orden = ObtenerOrden(Niveles);
-                            Uno = -1;
-                            break;
-                        }
+                        if (Dos == Niveles.Length)
+                            WDos = false;
 
                     }
 
-                    ++Dos;
+                    ++Uno;
 
-                    if (Dos == Niveles.Length)
-                        WDos = false;
-
+                    if (Uno == Orden.Length)
+                        WUno = false;
                 }
-
-                ++Uno;
-
-                if (Uno == Orden.Length)
-                    WUno = false;
             }
 
             //RETORNAR EL OBJETO

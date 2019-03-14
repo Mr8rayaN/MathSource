@@ -61,7 +61,7 @@ namespace ALGEBRA
         {
             foreach (var elemento in Monomio.Elementos)
             {
-                if (elemento.Result.Contains(SimboloExtendido))
+                if (elemento.Base.Contains(Simbolo))
                 {
                     return true;
                 }

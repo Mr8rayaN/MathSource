@@ -179,7 +179,10 @@ namespace DERIVADAS
             //SI ANIDO CS<SEN<X>> POR ORDEN LO TOMA COMO SI LA FUNCION FUERA UN SENO CUANDO EN REALIZAD ES UN COSENO
 
             Interino = new Senos();
-            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
+            bool G = Interino.ContainsThisFuntion(MONO); //OK
+            bool A = DProceso.IsFirstFuncion(MONO, Interino);
+
+            if ( G & A )
             {
                 return new Derivadas(new Senos(MONO.Result), Var).Result;
             }
@@ -200,7 +203,9 @@ namespace DERIVADAS
 
 
             Interino = new Eulers();
-            if (Interino.ContainsThisFuntion(MONO) & DProceso.IsFirstFuncion(MONO, Interino))
+            bool K = Interino.ContainsThisFuntion(MONO);
+            bool H = DProceso.IsFirstFuncion(MONO, Interino);
+            if ( K & H )
             {
                 return new Derivadas(new Eulers(MONO.Result), Var).Result;
             }
@@ -213,7 +218,7 @@ namespace DERIVADAS
             }
 
 
-            return new Derivadas(MONO, Var).Result;
+             return new Derivadas(MONO, Var).Result;
         }
 
         public override string ToString()

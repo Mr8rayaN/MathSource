@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TESTER.TestOpsNumericas</StartupObject>
+    <StartupObject>TESTER.TestDerivadas</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
