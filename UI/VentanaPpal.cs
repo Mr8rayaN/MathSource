@@ -27,6 +27,7 @@ namespace UI
         public VentanaPpal()
         {
             InitializeComponent();
+            PnVisibilidadMax.Hide();
             PnSubRegistros.Hide();
             PMenu = new Panel();
         }
@@ -311,6 +312,35 @@ namespace UI
         private void PanelOpcionSeis_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void PanelGeneral_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void MaximizarVisibilidad(object sender, EventArgs e)
+        {
+            PnVisibilidadMin.Hide();
+            PnVisibilidadMax.Show();
+        }
+
+        private void MinimizarVisibilidad(object sender, EventArgs e)
+        {
+            PnVisibilidadMax.Hide();
+            PnVisibilidadMin.Show();
+        }
+
+        //SOLUCIONAR ESTE PROBLEMA
+        private void LeaveMaximizado(object sender, EventArgs e)
+        {
+            Pnl = (Panel)sender;
+            Form j = this;
+            if(!GetContainerControl().Equals(sender))
+            {
+                MinimizarVisibilidad(Pnl, EventArgs.Empty);
+            }
+            
         }
     }
 }

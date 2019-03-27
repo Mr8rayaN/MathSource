@@ -34,10 +34,10 @@
             this.funcionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pasosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.pasosBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.entradaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salidaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pasosBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pasosBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pasosBindingSource)).BeginInit();
@@ -86,10 +86,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(545, 426);
             this.dataGridView1.TabIndex = 3;
             // 
-            // pasosBindingSource2
-            // 
-            this.pasosBindingSource2.DataSource = typeof(ENTITY.Pasos);
-            // 
             // nombreDataGridViewTextBoxColumn
             // 
             this.nombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre";
@@ -113,11 +109,15 @@
             this.salidaDataGridViewTextBoxColumn.ReadOnly = true;
             this.salidaDataGridViewTextBoxColumn.Width = 200;
             // 
+            // pasosBindingSource2
+            // 
+            this.pasosBindingSource2.DataSource = typeof(ENTITY.Pasos);
+            // 
             // OpcionDos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(917, 450);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.LbTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

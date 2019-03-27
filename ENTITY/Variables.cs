@@ -32,6 +32,7 @@ namespace ENTITY
             this.Contenido = Contenido;
             this.Operable = Operable;
         }
+
         public override string ToString()
         {
             return $"  VARIABLE {Nombre}; ETIQUETA {Etiqueta}; CONTENIDO {Contenido.ToString()}  ";
