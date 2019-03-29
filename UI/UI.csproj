@@ -188,5 +188,8 @@
       <Name>ENTITY</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\VisibilidadMenu 25x25.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

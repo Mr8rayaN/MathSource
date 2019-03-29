@@ -27,10 +27,15 @@ namespace UI
         public VentanaPpal()
         {
             InitializeComponent();
-            PnSubRegistros.Hide();
+            ControlsHide();
             PMenu = new Panel();
         }
 
+        private void ControlsHide()
+        {
+            PnSubRegistros.Hide();
+            PnVisibilidadMax.Hide();
+        }
         private void PBoxDimensionSize (object sender, EventArgs e)
         {
             PBox = (PictureBox)sender;
@@ -311,6 +316,20 @@ namespace UI
         private void PanelOpcionSeis_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void AlterVisibilidad(object sender, EventArgs e)
+        {
+            if(PnVisibilidadMin.Visible == true)
+            {
+                PnVisibilidadMin.Hide();
+                PnVisibilidadMax.Show();
+            }
+            else
+            {
+                PnVisibilidadMax.Hide();
+                PnVisibilidadMin.Show();
+            }
         }
     }
 }

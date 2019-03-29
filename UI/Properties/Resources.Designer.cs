@@ -229,5 +229,15 @@ namespace UI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VisibilidadMenu_25x25 {
+            get {
+                object obj = ResourceManager.GetObject("VisibilidadMenu 25x25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
