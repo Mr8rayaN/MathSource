@@ -19,7 +19,6 @@ namespace UI
         public OpcionCuatro()
         {
             InitializeComponent();
-            LlenarDataGriew();
         }
 
         public OpcionCuatro(Form Padre, Panel Contenedor, Service BLL)
@@ -33,7 +32,7 @@ namespace UI
 
         private void LlenarDataGriew()
         {
-            dataGridView1.DataSource = BLL.ConsultarFunciones();
+            dataGridView1.DataSource = BLL.ConsultarResultados();
         }
     }
 }
