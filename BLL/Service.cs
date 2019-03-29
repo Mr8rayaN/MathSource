@@ -28,9 +28,9 @@ namespace BLL
         AMathOps Op { get; set;  }
         Derivadas Derivada { get; set; }
         Variables Var { get; set; }
-        public Pasos Paso = new Pasos();
-        public Funciones Funcion = new Funciones();
-        public Resultados Resultado = new Resultados();
+        Pasos Paso { get; set; }
+        Funciones Funcion { get; set; }
+        public Resultados Resultado { get; set; }
         Polinomios Polinomio { get; set; }
         List<Variables> LVariables { get; set; }
         List<Estados> LEstados { get; set; }
@@ -53,9 +53,7 @@ namespace BLL
         {
             try
             {
-                if (Conexion.State != System.Data.ConnectionState.Open)
-                    Conexion.Open();
-
+                Conexion.Open();
                 Respuesta = DAL.GuardarFuncion(F);
                 Conexion.Close();
             }
@@ -71,9 +69,7 @@ namespace BLL
         {
             try
             {
-                if (Conexion.State != System.Data.ConnectionState.Open)
-                    Conexion.Open();
-
+                Conexion.Open();
                 Respuesta = DAL.GuardarResultado(R);
                 Conexion.Close();
             }
@@ -90,9 +86,7 @@ namespace BLL
             Respuesta = "";
             try
             {
-                if (Conexion.State != System.Data.ConnectionState.Open)
-                    Conexion.Open();
-
+                Conexion.Open();
                 foreach (var paso in LPasos)
                 {
                     //AQUI SE GENERAN LOS PASO_ID
@@ -161,9 +155,7 @@ namespace BLL
         {
             try
             {
-                if (Conexion.State != System.Data.ConnectionState.Open)
-                    Conexion.Open();
-
+                Conexion.Open();
                 //AQUI SE GENERAN LOS PASO_ID
                 Cantidad = DAL.CantidadResultados();
                 //CREAR PASO_ID
@@ -180,9 +172,7 @@ namespace BLL
 
         public List<Estados> ConsultarEstados()
         {
-            if (Conexion.State != System.Data.ConnectionState.Open)
-                Conexion.Open();
-
+            Conexion.Open();
             LEstados = DAL.ConsultarEstados();
             Conexion.Close();
             return LEstados;
@@ -190,9 +180,7 @@ namespace BLL
 
         public List<Funciones> ConsultarFunciones()
         {
-            if(Conexion.State != System.Data.ConnectionState.Open)
-                Conexion.Open();
-
+            Conexion.Open();
             LFunciones = DAL.ConsultarFunciones();
             Conexion.Close();
 
@@ -201,9 +189,7 @@ namespace BLL
 
         public List<Resultados> ConsultarResultados()
         {
-            if (Conexion.State != System.Data.ConnectionState.Open)
-                Conexion.Open();
-
+            Conexion.Open();
             LResultados = DAL.ConsultarResultados();
             Conexion.Close();
 
@@ -212,9 +198,7 @@ namespace BLL
 
         public List<Pasos> ConsultarPasos()
         {
-            if (Conexion.State != System.Data.ConnectionState.Open)
-                Conexion.Open();
-
+            Conexion.Open();
             LPasos = DAL.ConsultarPasos();
             Conexion.Close();
 

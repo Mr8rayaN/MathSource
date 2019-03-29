@@ -34,10 +34,10 @@
             this.funcionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pasosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.pasosBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.entradaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salidaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pasosBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pasosBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pasosBindingSource)).BeginInit();
@@ -48,12 +48,11 @@
             // LbTitulo
             // 
             this.LbTitulo.AutoSize = true;
-            this.LbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LbTitulo.Location = new System.Drawing.Point(673, 12);
+            this.LbTitulo.Location = new System.Drawing.Point(87, 61);
             this.LbTitulo.Name = "LbTitulo";
-            this.LbTitulo.Size = new System.Drawing.Size(143, 24);
+            this.LbTitulo.Size = new System.Drawing.Size(36, 13);
             this.LbTitulo.TabIndex = 2;
-            this.LbTitulo.Text = " Pasos Actuales";
+            this.LbTitulo.Text = "Pasos";
             // 
             // pasosBindingSource1
             // 
@@ -71,8 +70,6 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -80,15 +77,11 @@
             this.entradaDataGridViewTextBoxColumn,
             this.salidaDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.pasosBindingSource2;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(90, 95);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(545, 426);
+            this.dataGridView1.Size = new System.Drawing.Size(644, 317);
             this.dataGridView1.TabIndex = 3;
-            // 
-            // pasosBindingSource2
-            // 
-            this.pasosBindingSource2.DataSource = typeof(ENTITY.Pasos);
             // 
             // nombreDataGridViewTextBoxColumn
             // 
@@ -96,6 +89,7 @@
             this.nombreDataGridViewTextBoxColumn.HeaderText = "Nombre";
             this.nombreDataGridViewTextBoxColumn.Name = "nombreDataGridViewTextBoxColumn";
             this.nombreDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nombreDataGridViewTextBoxColumn.Width = 200;
             // 
             // entradaDataGridViewTextBoxColumn
             // 
@@ -113,11 +107,15 @@
             this.salidaDataGridViewTextBoxColumn.ReadOnly = true;
             this.salidaDataGridViewTextBoxColumn.Width = 200;
             // 
+            // pasosBindingSource2
+            // 
+            this.pasosBindingSource2.DataSource = typeof(ENTITY.Pasos);
+            // 
             // OpcionDos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(917, 450);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.LbTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -139,9 +137,9 @@
         private System.Windows.Forms.Label LbTitulo;
         private System.Windows.Forms.BindingSource pasosBindingSource1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.BindingSource pasosBindingSource2;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn entradaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn salidaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource pasosBindingSource2;
     }
 }

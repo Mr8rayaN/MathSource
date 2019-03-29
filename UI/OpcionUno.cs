@@ -95,17 +95,7 @@ namespace UI
         {
             if (ValidarSave())
             {
-                try
-                {
-                    BLL.GuardarFuncion(BLL.Funcion);
-                    BLL.GuardarPasos(BLL.LPasos);
-                    BLL.GuardarResultado(BLL.Resultado);
-                    MessageBox.Show("Almacenado Satisfactoriamente", "Mira", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception M)
-                {
-                    MessageBox.Show($"Algo ha ocurrido, no se ha Almacenado\n Erro : {M.Message}", "Mira", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+
             }
             else
                 MostrarCompletar();
