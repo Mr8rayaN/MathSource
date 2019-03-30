@@ -33,7 +33,7 @@ namespace UI
 
         private void ControlsHide()
         {
-            PnSubRegistros.Hide();
+            PnSubMaxRegistros.Hide();
             PnVisibilidadMax.Hide();
         }
         private void PBoxDimensionSize (object sender, EventArgs e)
@@ -107,20 +107,20 @@ namespace UI
                 {
                     Label Lbl = (Label)item;
                     Lbl.ForeColor = Color.Black;
-                    Lbl.Font = new Font(Lbl.Font,FontStyle.Bold);
+                    Lbl.Font = new Font(Lbl.Font,FontStyle.Italic);
                     break;
                 }
             }
 
-            foreach (var item in Sender.Controls)
-            {
-                if (item.GetType().ToString().Contains("PictureBox"))
-                {
-                    PictureBox PB = (PictureBox)item;
-                    PB.Show();
-                    break;
-                }
-            }
+            if (Sender.Name.Contains("Entrada"))
+                PBoxEntrada.BackColor = Sender.BackColor;
+
+            else if (Sender.Name.Contains("Paso"))
+                PBoxPaso.BackColor = Sender.BackColor;
+
+            else if (Sender.Name.Contains("Registro"))
+                PBoxRegistro.BackColor = Sender.BackColor;
+
         }
 
         private void NoSeleccion(object sender, EventArgs e)
@@ -135,22 +135,19 @@ namespace UI
                 {
                     Label Lbl = (Label)item;
                     Lbl.ForeColor = Color.White;
-                    Lbl.Font = new Font(Lbl.Font, FontStyle.Regular);
+                    Lbl.Font = new Font(Lbl.Font, FontStyle.Italic);
                     break;
                 }
             }
 
-            foreach (var item in Sender.Controls)
-            {
-                if (item.GetType().ToString().Contains("PictureBox"))
-                {
-                    PictureBox PB = (PictureBox)item;
-                    PB.Hide();
-                    break;
-                }
-            }
+            if (Sender.Name.Contains("Entrada"))
+                PBoxEntrada.BackColor = PanelGeneral.BackColor;
 
-            
+            else if (Sender.Name.Contains("Paso"))
+                PBoxPaso.BackColor = PanelGeneral.BackColor;
+
+            else if (Sender.Name.Contains("Registro"))
+                PBoxRegistro.BackColor = PanelGeneral.BackColor;
         }
         
         private void ArrastrarVentana(object sender, MouseEventArgs e)
@@ -169,20 +166,38 @@ namespace UI
 
         private void ControlsOpcionesHover(object sender, EventArgs e)
         {
+            //Pintar el contenedor
             Ctl = (Control)sender;
-            Preseleccion(Ctl.Parent, EventArgs.Empty);
+            if (Ctl.Parent.Parent.Name.Contains("Max"))
+                Preseleccion(Ctl.Parent, EventArgs.Empty);
+
+            else
+                Ctl.BackColor = PanelGeneral.BackColor;
+
         }
 
         private void ControlsOpcionesLeave(object sender, EventArgs e)
         {
+            //Pintar el contenedor
             Ctl = (Control)sender;
-            NoSeleccion(Ctl.Parent, EventArgs.Empty);
+            if (Ctl.Parent.Parent.Name.Contains("Max"))
+                NoSeleccion(Ctl.Parent, EventArgs.Empty);
+
+            else
+                Ctl.BackColor = Color.FromArgb(24, 24, 24);
         }
 
         private void ControlOpcionesClick(object sender, EventArgs e)
         {
+            //Pintar el contenedor
             Ctl = (Control)sender;
-            OpcionesClick(Ctl.Parent, EventArgs.Empty);
+            if(Ctl.Parent.Parent.Name.Contains("Max"))
+                OpcionesClick(Ctl.Parent, EventArgs.Empty);
+
+            else
+            {
+
+            }
         }
 
         private void OpcionesClick(object sender, EventArgs e)
@@ -227,19 +242,19 @@ namespace UI
                 }
                 else if (Pnl.Name.Contains("Entrada"))
                 {
-                    PnSubRegistros.Hide();
+                    PnSubMaxRegistros.Hide();
                     Ventana = new OpcionUno(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Paso"))
                 {
-                    PnSubRegistros.Hide();
+                    PnSubMaxRegistros.Hide();
                     Ventana = new OpcionDos(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Registro"))
                 {
-                    PnSubRegistros.Show();
+                    PnSubMaxRegistros.Show();
                 }                
 
             }
@@ -318,17 +333,24 @@ namespace UI
 
         }
 
+        private void PintarBoxMinimizados(Color color)
+        {
+            PBoxEntrada.BackColor = color;
+            PBoxPaso.BackColor = color;
+            PBoxRegistro.BackColor = color;
+        }
+
         private void AlterVisibilidad(object sender, EventArgs e)
         {
-            if(PnVisibilidadMin.Visible == true)
+            if(PnVisibilidadMax.Visible == true)
             {
-                PnVisibilidadMin.Hide();
-                PnVisibilidadMax.Show();
+                PintarBoxMinimizados(Color.FromArgb(24, 24, 24));
+                PnVisibilidadMax.Hide();
             }
             else
             {
-                PnVisibilidadMax.Hide();
-                PnVisibilidadMin.Show();
+                PintarBoxMinimizados(PanelGeneral.BackColor);
+                PnVisibilidadMax.Show();
             }
         }
     }

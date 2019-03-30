@@ -31,7 +31,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VentanaPpal));
             this.PnVisibilidadMax = new System.Windows.Forms.Panel();
-            this.PnSubRegistros = new System.Windows.Forms.Panel();
+            this.PnSubMaxRegistros = new System.Windows.Forms.Panel();
             this.PnSubEntrada = new System.Windows.Forms.Panel();
             this.LblOpciopnCuatro = new System.Windows.Forms.Label();
             this.PnSubPaso = new System.Windows.Forms.Panel();
@@ -47,21 +47,20 @@
             this.PanelTitulo = new System.Windows.Forms.Panel();
             this.PanelGeneral = new System.Windows.Forms.Panel();
             this.PnVisibilidadMin = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.PBVisibilidad = new System.Windows.Forms.PictureBox();
+            this.PBoxPaso = new System.Windows.Forms.PictureBox();
+            this.PBoxRegistro = new System.Windows.Forms.PictureBox();
+            this.PBoxEntrada = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.PBoxIcono = new System.Windows.Forms.PictureBox();
             this.PBoxBMaximizar = new System.Windows.Forms.PictureBox();
             this.PBoxBMinimizar = new System.Windows.Forms.PictureBox();
             this.PBoxBCerrar = new System.Windows.Forms.PictureBox();
-            this.PBoxSeleccionCuatro = new System.Windows.Forms.PictureBox();
-            this.PBoxSeleccionCinco = new System.Windows.Forms.PictureBox();
-            this.PBoxSeleccionSeis = new System.Windows.Forms.PictureBox();
-            this.PBoxSeleccionDos = new System.Windows.Forms.PictureBox();
             this.PBoxGeneral = new System.Windows.Forms.PictureBox();
-            this.PBoxSeleccionTres = new System.Windows.Forms.PictureBox();
-            this.PBoxSeleccionUno = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.PnVisibilidadMax.SuspendLayout();
-            this.PnSubRegistros.SuspendLayout();
+            this.PnSubMaxRegistros.SuspendLayout();
             this.PnSubEntrada.SuspendLayout();
             this.PnSubPaso.SuspendLayout();
             this.PnSubSalida.SuspendLayout();
@@ -69,19 +68,19 @@
             this.PnRegistros.SuspendLayout();
             this.PnEntradas.SuspendLayout();
             this.PanelTitulo.SuspendLayout();
+            this.PanelGeneral.SuspendLayout();
+            this.PnVisibilidadMin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBVisibilidad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBoxPaso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBoxRegistro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBoxEntrada)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxIcono)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBMaximizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBCerrar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionCuatro)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionCinco)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionSeis)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionDos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxGeneral)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionTres)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionUno)).BeginInit();
             this.SuspendLayout();
             // 
             // PnVisibilidadMax
@@ -89,40 +88,41 @@
             this.PnVisibilidadMax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PnVisibilidadMax.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.PnVisibilidadMax.Controls.Add(this.PnSubRegistros);
+            this.PnVisibilidadMax.Controls.Add(this.PnSubMaxRegistros);
             this.PnVisibilidadMax.Controls.Add(this.PnPasos);
             this.PnVisibilidadMax.Controls.Add(this.PBoxGeneral);
             this.PnVisibilidadMax.Controls.Add(this.PnRegistros);
             this.PnVisibilidadMax.Controls.Add(this.PnEntradas);
-            this.PnVisibilidadMax.Location = new System.Drawing.Point(1, 25);
+            this.PnVisibilidadMax.Location = new System.Drawing.Point(35, 25);
             this.PnVisibilidadMax.Name = "PnVisibilidadMax";
             this.PnVisibilidadMax.Size = new System.Drawing.Size(303, 588);
             this.PnVisibilidadMax.TabIndex = 0;
             this.PnVisibilidadMax.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelMenu_Paint);
             // 
-            // PnSubRegistros
+            // PnSubMaxRegistros
             // 
-            this.PnSubRegistros.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.PnSubRegistros.Controls.Add(this.PnSubEntrada);
-            this.PnSubRegistros.Controls.Add(this.PnSubPaso);
-            this.PnSubRegistros.Controls.Add(this.PnSubSalida);
-            this.PnSubRegistros.Location = new System.Drawing.Point(0, 394);
-            this.PnSubRegistros.Name = "PnSubRegistros";
-            this.PnSubRegistros.Size = new System.Drawing.Size(303, 187);
-            this.PnSubRegistros.TabIndex = 8;
-            this.PnSubRegistros.Paint += new System.Windows.Forms.PaintEventHandler(this.PnSubRegistros_Paint);
+            this.PnSubMaxRegistros.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PnSubMaxRegistros.Controls.Add(this.PnSubEntrada);
+            this.PnSubMaxRegistros.Controls.Add(this.PnSubPaso);
+            this.PnSubMaxRegistros.Controls.Add(this.PnSubSalida);
+            this.PnSubMaxRegistros.Location = new System.Drawing.Point(0, 394);
+            this.PnSubMaxRegistros.Name = "PnSubMaxRegistros";
+            this.PnSubMaxRegistros.Size = new System.Drawing.Size(303, 187);
+            this.PnSubMaxRegistros.TabIndex = 8;
+            this.PnSubMaxRegistros.Visible = false;
+            this.PnSubMaxRegistros.Paint += new System.Windows.Forms.PaintEventHandler(this.PnSubRegistros_Paint);
             // 
             // PnSubEntrada
             // 
-            this.PnSubEntrada.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PnSubEntrada.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.PnSubEntrada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PnSubEntrada.Controls.Add(this.LblOpciopnCuatro);
-            this.PnSubEntrada.Controls.Add(this.PBoxSeleccionCuatro);
             this.PnSubEntrada.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PnSubEntrada.ForeColor = System.Drawing.Color.White;
-            this.PnSubEntrada.Location = new System.Drawing.Point(16, 12);
+            this.PnSubEntrada.Location = new System.Drawing.Point(0, 12);
             this.PnSubEntrada.Name = "PnSubEntrada";
-            this.PnSubEntrada.Size = new System.Drawing.Size(285, 45);
+            this.PnSubEntrada.Size = new System.Drawing.Size(303, 45);
             this.PnSubEntrada.TabIndex = 4;
             this.PnSubEntrada.Click += new System.EventHandler(this.OpcionesClick);
             this.PnSubEntrada.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelOpcionCuatro_Paint);
@@ -132,9 +132,10 @@
             // LblOpciopnCuatro
             // 
             this.LblOpciopnCuatro.AutoSize = true;
-            this.LblOpciopnCuatro.Location = new System.Drawing.Point(116, 16);
+            this.LblOpciopnCuatro.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOpciopnCuatro.Location = new System.Drawing.Point(106, 11);
             this.LblOpciopnCuatro.Name = "LblOpciopnCuatro";
-            this.LblOpciopnCuatro.Size = new System.Drawing.Size(49, 13);
+            this.LblOpciopnCuatro.Size = new System.Drawing.Size(77, 23);
             this.LblOpciopnCuatro.TabIndex = 12;
             this.LblOpciopnCuatro.Text = "Entradas";
             this.LblOpciopnCuatro.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -142,15 +143,15 @@
             // 
             // PnSubPaso
             // 
-            this.PnSubPaso.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PnSubPaso.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.PnSubPaso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PnSubPaso.Controls.Add(this.LblOpciopnCinco);
-            this.PnSubPaso.Controls.Add(this.PBoxSeleccionCinco);
             this.PnSubPaso.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PnSubPaso.ForeColor = System.Drawing.Color.White;
-            this.PnSubPaso.Location = new System.Drawing.Point(16, 67);
+            this.PnSubPaso.Location = new System.Drawing.Point(0, 67);
             this.PnSubPaso.Name = "PnSubPaso";
-            this.PnSubPaso.Size = new System.Drawing.Size(285, 45);
+            this.PnSubPaso.Size = new System.Drawing.Size(303, 45);
             this.PnSubPaso.TabIndex = 5;
             this.PnSubPaso.Click += new System.EventHandler(this.OpcionesClick);
             this.PnSubPaso.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelOpcionCinco_Paint);
@@ -160,9 +161,10 @@
             // LblOpciopnCinco
             // 
             this.LblOpciopnCinco.AutoSize = true;
-            this.LblOpciopnCinco.Location = new System.Drawing.Point(116, 17);
+            this.LblOpciopnCinco.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOpciopnCinco.Location = new System.Drawing.Point(106, 11);
             this.LblOpciopnCinco.Name = "LblOpciopnCinco";
-            this.LblOpciopnCinco.Size = new System.Drawing.Size(36, 13);
+            this.LblOpciopnCinco.Size = new System.Drawing.Size(50, 23);
             this.LblOpciopnCinco.TabIndex = 13;
             this.LblOpciopnCinco.Text = "Pasos";
             this.LblOpciopnCinco.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -170,14 +172,14 @@
             // 
             // PnSubSalida
             // 
-            this.PnSubSalida.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PnSubSalida.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.PnSubSalida.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PnSubSalida.Controls.Add(this.LblOpciopnSeis);
-            this.PnSubSalida.Controls.Add(this.PBoxSeleccionSeis);
             this.PnSubSalida.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PnSubSalida.Location = new System.Drawing.Point(16, 122);
+            this.PnSubSalida.Location = new System.Drawing.Point(0, 122);
             this.PnSubSalida.Name = "PnSubSalida";
-            this.PnSubSalida.Size = new System.Drawing.Size(285, 45);
+            this.PnSubSalida.Size = new System.Drawing.Size(303, 45);
             this.PnSubSalida.TabIndex = 6;
             this.PnSubSalida.Click += new System.EventHandler(this.OpcionesClick);
             this.PnSubSalida.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelOpcionSeis_Paint);
@@ -187,10 +189,11 @@
             // LblOpciopnSeis
             // 
             this.LblOpciopnSeis.AutoSize = true;
+            this.LblOpciopnSeis.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblOpciopnSeis.ForeColor = System.Drawing.Color.White;
-            this.LblOpciopnSeis.Location = new System.Drawing.Point(116, 16);
+            this.LblOpciopnSeis.Location = new System.Drawing.Point(106, 11);
             this.LblOpciopnSeis.Name = "LblOpciopnSeis";
-            this.LblOpciopnSeis.Size = new System.Drawing.Size(41, 13);
+            this.LblOpciopnSeis.Size = new System.Drawing.Size(62, 23);
             this.LblOpciopnSeis.TabIndex = 14;
             this.LblOpciopnSeis.Text = "Salidas";
             this.LblOpciopnSeis.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -200,7 +203,6 @@
             // 
             this.PnPasos.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PnPasos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.PnPasos.Controls.Add(this.PBoxSeleccionDos);
             this.PnPasos.Controls.Add(this.LblOpciopnDos);
             this.PnPasos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PnPasos.ForeColor = System.Drawing.Color.White;
@@ -216,9 +218,10 @@
             // LblOpciopnDos
             // 
             this.LblOpciopnDos.AutoSize = true;
-            this.LblOpciopnDos.Location = new System.Drawing.Point(106, 16);
+            this.LblOpciopnDos.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOpciopnDos.Location = new System.Drawing.Point(106, 11);
             this.LblOpciopnDos.Name = "LblOpciopnDos";
-            this.LblOpciopnDos.Size = new System.Drawing.Size(36, 13);
+            this.LblOpciopnDos.Size = new System.Drawing.Size(50, 23);
             this.LblOpciopnDos.TabIndex = 10;
             this.LblOpciopnDos.Text = "Pasos";
             this.LblOpciopnDos.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -229,7 +232,6 @@
             this.PnRegistros.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PnRegistros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PnRegistros.Controls.Add(this.LblOpciopnTres);
-            this.PnRegistros.Controls.Add(this.PBoxSeleccionTres);
             this.PnRegistros.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PnRegistros.ForeColor = System.Drawing.Color.White;
             this.PnRegistros.Location = new System.Drawing.Point(0, 350);
@@ -243,9 +245,10 @@
             // LblOpciopnTres
             // 
             this.LblOpciopnTres.AutoSize = true;
-            this.LblOpciopnTres.Location = new System.Drawing.Point(106, 16);
+            this.LblOpciopnTres.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOpciopnTres.Location = new System.Drawing.Point(106, 11);
             this.LblOpciopnTres.Name = "LblOpciopnTres";
-            this.LblOpciopnTres.Size = new System.Drawing.Size(51, 13);
+            this.LblOpciopnTres.Size = new System.Drawing.Size(82, 23);
             this.LblOpciopnTres.TabIndex = 11;
             this.LblOpciopnTres.Text = "Registros";
             this.LblOpciopnTres.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -256,7 +259,6 @@
             this.PnEntradas.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PnEntradas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PnEntradas.Controls.Add(this.LblOpciopnUno);
-            this.PnEntradas.Controls.Add(this.PBoxSeleccionUno);
             this.PnEntradas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PnEntradas.Location = new System.Drawing.Point(0, 240);
             this.PnEntradas.Name = "PnEntradas";
@@ -270,12 +272,12 @@
             // 
             this.LblOpciopnUno.AutoSize = true;
             this.LblOpciopnUno.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblOpciopnUno.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOpciopnUno.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblOpciopnUno.ForeColor = System.Drawing.Color.White;
-            this.LblOpciopnUno.Location = new System.Drawing.Point(106, 15);
+            this.LblOpciopnUno.Location = new System.Drawing.Point(106, 11);
             this.LblOpciopnUno.Name = "LblOpciopnUno";
             this.LblOpciopnUno.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.LblOpciopnUno.Size = new System.Drawing.Size(44, 13);
+            this.LblOpciopnUno.Size = new System.Drawing.Size(69, 23);
             this.LblOpciopnUno.TabIndex = 9;
             this.LblOpciopnUno.Text = "Entrada";
             this.LblOpciopnUno.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -304,6 +306,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelGeneral.BackColor = System.Drawing.Color.DimGray;
+            this.PanelGeneral.Controls.Add(this.label1);
+            this.PanelGeneral.Controls.Add(this.pictureBox2);
             this.PanelGeneral.Cursor = System.Windows.Forms.Cursors.Default;
             this.PanelGeneral.Location = new System.Drawing.Point(35, 25);
             this.PanelGeneral.Name = "PanelGeneral";
@@ -312,22 +316,86 @@
             // 
             // PnVisibilidadMin
             // 
+            this.PnVisibilidadMin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.PnVisibilidadMin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.PnVisibilidadMin.Controls.Add(this.PBoxPaso);
+            this.PnVisibilidadMin.Controls.Add(this.PBoxRegistro);
+            this.PnVisibilidadMin.Controls.Add(this.PBoxEntrada);
             this.PnVisibilidadMin.Location = new System.Drawing.Point(0, 25);
             this.PnVisibilidadMin.Name = "PnVisibilidadMin";
-            this.PnVisibilidadMin.Size = new System.Drawing.Size(37, 588);
+            this.PnVisibilidadMin.Size = new System.Drawing.Size(35, 588);
             this.PnVisibilidadMin.TabIndex = 0;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.pictureBox2.Image = global::UI.Properties.Resources.Logo_400x4001;
+            this.pictureBox2.Location = new System.Drawing.Point(457, 73);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
             // 
             // PBVisibilidad
             // 
+            this.PBVisibilidad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.PBVisibilidad.Image = global::UI.Properties.Resources.VisibilidadMenu_25x25;
-            this.PBVisibilidad.Location = new System.Drawing.Point(1, 31);
+            this.PBVisibilidad.Location = new System.Drawing.Point(0, 31);
             this.PBVisibilidad.Name = "PBVisibilidad";
             this.PBVisibilidad.Size = new System.Drawing.Size(35, 35);
             this.PBVisibilidad.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PBVisibilidad.TabIndex = 0;
             this.PBVisibilidad.TabStop = false;
             this.PBVisibilidad.Click += new System.EventHandler(this.AlterVisibilidad);
+            // 
+            // PBoxPaso
+            // 
+            this.PBoxPaso.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PBoxPaso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            this.PBoxPaso.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PBoxPaso.Image = global::UI.Properties.Resources.Flecha_Menu;
+            this.PBoxPaso.Location = new System.Drawing.Point(0, 295);
+            this.PBoxPaso.Name = "PBoxPaso";
+            this.PBoxPaso.Size = new System.Drawing.Size(35, 45);
+            this.PBoxPaso.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBoxPaso.TabIndex = 9;
+            this.PBoxPaso.TabStop = false;
+            this.PBoxPaso.Click += new System.EventHandler(this.ControlOpcionesClick);
+            this.PBoxPaso.MouseLeave += new System.EventHandler(this.ControlsOpcionesLeave);
+            this.PBoxPaso.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
+            // 
+            // PBoxRegistro
+            // 
+            this.PBoxRegistro.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PBoxRegistro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            this.PBoxRegistro.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PBoxRegistro.Image = global::UI.Properties.Resources.Flecha_Menu;
+            this.PBoxRegistro.Location = new System.Drawing.Point(0, 350);
+            this.PBoxRegistro.Name = "PBoxRegistro";
+            this.PBoxRegistro.Size = new System.Drawing.Size(35, 45);
+            this.PBoxRegistro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBoxRegistro.TabIndex = 10;
+            this.PBoxRegistro.TabStop = false;
+            this.PBoxRegistro.Click += new System.EventHandler(this.ControlOpcionesClick);
+            this.PBoxRegistro.MouseLeave += new System.EventHandler(this.ControlsOpcionesLeave);
+            this.PBoxRegistro.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
+            // 
+            // PBoxEntrada
+            // 
+            this.PBoxEntrada.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.PBoxEntrada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            this.PBoxEntrada.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PBoxEntrada.Image = global::UI.Properties.Resources.Flecha_Menu;
+            this.PBoxEntrada.Location = new System.Drawing.Point(0, 240);
+            this.PBoxEntrada.Name = "PBoxEntrada";
+            this.PBoxEntrada.Size = new System.Drawing.Size(35, 45);
+            this.PBoxEntrada.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBoxEntrada.TabIndex = 8;
+            this.PBoxEntrada.TabStop = false;
+            this.PBoxEntrada.Click += new System.EventHandler(this.ControlOpcionesClick);
+            this.PBoxEntrada.MouseLeave += new System.EventHandler(this.ControlsOpcionesLeave);
+            this.PBoxEntrada.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
             // 
             // pictureBox1
             // 
@@ -392,96 +460,29 @@
             this.PBoxBCerrar.MouseLeave += new System.EventHandler(this.DimensionNoSeleccion);
             this.PBoxBCerrar.MouseHover += new System.EventHandler(this.DimensionPreseleccion);
             // 
-            // PBoxSeleccionCuatro
-            // 
-            this.PBoxSeleccionCuatro.Image = global::UI.Properties.Resources.Flecha_Menu;
-            this.PBoxSeleccionCuatro.Location = new System.Drawing.Point(1, 0);
-            this.PBoxSeleccionCuatro.Name = "PBoxSeleccionCuatro";
-            this.PBoxSeleccionCuatro.Size = new System.Drawing.Size(45, 45);
-            this.PBoxSeleccionCuatro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBoxSeleccionCuatro.TabIndex = 11;
-            this.PBoxSeleccionCuatro.TabStop = false;
-            this.PBoxSeleccionCuatro.Visible = false;
-            this.PBoxSeleccionCuatro.Click += new System.EventHandler(this.ControlOpcionesClick);
-            this.PBoxSeleccionCuatro.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
-            // 
-            // PBoxSeleccionCinco
-            // 
-            this.PBoxSeleccionCinco.Image = global::UI.Properties.Resources.Flecha_Menu;
-            this.PBoxSeleccionCinco.Location = new System.Drawing.Point(1, 0);
-            this.PBoxSeleccionCinco.Name = "PBoxSeleccionCinco";
-            this.PBoxSeleccionCinco.Size = new System.Drawing.Size(45, 45);
-            this.PBoxSeleccionCinco.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBoxSeleccionCinco.TabIndex = 12;
-            this.PBoxSeleccionCinco.TabStop = false;
-            this.PBoxSeleccionCinco.Visible = false;
-            this.PBoxSeleccionCinco.Click += new System.EventHandler(this.ControlOpcionesClick);
-            this.PBoxSeleccionCinco.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
-            // 
-            // PBoxSeleccionSeis
-            // 
-            this.PBoxSeleccionSeis.Image = global::UI.Properties.Resources.Flecha_Menu;
-            this.PBoxSeleccionSeis.Location = new System.Drawing.Point(1, 0);
-            this.PBoxSeleccionSeis.Name = "PBoxSeleccionSeis";
-            this.PBoxSeleccionSeis.Size = new System.Drawing.Size(45, 45);
-            this.PBoxSeleccionSeis.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBoxSeleccionSeis.TabIndex = 13;
-            this.PBoxSeleccionSeis.TabStop = false;
-            this.PBoxSeleccionSeis.Visible = false;
-            this.PBoxSeleccionSeis.Click += new System.EventHandler(this.ControlOpcionesClick);
-            this.PBoxSeleccionSeis.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
-            // 
-            // PBoxSeleccionDos
-            // 
-            this.PBoxSeleccionDos.Image = global::UI.Properties.Resources.Flecha_Menu;
-            this.PBoxSeleccionDos.Location = new System.Drawing.Point(16, 0);
-            this.PBoxSeleccionDos.Name = "PBoxSeleccionDos";
-            this.PBoxSeleccionDos.Size = new System.Drawing.Size(45, 45);
-            this.PBoxSeleccionDos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBoxSeleccionDos.TabIndex = 9;
-            this.PBoxSeleccionDos.TabStop = false;
-            this.PBoxSeleccionDos.Visible = false;
-            this.PBoxSeleccionDos.Click += new System.EventHandler(this.ControlOpcionesClick);
-            this.PBoxSeleccionDos.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
-            // 
             // PBoxGeneral
             // 
             this.PBoxGeneral.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PBoxGeneral.BackColor = System.Drawing.Color.Transparent;
             this.PBoxGeneral.Image = global::UI.Properties.Resources.Logotipo_350x200;
-            this.PBoxGeneral.Location = new System.Drawing.Point(19, 58);
+            this.PBoxGeneral.Location = new System.Drawing.Point(17, 41);
             this.PBoxGeneral.Name = "PBoxGeneral";
             this.PBoxGeneral.Size = new System.Drawing.Size(268, 150);
             this.PBoxGeneral.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PBoxGeneral.TabIndex = 7;
             this.PBoxGeneral.TabStop = false;
             // 
-            // PBoxSeleccionTres
+            // label1
             // 
-            this.PBoxSeleccionTres.Image = global::UI.Properties.Resources.Flecha_Menu;
-            this.PBoxSeleccionTres.Location = new System.Drawing.Point(16, 0);
-            this.PBoxSeleccionTres.Name = "PBoxSeleccionTres";
-            this.PBoxSeleccionTres.Size = new System.Drawing.Size(45, 45);
-            this.PBoxSeleccionTres.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBoxSeleccionTres.TabIndex = 10;
-            this.PBoxSeleccionTres.TabStop = false;
-            this.PBoxSeleccionTres.Visible = false;
-            this.PBoxSeleccionTres.Click += new System.EventHandler(this.ControlOpcionesClick);
-            this.PBoxSeleccionTres.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
-            // 
-            // PBoxSeleccionUno
-            // 
-            this.PBoxSeleccionUno.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PBoxSeleccionUno.Image = global::UI.Properties.Resources.Flecha_Menu;
-            this.PBoxSeleccionUno.Location = new System.Drawing.Point(16, 0);
-            this.PBoxSeleccionUno.Name = "PBoxSeleccionUno";
-            this.PBoxSeleccionUno.Size = new System.Drawing.Size(45, 45);
-            this.PBoxSeleccionUno.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBoxSeleccionUno.TabIndex = 8;
-            this.PBoxSeleccionUno.TabStop = false;
-            this.PBoxSeleccionUno.Visible = false;
-            this.PBoxSeleccionUno.Click += new System.EventHandler(this.ControlOpcionesClick);
-            this.PBoxSeleccionUno.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("MV Boli", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(674, 473);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(187, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Design by Ing. Brayan D. Martinez";
             // 
             // VentanaPpal
             // 
@@ -502,7 +503,7 @@
             this.Text = "VentanaPpal";
             this.Resize += new System.EventHandler(this.ResizePrincipal);
             this.PnVisibilidadMax.ResumeLayout(false);
-            this.PnSubRegistros.ResumeLayout(false);
+            this.PnSubMaxRegistros.ResumeLayout(false);
             this.PnSubEntrada.ResumeLayout(false);
             this.PnSubEntrada.PerformLayout();
             this.PnSubPaso.ResumeLayout(false);
@@ -516,19 +517,20 @@
             this.PnEntradas.ResumeLayout(false);
             this.PnEntradas.PerformLayout();
             this.PanelTitulo.ResumeLayout(false);
+            this.PanelGeneral.ResumeLayout(false);
+            this.PanelGeneral.PerformLayout();
+            this.PnVisibilidadMin.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBVisibilidad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBoxPaso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBoxRegistro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBoxEntrada)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxIcono)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBMaximizar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBMinimizar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBCerrar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionCuatro)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionCinco)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionSeis)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionDos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxGeneral)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionTres)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PBoxSeleccionUno)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -548,12 +550,9 @@
         private System.Windows.Forms.Panel PnPasos;
         private System.Windows.Forms.Panel PnEntradas;
         private System.Windows.Forms.PictureBox PBoxGeneral;
-        private System.Windows.Forms.PictureBox PBoxSeleccionSeis;
-        private System.Windows.Forms.PictureBox PBoxSeleccionCinco;
-        private System.Windows.Forms.PictureBox PBoxSeleccionCuatro;
-        private System.Windows.Forms.PictureBox PBoxSeleccionTres;
-        private System.Windows.Forms.PictureBox PBoxSeleccionDos;
-        private System.Windows.Forms.PictureBox PBoxSeleccionUno;
+        private System.Windows.Forms.PictureBox PBoxRegistro;
+        private System.Windows.Forms.PictureBox PBoxPaso;
+        private System.Windows.Forms.PictureBox PBoxEntrada;
         private System.Windows.Forms.Label LblOpciopnSeis;
         private System.Windows.Forms.Label LblOpciopnCinco;
         private System.Windows.Forms.Label LblOpciopnCuatro;
@@ -562,8 +561,10 @@
         private System.Windows.Forms.Panel PanelGeneral;
         private System.Windows.Forms.Label LblOpciopnUno;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel PnSubRegistros;
+        private System.Windows.Forms.Panel PnSubMaxRegistros;
         private System.Windows.Forms.Panel PnVisibilidadMin;
         private System.Windows.Forms.PictureBox PBVisibilidad;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label1;
     }
 }

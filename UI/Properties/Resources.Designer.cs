@@ -153,6 +153,16 @@ namespace UI.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Logo_400x4001 {
+            get {
+                object obj = ResourceManager.GetObject("Logo 400x4001", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logotipo_175x100 {
             get {
                 object obj = ResourceManager.GetObject("Logotipo 175x100", resourceCulture);
