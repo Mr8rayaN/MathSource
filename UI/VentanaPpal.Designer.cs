@@ -46,8 +46,8 @@
             this.LblOpciopnUno = new System.Windows.Forms.Label();
             this.PanelTitulo = new System.Windows.Forms.Panel();
             this.PanelGeneral = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.PnVisibilidadMin = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.PBVisibilidad = new System.Windows.Forms.PictureBox();
             this.PBoxPaso = new System.Windows.Forms.PictureBox();
             this.PBoxRegistro = new System.Windows.Forms.PictureBox();
@@ -58,7 +58,7 @@
             this.PBoxBMinimizar = new System.Windows.Forms.PictureBox();
             this.PBoxBCerrar = new System.Windows.Forms.PictureBox();
             this.PBoxGeneral = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.PnVisibilidadMax.SuspendLayout();
             this.PnSubMaxRegistros.SuspendLayout();
             this.PnSubEntrada.SuspendLayout();
@@ -70,7 +70,6 @@
             this.PanelTitulo.SuspendLayout();
             this.PanelGeneral.SuspendLayout();
             this.PnVisibilidadMin.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBVisibilidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxPaso)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxRegistro)).BeginInit();
@@ -81,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBCerrar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxGeneral)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // PnVisibilidadMax
@@ -314,6 +314,18 @@
             this.PanelGeneral.Size = new System.Drawing.Size(1220, 588);
             this.PanelGeneral.TabIndex = 5;
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("MV Boli", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(674, 473);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(187, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Design by Ing. Brayan D. Martinez";
+            // 
             // PnVisibilidadMin
             // 
             this.PnVisibilidadMin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -326,16 +338,6 @@
             this.PnVisibilidadMin.Name = "PnVisibilidadMin";
             this.PnVisibilidadMin.Size = new System.Drawing.Size(35, 588);
             this.PnVisibilidadMin.TabIndex = 0;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.pictureBox2.Image = global::UI.Properties.Resources.Logo_400x4001;
-            this.pictureBox2.Location = new System.Drawing.Point(457, 73);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(400, 400);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
             // 
             // PBVisibilidad
             // 
@@ -354,11 +356,11 @@
             this.PBoxPaso.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PBoxPaso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PBoxPaso.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PBoxPaso.Image = global::UI.Properties.Resources.Flecha_Menu;
+            this.PBoxPaso.Image = global::UI.Properties.Resources.Pasos_25x25;
             this.PBoxPaso.Location = new System.Drawing.Point(0, 295);
             this.PBoxPaso.Name = "PBoxPaso";
             this.PBoxPaso.Size = new System.Drawing.Size(35, 45);
-            this.PBoxPaso.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBoxPaso.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PBoxPaso.TabIndex = 9;
             this.PBoxPaso.TabStop = false;
             this.PBoxPaso.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -370,11 +372,11 @@
             this.PBoxRegistro.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PBoxRegistro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PBoxRegistro.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PBoxRegistro.Image = global::UI.Properties.Resources.Flecha_Menu;
+            this.PBoxRegistro.Image = global::UI.Properties.Resources.Registro_25x25;
             this.PBoxRegistro.Location = new System.Drawing.Point(0, 350);
             this.PBoxRegistro.Name = "PBoxRegistro";
             this.PBoxRegistro.Size = new System.Drawing.Size(35, 45);
-            this.PBoxRegistro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBoxRegistro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PBoxRegistro.TabIndex = 10;
             this.PBoxRegistro.TabStop = false;
             this.PBoxRegistro.Click += new System.EventHandler(this.ControlOpcionesClick);
@@ -386,13 +388,14 @@
             this.PBoxEntrada.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PBoxEntrada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.PBoxEntrada.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PBoxEntrada.Image = global::UI.Properties.Resources.Flecha_Menu;
+            this.PBoxEntrada.Image = global::UI.Properties.Resources.Entrada_25x25;
             this.PBoxEntrada.Location = new System.Drawing.Point(0, 240);
             this.PBoxEntrada.Name = "PBoxEntrada";
             this.PBoxEntrada.Size = new System.Drawing.Size(35, 45);
-            this.PBoxEntrada.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBoxEntrada.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PBoxEntrada.TabIndex = 8;
             this.PBoxEntrada.TabStop = false;
+            this.PBoxEntrada.Tag = "";
             this.PBoxEntrada.Click += new System.EventHandler(this.ControlOpcionesClick);
             this.PBoxEntrada.MouseLeave += new System.EventHandler(this.ControlsOpcionesLeave);
             this.PBoxEntrada.MouseHover += new System.EventHandler(this.ControlsOpcionesHover);
@@ -472,17 +475,15 @@
             this.PBoxGeneral.TabIndex = 7;
             this.PBoxGeneral.TabStop = false;
             // 
-            // label1
+            // pictureBox2
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("MV Boli", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(674, 473);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Design by Ing. Brayan D. Martinez";
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.pictureBox2.Image = global::UI.Properties.Resources.Logo_400x4001;
+            this.pictureBox2.Location = new System.Drawing.Point(457, 73);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
             // 
             // VentanaPpal
             // 
@@ -520,7 +521,6 @@
             this.PanelGeneral.ResumeLayout(false);
             this.PanelGeneral.PerformLayout();
             this.PnVisibilidadMin.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBVisibilidad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxPaso)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxRegistro)).EndInit();
@@ -531,6 +531,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBMinimizar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxBCerrar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxGeneral)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }

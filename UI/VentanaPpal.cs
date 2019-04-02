@@ -17,6 +17,7 @@ namespace UI
 
         public int X_Click { get; set; }
         public int Y_Click { get; set; }
+        private ToolTip ToolTipText = new ToolTip();
         private PictureBox PBox;
         private Panel Pnl;
         private Panel PMenu;
@@ -168,11 +169,15 @@ namespace UI
         {
             //Pintar el contenedor
             Ctl = (Control)sender;
+            string Text = Ctl.Name.Replace("PBox", "");
             if (Ctl.Parent.Parent.Name.Contains("Max"))
                 Preseleccion(Ctl.Parent, EventArgs.Empty);
 
             else
+            {
                 Ctl.BackColor = PanelGeneral.BackColor;
+                ToolTipText.SetToolTip(Ctl, Text);
+            }
 
         }
 
@@ -194,9 +199,19 @@ namespace UI
             if(Ctl.Parent.Parent.Name.Contains("Max"))
                 OpcionesClick(Ctl.Parent, EventArgs.Empty);
 
-            else
+            else if(Ctl.Name.Contains("Entrada"))
             {
-
+                OpcionesClick(PnEntradas, EventArgs.Empty);
+            }
+            else if (Ctl.Name.Contains("Paso"))
+            {
+                OpcionesClick(PnPasos, EventArgs.Empty);
+            }
+            else if (Ctl.Name.Contains("Registro"))
+            {
+                PnSubMaxRegistros.Show();
+                AlterVisibilidad(Ctl, EventArgs.Empty);
+                OpcionesClick(PnRegistros, EventArgs.Empty);
             }
         }
 

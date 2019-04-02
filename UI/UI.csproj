@@ -191,5 +191,14 @@
   <ItemGroup>
     <None Include="Properties\Iconos\VisibilidadMenu 25x25.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Entrada 25x25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Pasos 25x25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Iconos\Registro 25x25.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
