@@ -242,17 +242,17 @@ namespace UI
             {
                 if (Pnl.Name.Contains("SubEntrada"))
                 {
-                    Ventana = new OpcionCuatro(this, PanelGeneral, BLL);
+                    Ventana = new OpcionTres(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("SubPaso"))
                 {
-                    Ventana = new OpcionCinco(this, PanelGeneral);
+                    Ventana = new OpcionCuatro(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("SubSalida"))
                 {
-                    Ventana = new OpcionSeis(this, PanelGeneral);
+                    Ventana = new OpcionCinco(this, PanelGeneral, BLL);
                     Abrir(Ventana);
                 }
                 else if (Pnl.Name.Contains("Entrada"))
@@ -334,11 +334,6 @@ namespace UI
         }
 
         private void PanelOpcionCuatro_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void PanelOpcionCinco_Paint(object sender, PaintEventArgs e)
         {
 
         }

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ENTITY;
+using BLL;
 
 namespace UI
 {
@@ -17,7 +19,7 @@ namespace UI
             InitializeComponent();
         }
 
-        public OpcionCinco(Form Padre, Panel Contenedor)
+        public OpcionCinco(Form Padre, Panel Contenedor, Service BLL)
         {
             InitializeComponent();
             this.BackColor = Contenedor.BackColor;
