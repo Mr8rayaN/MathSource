@@ -89,7 +89,7 @@
             this.DGVPasos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.DGVPasos.RowHeadersVisible = false;
             this.DGVPasos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DGVPasos.Size = new System.Drawing.Size(601, 317);
+            this.DGVPasos.Size = new System.Drawing.Size(598, 317);
             this.DGVPasos.TabIndex = 3;
             // 
             // nombreDataGridViewTextBoxColumn

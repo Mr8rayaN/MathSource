@@ -26,13 +26,20 @@ namespace UI
             InitializeComponent();
             this.BLL = BLL;
             this.BackColor = Contenedor.BackColor;
+            PintarControles();
             this.Size = Contenedor.Size;
             LlenarDataView();
         }
 
         private void LlenarDataView()
         {
-            dataGridView1.DataSource = BLL.ConsultarPasos();
+            DGVEntradas.DataSource = BLL.ConsultarFunciones();
         }
+
+        private void PintarControles()
+        {
+            DGVEntradas.BackgroundColor = this.BackColor;
+        }
+
     }
 }

@@ -29,94 +29,109 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.estadoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contenidoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.resultadosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.DGVPasos = new System.Windows.Forms.DataGridView();
+            this.LbTitulo = new System.Windows.Forms.Label();
+            this.pasosBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.entradaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.salidaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.resultadosBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVPasos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pasosBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // resultadosBindingSource
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.estadoDataGridViewTextBoxColumn,
-            this.idDataGridViewTextBoxColumn,
+            this.resultadosBindingSource.DataSource = typeof(ENTITY.Resultados);
+            // 
+            // DGVPasos
+            // 
+            this.DGVPasos.AllowUserToAddRows = false;
+            this.DGVPasos.AllowUserToDeleteRows = false;
+            this.DGVPasos.AutoGenerateColumns = false;
+            this.DGVPasos.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DGVPasos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.DGVPasos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.DGVPasos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.DGVPasos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nombreDataGridViewTextBoxColumn,
-            this.contenidoDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.resultadosBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(141, 156);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(444, 150);
-            this.dataGridView1.TabIndex = 0;
+            this.entradaDataGridViewTextBoxColumn,
+            this.salidaDataGridViewTextBoxColumn});
+            this.DGVPasos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DGVPasos.DataSource = this.pasosBindingSource;
+            this.DGVPasos.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DGVPasos.Location = new System.Drawing.Point(103, 94);
+            this.DGVPasos.Name = "DGVPasos";
+            this.DGVPasos.ReadOnly = true;
+            this.DGVPasos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.DGVPasos.RowHeadersVisible = false;
+            this.DGVPasos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DGVPasos.Size = new System.Drawing.Size(500, 317);
+            this.DGVPasos.TabIndex = 5;
             // 
-            // estadoDataGridViewTextBoxColumn
+            // LbTitulo
             // 
-            this.estadoDataGridViewTextBoxColumn.DataPropertyName = "Estado";
-            this.estadoDataGridViewTextBoxColumn.HeaderText = "Estado";
-            this.estadoDataGridViewTextBoxColumn.Name = "estadoDataGridViewTextBoxColumn";
+            this.LbTitulo.AutoSize = true;
+            this.LbTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LbTitulo.Location = new System.Drawing.Point(100, 40);
+            this.LbTitulo.Name = "LbTitulo";
+            this.LbTitulo.Size = new System.Drawing.Size(85, 29);
+            this.LbTitulo.TabIndex = 4;
+            this.LbTitulo.Text = "Pasos";
             // 
-            // idDataGridViewTextBoxColumn
+            // pasosBindingSource
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.pasosBindingSource.DataSource = typeof(ENTITY.Pasos);
             // 
             // nombreDataGridViewTextBoxColumn
             // 
             this.nombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre";
             this.nombreDataGridViewTextBoxColumn.HeaderText = "Nombre";
             this.nombreDataGridViewTextBoxColumn.Name = "nombreDataGridViewTextBoxColumn";
+            this.nombreDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // contenidoDataGridViewTextBoxColumn
+            // entradaDataGridViewTextBoxColumn
             // 
-            this.contenidoDataGridViewTextBoxColumn.DataPropertyName = "Contenido";
-            this.contenidoDataGridViewTextBoxColumn.HeaderText = "Contenido";
-            this.contenidoDataGridViewTextBoxColumn.Name = "contenidoDataGridViewTextBoxColumn";
+            this.entradaDataGridViewTextBoxColumn.DataPropertyName = "Entrada";
+            this.entradaDataGridViewTextBoxColumn.HeaderText = "Entrada";
+            this.entradaDataGridViewTextBoxColumn.Name = "entradaDataGridViewTextBoxColumn";
+            this.entradaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.entradaDataGridViewTextBoxColumn.Width = 200;
             // 
-            // resultadosBindingSource
+            // salidaDataGridViewTextBoxColumn
             // 
-            this.resultadosBindingSource.DataSource = typeof(ENTITY.Resultados);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(138, 110);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Resultados";
+            this.salidaDataGridViewTextBoxColumn.DataPropertyName = "Salida";
+            this.salidaDataGridViewTextBoxColumn.HeaderText = "Salida";
+            this.salidaDataGridViewTextBoxColumn.Name = "salidaDataGridViewTextBoxColumn";
+            this.salidaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.salidaDataGridViewTextBoxColumn.Width = 200;
             // 
             // OpcionCuatro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.DGVPasos);
+            this.Controls.Add(this.LbTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "OpcionCuatro";
             this.Text = "OpcionCuatro";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.resultadosBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVPasos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pasosBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn estadoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contenidoDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource resultadosBindingSource;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView DGVPasos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn entradaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn salidaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource pasosBindingSource;
+        private System.Windows.Forms.Label LbTitulo;
     }
 }
