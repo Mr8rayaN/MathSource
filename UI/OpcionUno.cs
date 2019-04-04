@@ -30,6 +30,7 @@ namespace UI
             InitializeComponent();
             PnSalida.Hide();
             this.BackColor = Contenedor.BackColor;
+            PintarComponentes();
             this.Size = Contenedor.Size;
 
             this.BLL = BLL;
@@ -164,6 +165,17 @@ namespace UI
                 return true;
 
             return false;
+        }
+
+        private void PintarComponentes()
+        {
+            TBExpresion.BackColor = this.BackColor;
+            TBResultado.BackColor = this.BackColor;
+            CBProcesos.BackColor = this.BackColor;
+            CBVariables.BackColor = this.BackColor;
+            CBEstados.BackColor = this.BackColor;
+            PnGuiaTBExpresion.BackColor = TBExpresion.ForeColor;
+            PnGuiaTBResultado.BackColor = TBResultado.ForeColor;
         }
     }
 }
